@@ -8,7 +8,7 @@ Product Owner: Abdullah Chaudhry
 - [Hanzalla Usman](https://github.com/HanzallaUsman)
 - [Abdullah Chaudhry](https://github.com/aqhra050)
 - [Talal Said](https://github.com/talalsaid1)
-- [Syed Umair Hussain Shah](https://github.com/HanzallaUsman)
+- [Syed Umair Hussain Shah](https://github.com/Umairshah99)
 - [Sashank Silwal](https://github.com/sashanksilwal)
 - [Desmond Ofori Atta](https://github.com/Des-cloud)
 
