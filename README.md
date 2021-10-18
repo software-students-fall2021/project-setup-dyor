@@ -5,12 +5,12 @@ Scrum Master: Hanzalla Usman
 Product Owner: Abdullah Chaudhry
 
 ## Core Team Members
-Hanzalla Usman
-Abdullah Chaudhry
-Talal Said
-Syed Umair Hussain Shah
-Sashank Silwal
-Desmond Ofori Atta
+- [Hanzalla Usman](https://github.com/HanzallaUsman)
+- [Abdullah Chaudhry](https://github.com/aqhra050)
+- [Talal Said](https://github.com/talalsaid1)
+- [Syed Umair Hussain Shah](https://github.com/HanzallaUsman)
+- [Sashank Silwal](https://github.com/sashanksilwal)
+- [Desmond Ofori Atta](https://github.com/Des-cloud)
 
 ## Project Description
 As young students and entrepreneurs we have all experienced the hardhsip when investing in the wrong cryptocurrency and losing our money. We thought a platform like DYOR will be helpful for all kinds of people to minimize the risk in their investments. DYOR is a service that seeks to enable investment in the Crypto and Equity markets. The Crypto market has become increasingly dangerous (with the manipulation of prices by notable personalities, “false” signal groups that are in truth Pump-and-Dumps, and sh*t coins). DYOR seeks to make portfolio management and investment research easier for users of the Web-App, through the maintenance of a “Paper Portfolio” wherein users input the details for their present open positions so that they may keep track of the same, and the therein Profit/Loss with dynamic graphs (TradingView API) through a convenient Web-App as opposed to manual calculations as would be the case for hardware wallets, and without the inconvenience of multiple factor authentication (requiring a picture, OTP, password, captcha) only usable on verified devices as would be the case for a reputable exchange application. Beyond that, users would be provided with an alternate “Practice Portofolio” wherein they would be provided false dollars so that they make paper-trades and avoid financial losses as they learn. This enables a certain ease for investment maintenance, and alternate eases are to come in the form of more accessible research.
