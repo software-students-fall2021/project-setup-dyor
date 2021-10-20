@@ -1,3 +1,3 @@
-The source files and exported PNG files of the app map and wireframe diagrams should reside in this directory.
+The source files and exported PNG files of the app map and wireframe diagrams resides in this directory.
 
-Your completed prototype will reside within the 'prototype' subdirectory.
+The completed prototype resides within the 'prototype' subdirectory.
