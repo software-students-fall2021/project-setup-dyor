@@ -1,8 +1,14 @@
 .news{
     max-width: 95%;
     margin: auto;
+    margin-bottom: 30px;
+}
+.news_header{
+    margin-top: 10px;
+    margin-bottom: 10px; 
 }
 .news_type{
+    margin: auto;
     display: flex;
     flex-direction: row;
     justify-content: space-around;

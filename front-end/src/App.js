@@ -1,10 +1,17 @@
 import './App.css';
+import NewsTile from './components/NewsTile/newsTile';
 import TopBar from './components/TopBar/topBar';
 
 function App() {
   return (
     <div className="App">
-      <TopBar />
+      <div>
+        <TopBar />
+      </div>
+      <div>
+        <NewsTile />
+        <NewsTile />
+      </div> 
     </div>
   );
 }

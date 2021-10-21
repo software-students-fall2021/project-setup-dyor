@@ -9,7 +9,7 @@ import './topBar.css';
 export default function TopBar() {
     return (
         <>
-        <AppBar className="header">
+        <AppBar position="sticky" className="header">
         <Toolbar className="topBar">
             <Box className="logo">
                 <Typography className = "logoTitle">
