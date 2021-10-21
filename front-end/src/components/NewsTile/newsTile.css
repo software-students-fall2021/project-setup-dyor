@@ -1,0 +1,13 @@
+.news{
+    max-width: 95%;
+    margin: auto;
+}
+.news_type{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+#news_dropdown{
+    margin-left: auto;
+}
