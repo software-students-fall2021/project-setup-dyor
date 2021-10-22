@@ -3,7 +3,7 @@ import DropDownMenu from '../DropDownMenu/drop_down_menu';
 import Article from '../Article/article'
 import './newsTile.css'
   
-export default function NewsTile() {
+export default function NewsTile({news_type, heading, extract, contents}) {
 return (
     <div className="news">
         <div className="news_content">
