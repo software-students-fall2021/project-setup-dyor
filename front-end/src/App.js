@@ -1,11 +1,36 @@
-import { Portfolio } from "./containers/Portfolio/Portfolio";
+// import { Portfolio } from "./containers/Portfolio/Portfolio";
+// import "./App.css";
+
+// function App() {
+//     return (
+//         <div className="App">
+//             <Portfolio></Portfolio>
+//         </div>
+//     );
+
+import { PortfolioPage } from "./containers/PortfolioPage/PortfolioPage";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import * as React from "react";
+
 import "./App.css";
+// import Button from "@mui/material/Button";
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#088F8F",
+        },
+        secondary: {
+            main: "#0D98BA",
+        },
+    },
+});
 
 function App() {
     return (
-        <div className="App">
-            <Portfolio></Portfolio>
-        </div>
+        <ThemeProvider theme={theme}>
+            <PortfolioPage></PortfolioPage>
+        </ThemeProvider>
     );
 }
 
