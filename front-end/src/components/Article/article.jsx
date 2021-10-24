@@ -6,8 +6,13 @@ export default function Article({article}){
 
     return (
         <Paper variant="outlined" className="article_paper">
-            <article className="article article_content">
-                <div className="article_content">
+            <article className="article_content">
+                    <div className="image">
+                        <img className= "article_image"
+                            src= {article.urlToImage}
+                            alt="A crypto coin"
+                        />
+                    </div>
                     <div className="description">
                         <h4 className="article_title"><a href={article.url} target="blank">{article.title}</a></h4>
                         <h5 className="extract_title">{article.author}</h5>
@@ -15,11 +20,6 @@ export default function Article({article}){
                             {article.description} 
                         </p>
                     </div>
-                    <img className= "article_image"
-                        src= {article.urlToImage}
-                        align= "right" alt="A crypto coin"
-                    />
-                </div>
             </article>
         </Paper>
     );
