@@ -3,16 +3,34 @@
     padding: 16px;
 }
 .article_title{
-    text-align: center;
+    text-align: left;
     margin: 10px auto;
 }
 .extract_title{
-    margin: 10px auto;
+    margin: 5px auto;
     text-align: left;
 }
+.article .description {
+    width: 70%;
+}
+
 .article_content{
-    text-align: justify;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    min-height: 50px;
 }
 .article_paper{
     margin: 0 auto 10px;
+}
+.article_story{
+    display: inline-block;
+    text-align: justify;
+    vertical-align: top;
+    margin-top: 0;
+}
+.article_image{
+    max-width: 20%;
+    max-height: 80%;
 }
