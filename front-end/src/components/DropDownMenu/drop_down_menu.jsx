@@ -8,6 +8,7 @@ import './drop_down.css'
 export default function DropDownMenu({selectedValue, options, setArticleNum}) {
 
   const handleChange = (event) => {
+    console.log(event.target.value)
     setArticleNum(event.target.value);
   };
 

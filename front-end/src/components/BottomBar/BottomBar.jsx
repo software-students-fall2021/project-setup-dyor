@@ -9,8 +9,9 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import Paper from "@mui/material/Paper";
 
-export function BottomBar() {
-  const [value, setValue] = React.useState(0);
+
+
+export function BottomBar({currentPage, setCurrentPage}) {
   const ref = React.useRef(null);
 
   return (
@@ -22,9 +23,9 @@ export function BottomBar() {
       >
         <BottomNavigation
           showLabels
-          value={value}
+          value={currentPage}
           onChange={(event, newValue) => {
-            setValue(newValue);
+            setCurrentPage(newValue);
           }}
         >
           <BottomNavigationAction label="Dashboard" icon={<DashboardIcon />} />
