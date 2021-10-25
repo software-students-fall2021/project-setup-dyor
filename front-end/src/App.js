@@ -1,9 +1,12 @@
 import NFA from "./containers/NFA/NFA";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import * as React from "react";
-
 import "./App.css";
 import { BottomBar } from "./components/BottomBar/BottomBar";
+import DashboardPage from "./containers/Dashboard/Dashboard";
+import NewsPage from "./containers/NewsPage/newsPage";
+import { PortfolioPage } from "./containers/PortfolioPage/PortfolioPage";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 // import Button from "@mui/material/Button";
 
 const theme = createTheme({
@@ -17,11 +20,15 @@ const theme = createTheme({
   },
 });
 
+const Pages = [<DashboardPage />, <PortfolioPage />, <NewsPage />, <PortfolioPage />]
 function App() {
+  const [currentPage, setPage] = React.useState(0);
+
   return (
     <ThemeProvider theme={theme}>
-      <NFA></NFA>
-      <BottomBar></BottomBar>
+
+      {Pages[currentPage]}
+      <BottomBar currentPage={currentPage} setCurrentPage={setPage}></BottomBar>
     </ThemeProvider>
   );
 }
