@@ -6,6 +6,7 @@ import DashboardPage from "./containers/Dashboard/Dashboard";
 import NewsPage from "./containers/NewsPage/newsPage";
 import { PortfolioPage } from "./containers/PortfolioPage/PortfolioPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import TopBar from "./components/TopBar/TopBar";
 
 // import Button from "@mui/material/Button";
 
@@ -20,13 +21,13 @@ const theme = createTheme({
   },
 });
 
-const Pages = [<DashboardPage />, <PortfolioPage />, <NewsPage />, <PortfolioPage />]
+const Pages = [<DashboardPage />, <PortfolioPage />, <NewsPage />, <NFA />];
 function App() {
   const [currentPage, setPage] = React.useState(0);
 
   return (
     <ThemeProvider theme={theme}>
-
+      <TopBar></TopBar>
       {Pages[currentPage]}
       <BottomBar currentPage={currentPage} setCurrentPage={setPage}></BottomBar>
     </ThemeProvider>
