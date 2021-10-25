@@ -1,4 +1,4 @@
-import { PortfolioPage } from "./containers/PortfolioPage/PortfolioPage";
+import NFA from "./containers/NFA/NFA";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import * as React from "react";
 
@@ -7,20 +7,20 @@ import { BottomBar } from "./components/BottomBar/BottomBar";
 // import Button from "@mui/material/Button";
 
 const theme = createTheme({
-    palette: {
-        primary: {
-            main: "#088F8F",
-        },
-        secondary: {
-            main: "#0D98BA",
-        },
+  palette: {
+    primary: {
+      main: "#088F8F",
     },
+    secondary: {
+      main: "#0D98BA",
+    },
+  },
 });
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <PortfolioPage></PortfolioPage>
+      <NFA></NFA>
       <BottomBar></BottomBar>
     </ThemeProvider>
   );
