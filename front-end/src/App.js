@@ -5,17 +5,18 @@ import DashboardPage from "./containers/Dashboard/Dashboard";
 import NewsPage from "./containers/NewsPage/newsPage";
 import { PortfolioPage } from "./containers/PortfolioPage/PortfolioPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 // import Button from "@mui/material/Button";
 
 const theme = createTheme({
-    palette: {
-        primary: {
-            main: "#088F8F",
-        },
-        secondary: {
-            main: "#0D98BA",
-        },
+  palette: {
+    primary: {
+      main: "#088F8F",
     },
+    secondary: {
+      main: "#0D98BA",
+    },
+  },
 });
 
 const Pages = [<DashboardPage />, <PortfolioPage />, <NewsPage />, <PortfolioPage />]
