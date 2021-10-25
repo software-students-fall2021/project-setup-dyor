@@ -15,28 +15,28 @@ import axios from "axios";
 // const rounded2DP = (number) => Math.round(number * 100) / 100;
 
 const CoinImage = (props) => {
-  const coinID = props.id;
-  const coinSymbol =
-    props.symbolsDict[coinID] && props.symbolsDict[coinID].toLowerCase();
+    const coinID = props.id;
+    const coinSymbol =
+        props.symbolsDict[coinID] && props.symbolsDict[coinID].toLowerCase();
 
-  return (
-    <Grid
-      container
-      direction="columnn"
-      alignItems="center"
-      justifyContent="center"
-      className={styles.coinAggregate}
-    >
-      <Grid item>
-        <Icon name={coinSymbol} size={32}></Icon>
-      </Grid>
-      <Grid item>
-        <Typography className={styles.coinText}>
-          {(coinSymbol && coinSymbol.toUpperCase()) || "NA"}
-        </Typography>
-      </Grid>
-    </Grid>
-  );
+    return (
+        <Grid
+            container
+            direction="columnn"
+            alignItems="center"
+            justifyContent="center"
+            className={styles.coinAggregate}
+        >
+            <Grid item>
+                <Icon name={coinSymbol} size={32}></Icon>
+            </Grid>
+            <Grid item>
+                <Typography className={styles.coinText}>
+                    {(coinSymbol && coinSymbol.toUpperCase()) || "NA"}
+                </Typography>
+            </Grid>
+        </Grid>
+    );
 };
 
 const NumericEntry = ({
@@ -59,27 +59,27 @@ const NumericEntry = ({
 export function PortfolioTable(props) {
     const [dailyPercentageChanges, setDailyPercentageChanges] = useState({});
 
-  useEffect(() => {
-    axios
-      .request("https://api.coincap.io/v2/assets")
-      .then((response) => {
-        const dailyPriceChange = response.data.data.map(
-          ({ id, changePercent24Hr }) => ({
-            id: id,
-            priceChange: changePercent24Hr,
-          })
-        );
-        const dailyPriceChangeDict = dailyPriceChange.reduce(
-          (a, x) => ({ ...a, [x.id]: x.priceChange }),
-          {}
-        );
-        setDailyPercentageChanges(() => dailyPriceChangeDict);
-      })
-      .catch((err) => {
-        console.log("Get Daily Change Data Failed.");
-        console.log(err);
-      });
-  }, []);
+    useEffect(() => {
+        axios
+            .request("https://api.coincap.io/v2/assets")
+            .then((response) => {
+                const dailyPriceChange = response.data.data.map(
+                    ({ id, changePercent24Hr }) => ({
+                        id: id,
+                        priceChange: changePercent24Hr,
+                    })
+                );
+                const dailyPriceChangeDict = dailyPriceChange.reduce(
+                    (a, x) => ({ ...a, [x.id]: x.priceChange }),
+                    {}
+                );
+                setDailyPercentageChanges(() => dailyPriceChangeDict);
+            })
+            .catch((err) => {
+                console.log("Get Daily Change Data Failed.");
+                console.log(err);
+            });
+    }, []);
 
     return (
         <Box className={styles.tableBox}>
@@ -91,22 +91,34 @@ export function PortfolioTable(props) {
                 <TableHead>
                     <TableRow style={{ height: 10 }}>
                         <TableCell>
-                            <Typography className={styles.tableHeading}>
+                            <Typography
+                                className={styles.tableHeading}
+                                variant="h7"
+                            >
                                 Coin
                             </Typography>
                         </TableCell>
                         <TableCell align="right">
-                            <Typography className={styles.tableHeading}>
+                            <Typography
+                                className={styles.tableHeading}
+                                variant="h7"
+                            >
                                 Price
                             </Typography>
                         </TableCell>
                         <TableCell align="right">
-                            <Typography className={styles.tableHeading}>
+                            <Typography
+                                className={styles.tableHeading}
+                                variant="h7"
+                            >
                                 Percentange Change (24 Hours)
                             </Typography>
                         </TableCell>
                         <TableCell align="right">
-                            <Typography className={styles.tableHeading}>
+                            <Typography
+                                className={styles.tableHeading}
+                                variant="h7"
+                            >
                                 Cumulative Profit/Loss
                             </Typography>
                         </TableCell>
