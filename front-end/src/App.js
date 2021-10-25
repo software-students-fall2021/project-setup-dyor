@@ -1,3 +1,4 @@
+import NFA from "./containers/NFA/NFA";
 import * as React from "react";
 import "./App.css";
 import { BottomBar } from "./components/BottomBar/BottomBar";
@@ -25,6 +26,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+
       {Pages[currentPage]}
       <BottomBar currentPage={currentPage} setCurrentPage={setPage}></BottomBar>
     </ThemeProvider>

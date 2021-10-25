@@ -1,0 +1,16 @@
+.nfaPageDiv {
+  background-color: white;
+}
+
+.displayInline {
+  display: flex;
+  font-size: 30px;
+  text-align: center;
+  justify-content: space-around;
+
+  padding-bottom: 5%;
+}
+
+.bgColor {
+  background-color: rgba(23, 24, 24, 0.233);
+}
