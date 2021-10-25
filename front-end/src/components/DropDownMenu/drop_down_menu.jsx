@@ -13,9 +13,10 @@ export default function DropDownMenu({selectedValue, options, setArticleNum}) {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 80 }}>
+      <FormControl className="form" sx={{ m: 1, minWidth: 70 }}>
         <InputLabel id="demo-simple-select-autowidth-label">Articles</InputLabel>
         <Select
+          className="selection"
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
           value={selectedValue}
@@ -24,7 +25,7 @@ export default function DropDownMenu({selectedValue, options, setArticleNum}) {
           label="Number of Articles"
         >
           {options.map((option) => (
-            <MenuItem key={option} value={option} >
+            <MenuItem className="menu_item" key={option} value={option} >
               {option}
             </MenuItem>
           ))}

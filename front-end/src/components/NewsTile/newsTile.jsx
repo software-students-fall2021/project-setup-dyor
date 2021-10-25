@@ -4,8 +4,6 @@ import Article from '../Article/article'
 import axios from 'axios';
 import './newsTile.css'
 
-const API_KEY = ""
-
 const options = [1,2,3,4,5,6,7,8,9];
 let articleTiles = []
 let id = 0;
@@ -16,7 +14,7 @@ export default function NewsTile() {
     const [num, setNum] = React.useState(2);
 
     const getArticles = async() => {
-        const url = `https://newsapi.org/v2/everything?qInTitle=+bitcoin&from=2021-10-15&language=en&sortBy=popularity&apiKey=${API_KEY}&pageSize=20`
+        const url = `https://newsapi.org/v2/everything?qInTitle=+bitcoin&from=2021-10-15&language=en&sortBy=popularity&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=20`
         const res = await axios.get(url)
         articleTiles = res.data.articles
         setArticles(articleTiles.slice(0,num))
