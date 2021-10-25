@@ -82,103 +82,106 @@ export function PortfolioTable(props) {
     }, []);
 
     return (
-        <Box className={styles.tableBox}>
-            <Table
-                sx={{ minWidth: 200 }}
-                size="small"
-                aria-label="a dense table"
-            >
-                <TableHead>
-                    <TableRow style={{ height: 10 }}>
-                        <TableCell>
-                            <Typography
-                                className={styles.tableHeading}
-                                variant="h7"
-                            >
-                                Coin
-                            </Typography>
-                        </TableCell>
-                        <TableCell align="right">
-                            <Typography
-                                className={styles.tableHeading}
-                                variant="h7"
-                            >
-                                Price
-                            </Typography>
-                        </TableCell>
-                        <TableCell align="right">
-                            <Typography
-                                className={styles.tableHeading}
-                                variant="h7"
-                            >
-                                Percentange Change (24 Hours)
-                            </Typography>
-                        </TableCell>
-                        <TableCell align="right">
-                            <Typography
-                                className={styles.tableHeading}
-                                variant="h7"
-                            >
-                                Cumulative Profit/Loss
-                            </Typography>
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {console.log(props.userData)}
-                    {props.userData.map((userDataElement) => {
-                        const coinPrice = props.pricesData[userDataElement.id];
-                        const coinDailyChange =
-                            dailyPercentageChanges[userDataElement.id];
-                        const userProfit =
-                            (coinPrice - userDataElement.unitPrice) *
-                            userDataElement.quantityPurchased;
-
-                        return (
-                            <TableRow key={userDataElement.id}>
-                                <TableCell component="th" scope="row">
-                                    <CoinImage
-                                        id={userDataElement.id}
-                                        symbolsDict={props.coinLabels}
-                                    ></CoinImage>
-                                </TableCell>
-                                <TableCell align="right">
-                                    <NumericEntry
-                                        val={coinPrice}
-                                        numDecimalPlaces={2}
-                                    ></NumericEntry>
-                                </TableCell>
-                                <TableCell align="right">
-                                    <NumericEntry
-                                        val={coinDailyChange}
-                                        isColor={true}
-                                        numDecimalPlaces={2}
-                                        additionalSuffix="%"
-                                    ></NumericEntry>
-                                </TableCell>
-                                <TableCell align="right">
-                                    <NumericEntry
-                                        val={userProfit}
-                                        isColor={true}
-                                        numDecimalPlaces={2}
-                                    ></NumericEntry>
-                                </TableCell>
-                            </TableRow>
-                        );
-                    })}
-                </TableBody>
-            </Table>
-            <Box className={styles.button}>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                        alert("clicked");
-                    }}
+        <>
+            <Box className={styles.tableBox}>
+                <Table
+                    sx={{ minWidth: 200 }}
+                    size="small"
+                    aria-label="a dense table"
                 >
-                    Add Asset
-                </Button>
+                    <TableHead>
+                        <TableRow style={{ height: 10 }}>
+                            <TableCell>
+                                <Typography
+                                    className={styles.tableHeading}
+                                    variant="h7"
+                                >
+                                    Coin
+                                </Typography>
+                            </TableCell>
+                            <TableCell align="right">
+                                <Typography
+                                    className={styles.tableHeading}
+                                    variant="h7"
+                                >
+                                    Price
+                                </Typography>
+                            </TableCell>
+                            <TableCell align="right">
+                                <Typography
+                                    className={styles.tableHeading}
+                                    variant="h7"
+                                >
+                                    Percentange Change (24 Hours)
+                                </Typography>
+                            </TableCell>
+                            <TableCell align="right">
+                                <Typography
+                                    className={styles.tableHeading}
+                                    variant="h7"
+                                >
+                                    Cumulative Profit/Loss
+                                </Typography>
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {console.log(props.userData)}
+                        {props.userData.map((userDataElement) => {
+                            const coinPrice =
+                                props.pricesData[userDataElement.id];
+                            const coinDailyChange =
+                                dailyPercentageChanges[userDataElement.id];
+                            const userProfit =
+                                (coinPrice - userDataElement.unitPrice) *
+                                userDataElement.quantityPurchased;
+
+                            return (
+                                <TableRow key={userDataElement.id}>
+                                    <TableCell component="th" scope="row">
+                                        <CoinImage
+                                            id={userDataElement.id}
+                                            symbolsDict={props.coinLabels}
+                                        ></CoinImage>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <NumericEntry
+                                            val={coinPrice}
+                                            numDecimalPlaces={2}
+                                        ></NumericEntry>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <NumericEntry
+                                            val={coinDailyChange}
+                                            isColor={true}
+                                            numDecimalPlaces={2}
+                                            additionalSuffix="%"
+                                        ></NumericEntry>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <NumericEntry
+                                            val={userProfit}
+                                            isColor={true}
+                                            numDecimalPlaces={2}
+                                        ></NumericEntry>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+                <Box className={styles.button}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                            alert("clicked");
+                        }}
+                    >
+                        Add Asset
+                    </Button>
+                </Box>
             </Box>
-        </Box>
+        </>
     );
 }
