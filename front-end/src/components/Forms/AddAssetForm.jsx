@@ -18,7 +18,7 @@ const AddAssetForm = (props) => {
                     Unit Price
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    Salam Four
+                    Date Purchased
                 </Grid>
             </Grid>
         </form>
