@@ -24,8 +24,21 @@
 
 .coinText {
     font-size: 1em;
+    font-weight: 100;
 }
 
 .coinAggregate {
     background-color: rgba(0, 0, 0, 0.05);
+}
+
+.normal {
+    color: black;
+}
+
+.profit {
+    color: green;
+}
+
+.loss {
+    color: red;
 }
