@@ -15,71 +15,71 @@ import axios from "axios";
 // const rounded2DP = (number) => Math.round(number * 100) / 100;
 
 const CoinImage = (props) => {
-    const coinID = props.id;
-    const coinSymbol =
-        props.symbolsDict[coinID] && props.symbolsDict[coinID].toLowerCase();
+  const coinID = props.id;
+  const coinSymbol =
+    props.symbolsDict[coinID] && props.symbolsDict[coinID].toLowerCase();
 
-    return (
-        <Grid
-            container
-            direction="columnn"
-            alignItems="center"
-            justifyContent="center"
-            className={styles.coinAggregate}
-        >
-            <Grid item>
-                <Icon name={coinSymbol} size={32}></Icon>
-            </Grid>
-            <Grid item>
-                <Typography className={styles.coinText}>
-                    {(coinSymbol && coinSymbol.toUpperCase()) || "NA"}
-                </Typography>
-            </Grid>
-        </Grid>
-    );
+  return (
+    <Grid
+      container
+      direction="columnn"
+      alignItems="center"
+      justifyContent="center"
+      className={styles.coinAggregate}
+    >
+      <Grid item>
+        <Icon name={coinSymbol} size={32}></Icon>
+      </Grid>
+      <Grid item>
+        <Typography className={styles.coinText}>
+          {(coinSymbol && coinSymbol.toUpperCase()) || "NA"}
+        </Typography>
+      </Grid>
+    </Grid>
+  );
 };
 
 const NumericEntry = ({
-    val,
-    isColor,
-    numDecimalPlaces = 0,
-    additionalSuffix = "",
+  val,
+  isColor,
+  numDecimalPlaces = 0,
+  additionalSuffix = "",
 }) => {
-    const multiplier = 10 ** numDecimalPlaces;
-    const formatedVal = Math.round(val * multiplier) / multiplier;
-    const styleClass = isColor
-        ? formatedVal > 0
-            ? styles.profit
-            : styles.loss
-        : styles.normal;
-    const outputString = `${formatedVal}${additionalSuffix}`;
-    return <Typography className={styleClass}>{outputString}</Typography>;
+  const multiplier = 10 ** numDecimalPlaces;
+  const formatedVal = Math.round(val * multiplier) / multiplier;
+  const styleClass = isColor
+    ? formatedVal > 0
+      ? styles.profit
+      : styles.loss
+    : styles.normal;
+  const outputString = `${formatedVal}${additionalSuffix}`;
+  return <Typography className={styleClass}>{outputString}</Typography>;
 };
 
 export function PortfolioTable(props) {
-    const [dailyPercentageChanges, setDailyPercentageChanges] = useState({});
+  const [dailyPercentageChanges, setDailyPercentageChanges] = useState({});
 
-    useEffect(() => {
-        axios
-            .request("https://api.coincap.io/v2/assets")
-            .then((response) => {
-                const dailyPriceChange = response.data.data.map(
-                    ({ id, changePercent24Hr }) => ({
-                        id: id,
-                        priceChange: changePercent24Hr,
-                    })
-                );
-                const dailyPriceChangeDict = dailyPriceChange.reduce(
-                    (a, x) => ({ ...a, [x.id]: x.priceChange }),
-                    {}
-                );
-                setDailyPercentageChanges(() => dailyPriceChangeDict);
-            })
-            .catch((err) => {
-                console.log("Get Daily Change Data Failed.");
-                console.log(err);
-            });
-    }, []);
+  useEffect(() => {
+    axios
+      .request("https://api.coincap.io/v2/assets")
+      .then((response) => {
+        const dailyPriceChange = response.data.data.map(
+          ({ id, changePercent24Hr }) => ({
+            id: id,
+            priceChange: changePercent24Hr,
+          })
+        );
+        const dailyPriceChangeDict = dailyPriceChange.reduce(
+          (a, x) => ({ ...a, [x.id]: x.priceChange }),
+          {}
+        );
+        setDailyPercentageChanges(() => dailyPriceChangeDict);
+      })
+      .catch((err) => {
+        console.log("Get Daily Change Data Failed.");
+        console.log(err);
+      });
+  }, []);
 
     return (
         <>
