@@ -1,13 +1,3 @@
-// import { Portfolio } from "./containers/Portfolio/Portfolio";
-// import "./App.css";
-
-// function App() {
-//     return (
-//         <div className="App">
-//             <Portfolio></Portfolio>
-//         </div>
-//     );
-
 import { PortfolioPage } from "./containers/PortfolioPage/PortfolioPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import * as React from "react";
