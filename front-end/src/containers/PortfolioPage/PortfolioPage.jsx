@@ -6,6 +6,7 @@ import styles from "./PortfolioPage.module.css";
 import { Box } from "@mui/system";
 import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
 import { Stack } from "@mui/material";
+import AddAssetForm from "../../components/Forms/AddAssetForm";
 
 class OwnedAsset {
   constructor(id, quantityPurchased, unitPrice, datePurchased) {
@@ -104,29 +105,27 @@ export function PortfolioPage() {
   //         <h2>{`Price: ${coinPrice}`}</h2>
   //     </Box>
 
-  return (
-    <Stack
-      direction="column"
-      justifyContent="space-evenly"
-      alignItems="stretch"
-      spacing={0.5}
-    >
-      <Box className={styles.pageDiv}>
-        <Typography weight="bold" color="primary" variant="h4">
-          Portfolio
-        </Typography>
-
-        <Box className={styles.portfolioTable}>
-          <PortfolioTable
-            pricesData={coinPrices}
-            userData={userData}
-            coinLabels={tickers}
-          ></PortfolioTable>
-        </Box>
-        <Box className={styles.portfolioTable}>
-          <DailyGraph></DailyGraph>
-        </Box>
-      </Box>
-    </Stack>
-  );
+    return (
+        <Stack
+            direction="column"
+            justifyContent="space-evenly"
+            alignItems="stretch"
+            spacing={0.5}
+        >
+            <Typography weight="bold" color="primary" variant="h4">
+                Portfolio
+            </Typography>
+            <Box className={styles.portfolioTable}>
+                <PortfolioTable
+                    pricesData={coinPrices}
+                    userData={userData}
+                    coinLabels={tickers}
+                ></PortfolioTable>
+            </Box>
+            <Box className={styles.portfolioTable}>
+                <DailyGraph></DailyGraph>
+            </Box>
+            <AddAssetForm></AddAssetForm>
+        </Stack>
+    );
 }
