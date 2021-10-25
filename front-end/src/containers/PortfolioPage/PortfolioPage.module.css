@@ -1,10 +1,11 @@
 .pageDiv {
-  padding: 5%;
-  background-color: black;
+  /* padding: 5%; */
+  /* border-radius: 15px; */
+  /* background-color: antiquewhite; */
 }
 
 .portfolioTable {
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
 
 /* .heading {
