@@ -1,12 +1,31 @@
 .button {
-  text-align: right;
-  padding-right: 10px;
+    text-align: right;
+    padding-right: 10px;
 }
 
 .tableBox {
-  padding-bottom: 10px;
-  border: 1px solid gray;
-  border-radius: 5px;
-  overflow: auto;
-  background-color: white;
+    padding-bottom: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    overflow: auto;
+    background-color: white;
+}
+
+.tableHeading {
+    font-size: 30px;
+    font-weight: bold;
+    padding: 1em 0.5em;
+}
+
+.coinImage {
+    width: 40px;
+    height: 40px;
+}
+
+.coinText {
+    font-size: 1em;
+}
+
+.coinAggregate {
+    background-color: rgba(0, 0, 0, 0.05);
 }
