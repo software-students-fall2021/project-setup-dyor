@@ -6,15 +6,22 @@ import './newsTile.css'
 
 const options = [1,2,3,4,5,6,7,8,9];
 let articleTiles = []
-let id = 0;
-export default function NewsTile() {
+
+function capitalize(word) {
+    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+}
+
+  
+export default function NewsTile({news_type, sortBy}) {
     
+    const temp_type = capitalize(news_type)
+
     const [articles, setArticles] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
     const [num, setNum] = React.useState(2);
 
     const getArticles = async() => {
-        const url = `https://newsapi.org/v2/everything?qInTitle=+bitcoin&from=2021-10-15&language=en&sortBy=popularity&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=20`
+        const url = `https://newsapi.org/v2/everything?qInTitle=+${news_type}&from=2021-10-20&language=en&sortBy=${sortBy}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=20`
         const res = await axios.get(url)
         articleTiles = res.data.articles
         setArticles(articleTiles.slice(0,num))
@@ -36,7 +43,6 @@ export default function NewsTile() {
         updateArticles();
     },[num, articles])
     
-    
 
     return (<>
         {!isLoading && <div className="news">
@@ -44,7 +50,7 @@ export default function NewsTile() {
                     <div className="news_header">
                         <div className="news_type">
                             <h3 className="news_title">
-                                Bitcoin
+                                {temp_type}
                             </h3>
                             <span id="news_dropdown">
                                 <DropDownMenu selectedValue={num} setArticleNum={setNum} options= {options} className="dropdown_menu"/>
@@ -53,7 +59,7 @@ export default function NewsTile() {
                     </div>
                     {articles.map((article) => (
                         <Article 
-                            key = {++id}
+                            key = {article.title}
                             article={article}
                         />
                     ))}
