@@ -7,7 +7,6 @@ import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
 import AddAssetForm from "../../components/Forms/AddAssetForm";
 import { PortfolioTable } from "../../components/PortfolioTable/PortfolioTable";
 import styles from "./PortfolioPage.module.css";
-import { invert } from "underscore";
 
 class OwnedAsset {
     constructor(id, quantityPurchased, purchasePrice, datePurchased) {
@@ -19,7 +18,7 @@ class OwnedAsset {
     }
 }
 
-const DefaultUserAssets = [
+let DefaultUserAssets = [
     new OwnedAsset("bitcoin", 2, 30000, "10/5/2021"),
     new OwnedAsset("ethereum", 20, 2000, "12/06/2021"),
     new OwnedAsset("polkadot", 2, 30, "13/08/2021"),
@@ -27,7 +26,6 @@ const DefaultUserAssets = [
 
 export function PortfolioPage() {
     const [tickersDict, setTickersDict] = useState({});
-    const [invertedTickersDict, setInvertedTickersDict] = useState({});
     const [tickersArr, setTickersArr] = useState([]);
     const [coinValue, setCoinValue] = useState({ id: "bitcoin", label: "BTC" });
     const [coinInputValue, setCoinInputValue] = useState("BTC");
@@ -60,7 +58,6 @@ export function PortfolioPage() {
                     {}
                 );
                 setTickersDict(() => tempTickersDict);
-                setInvertedTickersDict(() => invert(tempTickersDict));
             })
             .catch((err) => {
                 console.log("Get Ticker Data Failed.");
@@ -80,21 +77,41 @@ export function PortfolioPage() {
     }
 
     //will not handle at the moment previously existing data for the sake of simplicity and each purchase will be treated a new distinct purchase even if the coin purchased is the same
-    const addNewUserAssetData = ({
+    const addNewUserAssetData = (
         coin,
         quantityPurchased,
         purchasePrice,
-        datePurchased,
-    }) => {
-        // console.log(coin);
-        // console.log(quantityPurchased);
-        // console.log(purchasePrice);
-        // console.log(datePurchased);
-        setUserData((prevUserData) => [
-            { id: coin, quantityPurchased, purchasePrice, datePurchased },
-            ...prevUserData,
-        ]);
+        datePurchased
+    ) => {
+        console.log(datePurchased);
+        return;
     };
+
+    // return (
+    //     <Box
+    //         sx={{
+    //             display: "flex",
+    //             justifyContent: "center",
+    //         }}
+    //     >
+    //         <Autocomplete
+    //             id="Coin-Select"
+    //             value={coinValue}
+    //             onChange={(event, newValue) => {
+    //                 setCoinValue(newValue);
+    //                 console.log(newValue);
+    //             }}
+    //             inputValue={coinInputValue}
+    //             onInputChange={(event, newInputValue) => {
+    //                 setCoinInputValue(newInputValue);
+    //             }}
+    //             options={tickers}
+    //             sx={{ width: 200 }}
+    //             isOptionEqualToValue={(option, value) => option.id === value.id}
+    //             renderInput={(params) => <TextField {...params} label="Coin" />}
+    //         />
+    //         <h2>{`Price: ${coinPrice}`}</h2>
+    //     </Box>
 
     return (
         <Stack
@@ -119,7 +136,6 @@ export function PortfolioPage() {
             <AddAssetForm
                 coinLabels={tickersArr}
                 onAddNewAssetHandler={addNewUserAssetData}
-                labelsToCoinsDict={invertedTickersDict}
             ></AddAssetForm>
         </Stack>
     );

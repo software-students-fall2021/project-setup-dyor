@@ -6,31 +6,40 @@ import DashboardPage from "./containers/Dashboard/Dashboard";
 import NewsPage from "./containers/NewsPage/newsPage";
 import { PortfolioPage } from "./containers/PortfolioPage/PortfolioPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-// import Button from "@mui/material/Button";
+import DateAdapter from "@material-ui/lab/AdapterDateFns";
+import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#088F8F",
+    palette: {
+        primary: {
+            main: "#088F8F",
+        },
+        secondary: {
+            main: "#0D98BA",
+        },
     },
-    secondary: {
-      main: "#0D98BA",
-    },
-  },
 });
 
-const Pages = [<DashboardPage />, <PortfolioPage />, <NewsPage />, <PortfolioPage />]
+const Pages = [
+    <DashboardPage />,
+    <PortfolioPage />,
+    <NewsPage />,
+    <PortfolioPage />,
+];
 function App() {
-  const [currentPage, setPage] = React.useState(0);
+    const [currentPage, setPage] = React.useState(0);
 
-  return (
-    <ThemeProvider theme={theme}>
-
-      {Pages[currentPage]}
-      <BottomBar currentPage={currentPage} setCurrentPage={setPage}></BottomBar>
-    </ThemeProvider>
-  );
+    return (
+        <LocalizationProvider dateAdapter={DateAdapter}>
+            <ThemeProvider theme={theme}>
+                {Pages[currentPage]}
+                <BottomBar
+                    currentPage={currentPage}
+                    setCurrentPage={setPage}
+                ></BottomBar>
+            </ThemeProvider>
+        </LocalizationProvider>
+    );
 }
 
 export default App;

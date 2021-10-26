@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box, style } from "@mui/system";
+import { Box } from "@mui/system";
 import { Button } from "@mui/material";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import styles from "./PortfolioTable.module.css";
 import Icon from "react-crypto-icons";
 import axios from "axios";
@@ -126,14 +126,13 @@ export function PortfolioTable(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {console.log(props.userData)}
                         {props.userData.map((userDataElement) => {
                             const coinPrice =
                                 props.pricesData[userDataElement.id];
                             const coinDailyChange =
                                 dailyPercentageChanges[userDataElement.id];
                             const userProfit =
-                                (coinPrice - userDataElement.unitPrice) *
+                                (coinPrice - userDataElement.purchasePrice) *
                                 userDataElement.quantityPurchased;
 
                             return (
