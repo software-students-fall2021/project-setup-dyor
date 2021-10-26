@@ -13,13 +13,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LandingPage = () => {
+const LandingPage = ({setSign}) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Header />
+      <Header setSign={setSign}/>
       <PortfolioCard />
     </div>
   );

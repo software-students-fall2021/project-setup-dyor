@@ -8,6 +8,7 @@ import PageviewIcon from "@mui/icons-material/Pageview";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import Paper from "@mui/material/Paper";
+import { Link } from "react-router-dom";
 
 
 
@@ -28,13 +29,18 @@ export function BottomBar({currentPage, setCurrentPage}) {
             setCurrentPage(newValue);
           }}
         >
-          <BottomNavigationAction label="Dashboard" icon={<DashboardIcon />} />
-          <BottomNavigationAction
-            label="Portfolio"
-            icon={<AccountBalanceWalletIcon />}
-          />
-          <BottomNavigationAction label="News" icon={<DescriptionIcon />} />
-          <BottomNavigationAction label="NFA" icon={<PageviewIcon />} />
+          <Link to="/">
+            <BottomNavigationAction showLabel={true} label="Dashboard" icon={<DashboardIcon/>} />
+          </Link>
+          <Link to="/portfolio">
+          <BottomNavigationAction showLabel={true} label="Portfolio" icon={<AccountBalanceWalletIcon />}/>
+          </Link>
+          <Link to="/news">
+            <BottomNavigationAction showLabel={true} label="News" icon={<DescriptionIcon />} />
+          </Link>
+          <Link to="/nfa">
+            <BottomNavigationAction showLabel={true} label="NFA" icon={<PageviewIcon />} />
+          </Link>
         </BottomNavigation>
       </Paper>
     </Box>

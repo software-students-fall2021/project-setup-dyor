@@ -12,6 +12,66 @@ import { Link as Scroll } from "react-scroll";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
+export default function Header({setSign}) {
+  const classes = useStyles();
+  const [checked, setChecked] = useState(false);
+  useEffect(() => {
+    setChecked(true);
+  }, []);
+  return (
+    <div>
+      <div className={classes.root} id="header">
+        <AppBar className={classes.appbar} elevation={2}>
+          <Toolbar className={classes.appbarWrapper}>
+            <h1 className={classes.appbarTitle}>DYOR</h1>
+            {/* <IconButton>
+                        <AccountBalanceWalletIcon className = {classes.icon} />
+                    </IconButton> */}
+            <Scroll to="About_us" smooth={true}>
+              <h3 className={classes.aboutus}> About Us</h3>
+            </Scroll>
+          </Toolbar>
+        </AppBar>
+
+        <Collapse
+          in={checked}
+          {...(checked ? { timeout: 1500 } : {})}
+          collapseHeight={50}
+        >
+          <div className={classes.container}>
+            <h1 className={classes.title}>
+              WELCOME TO <br />{" "}
+              <strong className={classes.Emphasis}> DYOR </strong> <br />
+              Do Your Own Research
+            </h1>
+            <Stack spacing={2} direction="row">
+              <Button onClick={()=> setSign(true)}
+                variant="contained"
+                size="large"
+                className={classes.Button_root1}
+              >
+                Log-in
+              </Button>
+              <Button
+                variant="contained"
+                size="large"
+                className={classes.Button_root2}
+              >
+                Sign-up
+              </Button>
+            </Stack>
+            <Scroll to="Portfolio" smooth={true}>
+              <IconButton>
+                <KeyboardArrowDownIcon className={classes.goDown} />
+              </IconButton>
+            </Scroll>
+          </div>
+        </Collapse>
+      </div>
+    </div>
+  );
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -79,63 +139,3 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
 }));
-
-export default function Header() {
-  const classes = useStyles();
-  const [checked, setChecked] = useState(false);
-  useEffect(() => {
-    setChecked(true);
-  }, []);
-  return (
-    <div>
-      <div className={classes.root} id="header">
-        <AppBar className={classes.appbar} elevation={2}>
-          <Toolbar className={classes.appbarWrapper}>
-            <h1 className={classes.appbarTitle}>DYOR</h1>
-            {/* <IconButton>
-                        <AccountBalanceWalletIcon className = {classes.icon} />
-                    </IconButton> */}
-            <Scroll to="About_us" smooth={true}>
-              <h3 className={classes.aboutus}> About Us</h3>
-            </Scroll>
-          </Toolbar>
-        </AppBar>
-
-        <Collapse
-          in={checked}
-          {...(checked ? { timeout: 1500 } : {})}
-          collapseHeight={50}
-        >
-          <div className={classes.container}>
-            <h1 className={classes.title}>
-              WELCOME TO <br />{" "}
-              <strong className={classes.Emphasis}> DYOR </strong> <br />
-              Do Your Own Research
-            </h1>
-            <Stack spacing={2} direction="row">
-              <Button
-                variant="contained"
-                size="large"
-                className={classes.Button_root1}
-              >
-                Log-in
-              </Button>
-              <Button
-                variant="contained"
-                size="large"
-                className={classes.Button_root2}
-              >
-                Sign-up
-              </Button>
-            </Stack>
-            <Scroll to="Portfolio" smooth={true}>
-              <IconButton>
-                <KeyboardArrowDownIcon className={classes.goDown} />
-              </IconButton>
-            </Scroll>
-          </div>
-        </Collapse>
-      </div>
-    </div>
-  );
-}

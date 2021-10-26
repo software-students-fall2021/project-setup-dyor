@@ -17,7 +17,7 @@ export default function Article({article}){
                         <h4 className="article_title"><a href={article.url} target="blank">{article.title}</a></h4>
                         <h5 className="extract_title">{article.author}</h5>
                         <p className="article_story"> 
-                            {article.description} 
+                            {article.description}
                         </p>
                     </div>
             </article>
