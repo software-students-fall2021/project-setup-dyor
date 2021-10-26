@@ -1,15 +1,18 @@
 .tableBox {
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
+
+  background-color: rgb(230, 248, 246);
+}
+.tableDesign {
   table-layout: fixed;
   width: 100%;
-  background-color: rgb(230, 248, 246);
 }
 
 .tableHeading {
-  font-size: 10px;
-  font-weight: bold;
+  /* font-weight: bold;
   padding: 1em 0.5em;
   display: flex;
+  font-size: 10px; */
 }
 
 .coinImage {

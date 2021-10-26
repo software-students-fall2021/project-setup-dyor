@@ -14,30 +14,30 @@ export default function NFASocialMedia() {
         alignItems="stretch"
         spacing={0.5}
       >
-        <item>
+        <div>
           <NFASocialMediaTile
             title="Hello"
             author="John Deo"
             description={a}
             url="adsf.html"
           />
-        </item>
-        <item>
+        </div>
+        <div>
           <NFASocialMediaTile
             title="Hello"
             author="John Deo"
             description={a}
             url="adsf.html"
           />
-        </item>
-        <item>
+        </div>
+        <div>
           <NFASocialMediaTile
             title="Hello"
             author="John Deo"
             description={a}
             url="adsf.html"
           />
-        </item>
+        </div>
       </Stack>
     </>
   );
