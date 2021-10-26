@@ -5,8 +5,9 @@ import Typography from "@mui/material/Typography";
 import styles from "./PortfolioPage.module.css";
 import { Box } from "@mui/system";
 import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
-import { Stack } from "@mui/material";
+import { Paper, Stack } from "@mui/material";
 import AddAssetForm from "../../components/Forms/AddAssetForm";
+import { LiveChartContainer } from "../LiveChartContainer/LiveChartContainer";
 
 class OwnedAsset {
   constructor(id, quantityPurchased, unitPrice, datePurchased) {
@@ -105,27 +106,44 @@ export function PortfolioPage() {
   //         <h2>{`Price: ${coinPrice}`}</h2>
   //     </Box>
 
-    return (
-        <Stack
-            direction="column"
-            justifyContent="space-evenly"
-            alignItems="stretch"
-            spacing={0.5}
+  return (
+    <Stack
+      direction="column"
+      justifyContent="space-evenly"
+      alignItems="stretch"
+      spacing={2}
+      bgcolor="rgb(230, 248, 246)"
+    >
+      <item>
+        <Typography
+          weight="bolder"
+          color="primary"
+          variant="h4"
+          className={styles.heading}
         >
-            <Typography weight="bold" color="primary" variant="h4">
-                Portfolio
-            </Typography>
-            <Box className={styles.portfolioTable}>
-                <PortfolioTable
-                    pricesData={coinPrices}
-                    userData={userData}
-                    coinLabels={tickers}
-                ></PortfolioTable>
-            </Box>
-            <Box className={styles.portfolioTable}>
-                <DailyGraph></DailyGraph>
-            </Box>
-            <AddAssetForm></AddAssetForm>
-        </Stack>
-    );
+          Portfolio
+        </Typography>
+      </item>
+      <item>
+        <Paper elevation={2} className={styles.stackItem}>
+          <PortfolioTable
+            pricesData={coinPrices}
+            userData={userData}
+            coinLabels={tickers}
+          ></PortfolioTable>
+        </Paper>
+      </item>
+      <item>
+        <Paper elevation={2} className={styles.stackItem}>
+          <DailyGraph></DailyGraph>
+        </Paper>
+        <AddAssetForm></AddAssetForm>
+      </item>
+      <item>
+        <Paper elevation={2} className={styles.stackItem}>
+          <LiveChartContainer coinName="ADA"></LiveChartContainer>
+        </Paper>
+      </item>
+    </Stack>
+  );
 }

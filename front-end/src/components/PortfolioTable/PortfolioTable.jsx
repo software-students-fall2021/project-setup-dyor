@@ -5,12 +5,13 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box, style } from "@mui/system";
+import { Box, style, width } from "@mui/system";
 import { Button } from "@mui/material";
 import { Grid } from "@material-ui/core";
 import styles from "./PortfolioTable.module.css";
 import Icon from "react-crypto-icons";
 import axios from "axios";
+import { Paper } from "@material-ui/core";
 
 // const rounded2DP = (number) => Math.round(number * 100) / 100;
 
@@ -81,107 +82,96 @@ export function PortfolioTable(props) {
       });
   }, []);
 
-    return (
-        <>
-            <Box className={styles.tableBox}>
-                <Table
-                    sx={{ minWidth: 200 }}
-                    size="small"
-                    aria-label="a dense table"
-                >
-                    <TableHead>
-                        <TableRow style={{ height: 10 }}>
-                            <TableCell>
-                                <Typography
-                                    className={styles.tableHeading}
-                                    variant="h7"
-                                >
-                                    Coin
-                                </Typography>
-                            </TableCell>
-                            <TableCell align="right">
-                                <Typography
-                                    className={styles.tableHeading}
-                                    variant="h7"
-                                >
-                                    Price
-                                </Typography>
-                            </TableCell>
-                            <TableCell align="right">
-                                <Typography
-                                    className={styles.tableHeading}
-                                    variant="h7"
-                                >
-                                    Percentange Change (24 Hours)
-                                </Typography>
-                            </TableCell>
-                            <TableCell align="right">
-                                <Typography
-                                    className={styles.tableHeading}
-                                    variant="h7"
-                                >
-                                    Cumulative Profit/Loss
-                                </Typography>
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {console.log(props.userData)}
-                        {props.userData.map((userDataElement) => {
-                            const coinPrice =
-                                props.pricesData[userDataElement.id];
-                            const coinDailyChange =
-                                dailyPercentageChanges[userDataElement.id];
-                            const userProfit =
-                                (coinPrice - userDataElement.unitPrice) *
-                                userDataElement.quantityPurchased;
+  return (
+    <>
+      <Box className={styles.tableBox}>
+        <Table sx={{ minWidth: 200 }} size="small" aria-label="a dense table">
+          <colgroup>
+            <col style={{ width: "40%" }} />
+            <col style={{ width: "30%" }} />
+            <col style={{ width: "20%" }} />
+            <col style={{ width: "10%" }} />
+          </colgroup>
+          <TableHead>
+            <TableRow style={{ height: 5 }}>
+              <TableCell>
+                <Typography className={styles.tableHeading} variant="h7">
+                  Coin
+                </Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography className={styles.tableHeading} variant="h7">
+                  Price
+                </Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography className={styles.tableHeading} variant="h7">
+                  24H&nbsp;Change
+                </Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography className={styles.tableHeading} variant="h7">
+                  Profit/Loss
+                </Typography>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {console.log(props.userData)}
+            {props.userData.map((userDataElement) => {
+              const coinPrice = props.pricesData[userDataElement.id];
+              const coinDailyChange =
+                dailyPercentageChanges[userDataElement.id];
+              const userProfit =
+                (coinPrice - userDataElement.unitPrice) *
+                userDataElement.quantityPurchased;
 
-                            return (
-                                <TableRow key={userDataElement.id}>
-                                    <TableCell component="th" scope="row">
-                                        <CoinImage
-                                            id={userDataElement.id}
-                                            symbolsDict={props.coinLabels}
-                                        ></CoinImage>
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <NumericEntry
-                                            val={coinPrice}
-                                            numDecimalPlaces={2}
-                                        ></NumericEntry>
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <NumericEntry
-                                            val={coinDailyChange}
-                                            isColor={true}
-                                            numDecimalPlaces={2}
-                                            additionalSuffix="%"
-                                        ></NumericEntry>
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <NumericEntry
-                                            val={userProfit}
-                                            isColor={true}
-                                            numDecimalPlaces={2}
-                                        ></NumericEntry>
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-                <Box className={styles.button}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {
-                            alert("clicked");
-                        }}
-                    >
-                        Add Asset
-                    </Button>
-                </Box>
-            </Box>
-        </>
-    );
+              return (
+                <TableRow key={userDataElement.id}>
+                  <TableCell component="th" scope="row">
+                    <CoinImage
+                      id={userDataElement.id}
+                      symbolsDict={props.coinLabels}
+                    ></CoinImage>
+                  </TableCell>
+                  <TableCell align="right">
+                    <NumericEntry
+                      val={coinPrice}
+                      numDecimalPlaces={2}
+                    ></NumericEntry>
+                  </TableCell>
+                  <TableCell align="right">
+                    <NumericEntry
+                      val={coinDailyChange}
+                      isColor={true}
+                      numDecimalPlaces={2}
+                      additionalSuffix="%"
+                    ></NumericEntry>
+                  </TableCell>
+                  <TableCell align="right">
+                    <NumericEntry
+                      val={userProfit}
+                      isColor={true}
+                      numDecimalPlaces={2}
+                    ></NumericEntry>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+        <Box className={styles.button}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              alert("clicked");
+            }}
+          >
+            Add Asset
+          </Button>
+        </Box>
+      </Box>
+    </>
+  );
 }
