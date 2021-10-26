@@ -24,10 +24,10 @@ const theme = createTheme({
 
 // const Pages = [<DashboardPage />, <PortfolioPage />, <NewsPage />, <NFA />];
 const Pages = [
-  //<DashboardPage />,
-  //<PortfolioPage />,
-  //<LandingPage />,
-  //<NFA />,
+  <DashboardPage />,
+  <PortfolioPage />,
+  <LandingPage />,
+  <NFA />,
   //<SettingsPage />,
 ];
 function App() {
