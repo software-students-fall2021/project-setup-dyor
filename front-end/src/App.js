@@ -8,7 +8,7 @@ import TopBar from "./components/TopBar/TopBar";
 import "./App.css";
 import { BottomBar } from "./components/BottomBar/BottomBar";
 import LandingPage from "./containers/LandingPage/LandingPage";
-import { SettingsPage } from "./containers/SettingsPage/SettingsPage";
+//import { SettingsPage } from "./containers/SettingsPage/SettingsPage";
 // import Button from "@mui/material/Button";
 
 const theme = createTheme({
@@ -24,11 +24,11 @@ const theme = createTheme({
 
 // const Pages = [<DashboardPage />, <PortfolioPage />, <NewsPage />, <NFA />];
 const Pages = [
-  <DashboardPage />,
-  <PortfolioPage />,
-  <LandingPage />,
-  <NFA />,
-  <SettingsPage />,
+  //<DashboardPage />,
+  //<PortfolioPage />,
+  //<LandingPage />,
+  //<NFA />,
+  //<SettingsPage />,
 ];
 function App() {
   const [currentPage, setPage] = React.useState(0);
