@@ -7,7 +7,6 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PageviewIcon from "@mui/icons-material/Pageview";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import SettingsIcon from "@mui/icons-material/Settings";
 import Paper from "@mui/material/Paper";
 
 export function BottomBar({ currentPage, setCurrentPage }) {
@@ -34,7 +33,6 @@ export function BottomBar({ currentPage, setCurrentPage }) {
           />
           <BottomNavigationAction label="News" icon={<DescriptionIcon />} />
           <BottomNavigationAction label="NFA" icon={<PageviewIcon />} />
-          <BottomNavigationAction label="Settings" icon={<SettingsIcon />} />
         </BottomNavigation>
       </Paper>
     </Box>

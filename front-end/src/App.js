@@ -35,9 +35,9 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <TopBar></TopBar>
+      <TopBar setCurrentPage={setPage} />
       {Pages[currentPage]}
-      <BottomBar currentPage={currentPage} setCurrentPage={setPage}></BottomBar>
+      <BottomBar currentPage={currentPage} setCurrentPage={setPage} />
     </ThemeProvider>
   );
 }

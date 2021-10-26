@@ -1,6 +1,15 @@
-.stackItem {
+.stackItem1 {
   border-radius: 15px;
   margin: 2%;
+}
+
+.stackItem2 {
+  border-radius: 15px;
+  margin: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .heading {
