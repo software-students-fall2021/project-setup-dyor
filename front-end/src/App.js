@@ -8,6 +8,7 @@ import TopBar from "./components/TopBar/TopBar";
 import "./App.css";
 import { BottomBar } from "./components/BottomBar/BottomBar";
 import LandingPage from "./containers/LandingPage/LandingPage";
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 // import Button from "@mui/material/Button";
 
 const theme = createTheme({
@@ -22,18 +23,35 @@ const theme = createTheme({
 });
 
 // const Pages = [<DashboardPage />, <PortfolioPage />, <NewsPage />, <NFA />];
-const Pages = [<DashboardPage />, <PortfolioPage />, <LandingPage />, <NFA />];
+const Pages = [<DashboardPage />, <PortfolioPage />, <NewsPage />, <NFA />];
 function App() {
-  const [currentPage, setPage] = React.useState(0);
+  const [isLoggedIn, setLoggedIn] = React.useState(false);
 
   return (
     <ThemeProvider theme={theme}>
-      <TopBar></TopBar>
-      {Pages[currentPage]}
-      <BottomBar currentPage={currentPage} setCurrentPage={setPage}></BottomBar>
-    
+      {isLoggedIn &&
+        <BrowserRouter >
+          <TopBar></TopBar>
+            <Switch>
+              <Route exact path="/">
+                <DashboardPage />
+              </Route>
+              <Route path="/portfolio">
+                <PortfolioPage />
+              </Route>
+              <Route path="/news">
+                <NewsPage />
+              </Route>
+              <Route path="/nfa">
+                <NFA />
+              </Route>
+            </Switch>
+          <BottomBar></BottomBar>
+        </BrowserRouter>
+      }
+      {!isLoggedIn && <LandingPage setSign={setLoggedIn}/>}
     </ThemeProvider>
-  )
+    )
   }
 
 export default App;
