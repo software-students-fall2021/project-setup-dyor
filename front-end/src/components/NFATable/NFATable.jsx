@@ -19,7 +19,7 @@ const CoinImage = (props) => {
   return (
     <Grid
       container
-      direction="columnn"
+      direction="column"
       alignItems="center"
       justifyContent="center"
     >
@@ -80,27 +80,33 @@ export function NFATable(props) {
   return (
     <>
       <Box className={styles.tableBox}>
-        <Table sx={{ minWidth: 200 }} size="small" aria-label="a dense table">
+        <Table
+          sx={{ minWidth: 200 }}
+          size="small"
+          aria-label="a dense table"
+          className={styles.tableDesign}
+        >
           <TableHead>
             <TableRow>
-              <TableCell>
-                <Typography className={styles.tableHeading} variant="h7">
+              <TableCell align="center">
+                <Typography className={styles.tableHeading} variant="subtitle2">
                   Coin
                 </Typography>
               </TableCell>
-              <TableCell align="right">
-                <Typography className={styles.tableHeading} variant="h7">
+              <TableCell align="center">
+                <Typography className={styles.tableHeading} variant="subtitle2">
+                  {" "}
                   Price
                 </Typography>
               </TableCell>
-              <TableCell align="right">
-                <Typography className={styles.tableHeading} variant="h7">
+              <TableCell align="center">
+                <Typography className={styles.tableHeading} variant="subtitle2">
                   Percentange Change (24 Hours)
                 </Typography>
               </TableCell>
-              <TableCell align="right">
-                <Typography className={styles.tableHeading} variant="h7">
-                  NFA(Prediction)
+              <TableCell align="center">
+                <Typography className={styles.tableHeading} variant="subtitle2">
+                  Prediction
                 </Typography>
               </TableCell>
             </TableRow>
@@ -120,13 +126,13 @@ export function NFATable(props) {
                       symbolsDict={props.coinLabels}
                     ></CoinImage>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="center">
                     <NumericEntry
                       val={coinPrice}
                       numDecimalPlaces={2}
                     ></NumericEntry>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="center">
                     <NumericEntry
                       val={coinDailyChange}
                       isColor={true}

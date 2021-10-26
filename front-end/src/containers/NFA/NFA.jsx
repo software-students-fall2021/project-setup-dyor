@@ -74,14 +74,11 @@ export default function NFA() {
   if (pricesWebSocket.current !== null) {
     pricesWebSocket.current.onmessage = (e) => {
       const dataResponseArr = JSON.parse(e.data);
-      // console.log("RAW PRICES:");
-      // console.log(dataResponseArr);
-      // console.log("CUMULATED PRICES:");
+
       setCoinPrices((setCoinPrices) => ({
         ...coinPrices,
         ...dataResponseArr,
       }));
-      // console.log(coinPrices);
     };
   }
   return (
@@ -97,11 +94,11 @@ export default function NFA() {
           <Typography weight="bold" color="primary" variant="h4">
             NFA
           </Typography>
-          <item>
+          <div>
             <WordCloud />
-          </item>
+          </div>
 
-          <item>
+          <div>
             {/* The darker colored section. Contains: social media filter, search bar and the social media tiles */}
             <div className={styles.bgColor}>
               <div className={styles.displayInline}>
@@ -140,20 +137,20 @@ export default function NFA() {
                 </Button>
               </div>
             </div>
-          </item>
+          </div>
 
-          <item>
+          <div>
             <Typography weight="bold" color="primary" display="inline">
               Sentiment on your Portfolio
             </Typography>
-          </item>
-          <item>
+          </div>
+          <div>
             <NFATable
               pricesData={coinPrices}
               userData={userData}
               coinLabels={tickers}
             ></NFATable>
-          </item>
+          </div>
         </Stack>
       </Box>
     </>
