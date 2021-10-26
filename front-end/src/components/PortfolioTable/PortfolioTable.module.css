@@ -7,16 +7,16 @@
 .tableBox {
   padding-bottom: 10px;
   /* border: 1px solid gray; */
-  border-radius: 15px;
+  /* border-radius: 15px; */
   overflow: auto;
-  background-color: rgb(230, 248, 246);
+  /* background-color: rgb(230, 248, 246); */
 }
 
 .tableHeading {
   font-size: 10px;
   font-weight: bold;
   padding: 1em 0.5em;
-  display: flex;
+  display: flex-end;
 }
 
 .coinImage {
@@ -43,4 +43,8 @@
 
 .loss {
   color: red;
+}
+
+.cell {
+  font-size: 6;
 }

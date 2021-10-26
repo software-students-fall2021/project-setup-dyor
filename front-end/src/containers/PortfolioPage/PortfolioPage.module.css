@@ -1,10 +1,15 @@
-.portfolioTable {
-    padding-bottom: 10px;
+/* .portfolioTable {
+  padding-bottom: 10px;
+  padding: 2%;
+  border-radius: 15px;
+} */
+
+.stackItem {
+  border-radius: 15px;
+  margin: 2%;
 }
 
-/* .heading {
-  background-color: white;
-  margin-bottom: 5px;
-  border: 2;
-  border-radius: 5px;
-} */
+.heading {
+  padding-top: 5%;
+  padding-left: 4%;
+}
