@@ -8,7 +8,7 @@ import TopBar from "./components/TopBar/TopBar";
 import "./App.css";
 import { BottomBar } from "./components/BottomBar/BottomBar";
 import LandingPage from "./containers/LandingPage/LandingPage";
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import DateAdapter from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 
@@ -23,38 +23,36 @@ const theme = createTheme({
     },
 });
 
-const Pages = [<DashboardPage />, <PortfolioPage />, <NewsPage />, <NFA />];
-
 function App() {
-  const [isLoggedIn, setLoggedIn] = React.useState(false);
+    const [isLoggedIn, setLoggedIn] = React.useState(false);
 
-  return (
-    <LocalizationProvider dateAdapter={DateAdapter}>
-      <ThemeProvider theme={theme}>
-        {isLoggedIn &&
-          <BrowserRouter >
-            <TopBar></TopBar>
-              <Switch>
-                <Route exact path="/">
-                  <DashboardPage />
-                </Route>
-                <Route path="/portfolio">
-                  <PortfolioPage />
-                </Route>
-                <Route path="/news">
-                  <NewsPage />
-                </Route>
-                <Route path="/nfa">
-                  <NFA />
-                </Route>
-              </Switch>
-            <BottomBar></BottomBar>
-          </BrowserRouter>
-        }
-        {!isLoggedIn && <LandingPage setSign={setLoggedIn}/>}
-      </ThemeProvider>
-    </LocalizationProvider>
-    )
-  }
-  
-  export default App;
+    return (
+        <LocalizationProvider dateAdapter={DateAdapter}>
+            <ThemeProvider theme={theme}>
+                {isLoggedIn && (
+                    <BrowserRouter>
+                        <TopBar></TopBar>
+                        <Switch>
+                            <Route exact path="/">
+                                <DashboardPage />
+                            </Route>
+                            <Route path="/portfolio">
+                                <PortfolioPage />
+                            </Route>
+                            <Route path="/news">
+                                <NewsPage />
+                            </Route>
+                            <Route path="/nfa">
+                                <NFA />
+                            </Route>
+                        </Switch>
+                        <BottomBar></BottomBar>
+                    </BrowserRouter>
+                )}
+                {!isLoggedIn && <LandingPage setSign={setLoggedIn} />}
+            </ThemeProvider>
+        </LocalizationProvider>
+    );
+}
+
+export default App;

@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import Typography from "@mui/material/Typography";
-import { Box } from "@mui/system";
 import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
 import { Paper, Stack } from "@mui/material";
 import AddAssetForm from "../../components/Forms/AddAssetForm";
 import { LiveChartContainer } from "../LiveChartContainer/LiveChartContainer";
+import { PortfolioTable } from "../../components/PortfolioTable/PortfolioTable";
+import styles from "./PortfolioPage.module.css";
+import axios from "axios";
+import { invert } from "underscore";
 
 class OwnedAsset {
     constructor(id, quantityPurchased, unitPrice, datePurchased) {
@@ -26,9 +29,7 @@ export function PortfolioPage() {
     const [tickersDict, setTickersDict] = useState({});
     const [invertedTickersDict, setInvertedTickersDict] = useState({});
     const [tickersArr, setTickersArr] = useState([]);
-    const [coinValue, setCoinValue] = useState({ id: "bitcoin", label: "BTC" });
-    const [coinInputValue, setCoinInputValue] = useState("BTC");
-    let pricesWebSocket = useRef(null);
+    const pricesWebSocket = useRef(null);
     const [coinPrices, setCoinPrices] = useState([]);
     const [userData, setUserData] = useState(DefaultUserAssets);
 
@@ -82,10 +83,6 @@ export function PortfolioPage() {
         purchasePrice,
         datePurchased,
     }) => {
-        // console.log(coin);
-        // console.log(quantityPurchased);
-        // console.log(purchasePrice);
-        // console.log(datePurchased);
         setUserData((prevUserData) => [
             { id: coin, quantityPurchased, purchasePrice, datePurchased },
             ...prevUserData,
@@ -130,7 +127,6 @@ export function PortfolioPage() {
                 <Paper elevation={2} className={styles.stackItem}>
                     <DailyGraph></DailyGraph>
                 </Paper>
-                <AddAssetForm></AddAssetForm>
             </item>
             <item>
                 <Paper elevation={2} className={styles.stackItem}>
