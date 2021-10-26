@@ -1,9 +1,11 @@
 .stackItem1 {
+  padding: 10%;
   border-radius: 15px;
   margin: 2%;
 }
 
 .stackItem2 {
+  padding: 10%;
   border-radius: 15px;
   margin: 2%;
   display: flex;
@@ -13,6 +15,5 @@
 }
 
 .heading {
-  padding-top: 5%;
-  padding-left: 4%;
+  padding: 10%;
 }
