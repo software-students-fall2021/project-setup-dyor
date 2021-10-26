@@ -8,6 +8,7 @@ import TopBar from "./components/TopBar/TopBar";
 import "./App.css";
 import { BottomBar } from "./components/BottomBar/BottomBar";
 import LandingPage from "./containers/LandingPage/LandingPage";
+import { SettingsPage } from "./containers/SettingsPage/SettingsPage";
 // import Button from "@mui/material/Button";
 
 const theme = createTheme({
@@ -22,7 +23,13 @@ const theme = createTheme({
 });
 
 // const Pages = [<DashboardPage />, <PortfolioPage />, <NewsPage />, <NFA />];
-const Pages = [<DashboardPage />, <PortfolioPage />, <LandingPage />, <NFA />];
+const Pages = [
+  <DashboardPage />,
+  <PortfolioPage />,
+  <LandingPage />,
+  <NFA />,
+  <SettingsPage />,
+];
 function App() {
   const [currentPage, setPage] = React.useState(0);
 
@@ -31,9 +38,8 @@ function App() {
       <TopBar></TopBar>
       {Pages[currentPage]}
       <BottomBar currentPage={currentPage} setCurrentPage={setPage}></BottomBar>
-    
     </ThemeProvider>
-  )
-  }
+  );
+}
 
 export default App;
