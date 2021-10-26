@@ -9,7 +9,6 @@ import { Box } from "@mui/system";
 import { Grid } from "@material-ui/core";
 import styles from "./NFATable.module.css";
 import Icon from "react-crypto-icons";
-import axios from "axios";
 
 const CoinImage = (props) => {
   const coinID = props.id;
@@ -53,29 +52,7 @@ const NumericEntry = ({
 };
 
 export function NFATable(props) {
-  const [dailyPercentageChanges, setDailyPercentageChanges] = useState({});
-
-  useEffect(() => {
-    axios
-      .request("https://api.coincap.io/v2/assets")
-      .then((response) => {
-        const dailyPriceChange = response.data.data.map(
-          ({ id, changePercent24Hr }) => ({
-            id: id,
-            priceChange: changePercent24Hr,
-          })
-        );
-        const dailyPriceChangeDict = dailyPriceChange.reduce(
-          (a, x) => ({ ...a, [x.id]: x.priceChange }),
-          {}
-        );
-        setDailyPercentageChanges(() => dailyPriceChangeDict);
-      })
-      .catch((err) => {
-        console.log("Get Daily Change Data Failed.");
-        console.log(err);
-      });
-  }, []);
+  const [userPrediction, setUserPrediction] = useState();
 
   return (
     <>
@@ -99,11 +76,7 @@ export function NFATable(props) {
                   Price
                 </Typography>
               </TableCell>
-              <TableCell align="center">
-                <Typography className={styles.tableHeading} variant="subtitle2">
-                  Percentange Change (24 Hours)
-                </Typography>
-              </TableCell>
+
               <TableCell align="center">
                 <Typography className={styles.tableHeading} variant="subtitle2">
                   Prediction
@@ -114,9 +87,6 @@ export function NFATable(props) {
           <TableBody>
             {props.userData.map((userDataElement) => {
               const coinPrice = props.pricesData[userDataElement.id];
-              const coinDailyChange =
-                dailyPercentageChanges[userDataElement.id];
-              const userPrediction = 0;
 
               return (
                 <TableRow key={userDataElement.id}>
@@ -132,17 +102,14 @@ export function NFATable(props) {
                       numDecimalPlaces={2}
                     ></NumericEntry>
                   </TableCell>
+
                   <TableCell align="center">
                     <NumericEntry
-                      val={coinDailyChange}
-                      isColor={true}
-                      numDecimalPlaces={2}
-                      additionalSuffix="%"
-                    ></NumericEntry>
-                  </TableCell>
-                  <TableCell align="center">
-                    <NumericEntry
-                      val={userPrediction}
+                      val={
+                        Math.random() > 0.5
+                          ? Math.random() * 10
+                          : Math.random() * -10
+                      }
                       isColor={true}
                       numDecimalPlaces={2}
                     ></NumericEntry>
