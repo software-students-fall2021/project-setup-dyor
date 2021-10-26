@@ -5,15 +5,11 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box, style, width } from "@mui/system";
-import { Button } from "@mui/material";
+import { Box } from "@mui/system";
 import { Grid } from "@material-ui/core";
-import styles from "./PortfolioTable.module.css";
+import styles from "./NFATable.module.css";
 import Icon from "react-crypto-icons";
 import axios from "axios";
-import { Paper } from "@material-ui/core";
-
-// const rounded2DP = (number) => Math.round(number * 100) / 100;
 
 const CoinImage = (props) => {
   const coinID = props.id;
@@ -23,10 +19,9 @@ const CoinImage = (props) => {
   return (
     <Grid
       container
-      direction="columnn"
+      direction="column"
       alignItems="center"
       justifyContent="center"
-      className={styles.coinAggregate}
     >
       <Grid item>
         <Icon name={coinSymbol} size={32}></Icon>
@@ -57,7 +52,7 @@ const NumericEntry = ({
   return <Typography className={styleClass}>{outputString}</Typography>;
 };
 
-export function PortfolioTable(props) {
+export function NFATable(props) {
   const [dailyPercentageChanges, setDailyPercentageChanges] = useState({});
 
   useEffect(() => {
@@ -85,46 +80,43 @@ export function PortfolioTable(props) {
   return (
     <>
       <Box className={styles.tableBox}>
-        <Table sx={{ minWidth: 200 }} size="small" aria-label="a dense table">
-          <colgroup>
-            <col style={{ width: "40%" }} />
-            <col style={{ width: "30%" }} />
-            <col style={{ width: "20%" }} />
-            <col style={{ width: "10%" }} />
-          </colgroup>
+        <Table
+          sx={{ minWidth: 200 }}
+          size="small"
+          aria-label="a dense table"
+          className={styles.tableDesign}
+        >
           <TableHead>
-            <TableRow style={{ height: 5 }}>
-              <TableCell>
-                <Typography className={styles.tableHeading} variant="h7">
+            <TableRow>
+              <TableCell align="center">
+                <Typography className={styles.tableHeading} variant="subtitle2">
                   Coin
                 </Typography>
               </TableCell>
-              <TableCell align="right">
-                <Typography className={styles.tableHeading} variant="h7">
+              <TableCell align="center">
+                <Typography className={styles.tableHeading} variant="subtitle2">
+                  {" "}
                   Price
                 </Typography>
               </TableCell>
-              <TableCell align="right">
-                <Typography className={styles.tableHeading} variant="h7">
-                  24H&nbsp;Change
+              <TableCell align="center">
+                <Typography className={styles.tableHeading} variant="subtitle2">
+                  Percentange Change (24 Hours)
                 </Typography>
               </TableCell>
-              <TableCell align="right">
-                <Typography className={styles.tableHeading} variant="h7">
-                  Profit/Loss
+              <TableCell align="center">
+                <Typography className={styles.tableHeading} variant="subtitle2">
+                  Prediction
                 </Typography>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {console.log(props.userData)}
             {props.userData.map((userDataElement) => {
               const coinPrice = props.pricesData[userDataElement.id];
               const coinDailyChange =
                 dailyPercentageChanges[userDataElement.id];
-              const userProfit =
-                (coinPrice - userDataElement.unitPrice) *
-                userDataElement.quantityPurchased;
+              const userPrediction = 0;
 
               return (
                 <TableRow key={userDataElement.id}>
@@ -134,13 +126,13 @@ export function PortfolioTable(props) {
                       symbolsDict={props.coinLabels}
                     ></CoinImage>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="center">
                     <NumericEntry
                       val={coinPrice}
                       numDecimalPlaces={2}
                     ></NumericEntry>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="center">
                     <NumericEntry
                       val={coinDailyChange}
                       isColor={true}
@@ -148,9 +140,9 @@ export function PortfolioTable(props) {
                       additionalSuffix="%"
                     ></NumericEntry>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="center">
                     <NumericEntry
-                      val={userProfit}
+                      val={userPrediction}
                       isColor={true}
                       numDecimalPlaces={2}
                     ></NumericEntry>
@@ -160,17 +152,6 @@ export function PortfolioTable(props) {
             })}
           </TableBody>
         </Table>
-        <Box className={styles.button}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              alert("clicked");
-            }}
-          >
-            Add Asset
-          </Button>
-        </Box>
       </Box>
     </>
   );
