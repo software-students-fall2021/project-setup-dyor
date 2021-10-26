@@ -9,7 +9,7 @@ function WordCloud() {
     const url = `https://quickchart.io/wordcloud?text=This girl is on fire.&format=png`;
     const res = await axios.get(url);
     setWordCloud(res);
-    console.log("The returned image", res);
+    // console.log("The returned image", res);
   };
 
   useEffect(() => {
