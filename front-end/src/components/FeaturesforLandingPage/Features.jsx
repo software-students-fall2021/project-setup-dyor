@@ -6,7 +6,7 @@ const features = [
             "Allow user to add Stock and Crypto to their Wallet and display their cumulative profit/loss thus far through Graphs",
         imageUrl: process.env.PUBLIC_URL + '/logo192.png',
         time: 1500,
-        src: 'sentiment_analysis.png',
+        src: 'portfolio1.png',
     },
     {
         id: 2,
@@ -24,7 +24,7 @@ const features = [
             "Allow users to get a short term price prediction based on technical indicators through a Machine Learning model",
         imageUrl: process.env.PUBLIC_URL + '/NFA.png',
         time: 1500,
-        src: 'NFA.png',
+        src: 'NFA2.png',
     },
     {
         id: 4,
@@ -33,7 +33,7 @@ const features = [
             "Allow users to get a short term price prediction based on technical indicators through a Machine Learning model",
         imageUrl: process.env.PUBLIC_URL + '/NFA.png',
         time: 1500,
-        src: 'News.png',
+        src: 'News2.png',
     },
 ];
 
