@@ -1,6 +1,5 @@
 import * as React from 'react'
 import axios from 'axios'
-import TopBar from '../../components/TopBar/TopBar'
 import Footer from '../../components/Footer/footer'
 import './newsPage.css'
 import NewsTile from '../../components/NewsTile/newsTile';
@@ -28,7 +27,6 @@ export default function NewsPage() {
 
     return (<>
         {!isLoading && <div className="newspage">
-            <TopBar className="header"></TopBar>
             {coins.map((coin, index) => (
                 <NewsTile key={index} coin={coin} articleTiles= {articles[coin]} />
             ))}
