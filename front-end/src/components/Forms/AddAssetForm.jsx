@@ -16,16 +16,6 @@ const AddAssetForm = ({
         purchasePrice: 0,
     });
 
-    // const handleSubmitInputChange = (event) => {
-    //     const { id, value } = event.target;
-    //     console.log(`Submit Input Change with ${id}:${value}`);
-    //     console.log(event);
-    //     setNewAssetValues((prevAssetValues) => ({
-    //         ...prevAssetValues,
-    //         [id]: value,
-    //     }));
-    // };
-
     const handleCoinSubmitInputChange = (event) => {
         console.log(`Setting ${event.target.innerText}`);
         setCoinValue(() => event.target.innerText);
@@ -52,15 +42,6 @@ const AddAssetForm = ({
         } else {
             alert("VALID COIN YET TO BE SELECTED");
         }
-        // console.log("TEMP ASSET VALUES");
-        // console.log(tempAssetValues);
-        // setNewAssetValues((prevAssetValues) => ({
-        //     ...tempAssetValues,
-        //     ...prevAssetValues,
-        // }));
-        // console.log("SUBMITING");
-        // console.log(newAssetValues);
-        // onAddNewAssetHandler(newAssetValues);
     };
 
     return (
@@ -114,7 +95,7 @@ const AddAssetForm = ({
                     <MobileDatePicker
                         fullWidth
                         label="Purchase Date"
-                        value={tempAssetValues.date}
+                        value={tempAssetValues.datePurchased}
                         onChange={(newValue) => {
                             setTempAssetValues((prevTempAssetValues) => ({
                                 ...prevTempAssetValues,

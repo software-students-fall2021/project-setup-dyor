@@ -117,11 +117,13 @@ export function PortfolioPage() {
                 </Paper>
             </item>
             <item>
-                <AddAssetForm
-                    coinLabels={tickersArr}
-                    onAddNewAssetHandler={addNewUserAssetData}
-                    labelsToCoinsDict={invertedTickersDict}
-                ></AddAssetForm>
+                <Paper elevation={2} className={styles.stackItem}>
+                    <AddAssetForm
+                        coinLabels={tickersArr}
+                        onAddNewAssetHandler={addNewUserAssetData}
+                        labelsToCoinsDict={invertedTickersDict}
+                    ></AddAssetForm>
+                </Paper>
             </item>
             <item>
                 <Paper elevation={2} className={styles.stackItem}>
