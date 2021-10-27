@@ -11,8 +11,7 @@ export default function NewsPage() {
 
     const getArticles = async() => {
         for (let i=0; i<coins.length; ++i){
-            const date = new Date("2021-10-25");
-            console.log(date)
+            const date = new Date("2021-10-26");
             const url = `https://newsapi.org/v2/everything?qInTitle=+${coins[i]}&from=${date}&language=en&sortBy=relevancy&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=20`
             await axios.get(url).then((res) => {
                 articles[coins[i]] = res.data.articles
