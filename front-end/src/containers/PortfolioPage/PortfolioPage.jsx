@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
 import { Paper, Stack } from "@mui/material";
 import AddAssetForm from "../../components/Forms/AddAssetForm";
-import { LiveChartContainer } from "../LiveChartContainer/LiveChartContainer";
 import { PortfolioTable } from "../../components/PortfolioTable/PortfolioTable";
 import styles from "./PortfolioPage.module.css";
 import axios from "axios";
@@ -28,6 +27,8 @@ const DefaultUserAssets = [
 export function PortfolioPage() {
     const [tickersDict, setTickersDict] = useState({});
     const [invertedTickersDict, setInvertedTickersDict] = useState({});
+    const [newAssetAdditionPending, setNewAssetAdditionPending] =
+        useState(false);
     const [tickersArr, setTickersArr] = useState([]);
     const pricesWebSocket = useRef(null);
     const [coinPrices, setCoinPrices] = useState([]);
@@ -76,6 +77,14 @@ export function PortfolioPage() {
         };
     }
 
+    const onAddNewAssetButtonClickHandler = () => {
+        setNewAssetAdditionPending(() => true);
+    };
+
+    const onSubmitNewAssetButtonClickHandler = () => {
+        setNewAssetAdditionPending(() => false);
+    };
+
     //will not handle at the moment previously existing data for the sake of simplicity and each purchase will be treated a new distinct purchase even if the coin purchased is the same
     const addNewUserAssetData = ({
         coin,
@@ -113,26 +122,28 @@ export function PortfolioPage() {
                         pricesData={coinPrices}
                         userData={userData}
                         coinLabels={tickersDict}
+                        onClick={onAddNewAssetButtonClickHandler}
                     ></PortfolioTable>
                 </Paper>
             </item>
             <item>
-                <Paper elevation={2} className={styles.stackItem}>
+                <Paper
+                    elevation={2}
+                    className={`${styles.stackItem} ${
+                        newAssetAdditionPending ? "" : styles.hidden
+                    }`}
+                >
                     <AddAssetForm
                         coinLabels={tickersArr}
                         onAddNewAssetHandler={addNewUserAssetData}
                         labelsToCoinsDict={invertedTickersDict}
+                        onSubmit={onSubmitNewAssetButtonClickHandler}
                     ></AddAssetForm>
                 </Paper>
             </item>
             <item>
                 <Paper elevation={2} className={styles.stackItem}>
                     <DailyGraph></DailyGraph>
-                </Paper>
-            </item>
-            <item>
-                <Paper elevation={2} className={styles.stackItem}>
-                    <LiveChartContainer coinName="ADA"></LiveChartContainer>
                 </Paper>
             </item>
         </Stack>

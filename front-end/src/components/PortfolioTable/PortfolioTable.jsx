@@ -11,7 +11,7 @@ import { Grid } from "@mui/material";
 import styles from "./PortfolioTable.module.css";
 import Icon from "react-crypto-icons";
 import axios from "axios";
-import { Paper } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 // const rounded2DP = (number) => Math.round(number * 100) / 100;
 
@@ -20,23 +20,33 @@ const CoinImage = (props) => {
     const coinSymbol =
         props.symbolsDict[coinID] && props.symbolsDict[coinID].toLowerCase();
 
+    const clickHandler = () => {
+        console.log(`${coinID} has been clicked.`);
+    };
+
     return (
-        <Grid
-            container
-            direction="columnn"
-            alignItems="center"
-            justifyContent="center"
-            className={styles.coinAggregate}
+        <Link
+            to={`/coinDetails${props.symbolsDict[coinID]}`}
+            className={styles.noDecoration}
         >
-            <Grid item>
-                <Icon name={coinSymbol} size={32}></Icon>
+            <Grid
+                container
+                direction="columnn"
+                alignItems="center"
+                justifyContent="center"
+                className={styles.coinAggregate}
+                onClick={clickHandler}
+            >
+                <Grid item>
+                    <Icon name={coinSymbol} size={32}></Icon>
+                </Grid>
+                <Grid item>
+                    <Typography className={styles.coinText}>
+                        {(coinSymbol && coinSymbol.toUpperCase()) || "NA"}
+                    </Typography>
+                </Grid>
             </Grid>
-            <Grid item>
-                <Typography className={styles.coinText}>
-                    {(coinSymbol && coinSymbol.toUpperCase()) || "NA"}
-                </Typography>
-            </Grid>
-        </Grid>
+        </Link>
     );
 };
 
@@ -180,9 +190,7 @@ export function PortfolioTable(props) {
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => {
-                            alert("clicked");
-                        }}
+                        onClick={props.onClick}
                     >
                         Add Asset
                     </Button>

@@ -5,11 +5,15 @@
 } */
 
 .stackItem {
-  border-radius: 15px;
-  margin: 2%;
+    border-radius: 15px;
+    margin: 2%;
 }
 
 .heading {
-  padding-top: 5%;
-  padding-left: 4%;
+    padding-top: 5%;
+    padding-left: 4%;
+}
+
+.hidden {
+    display: none;
 }
