@@ -7,6 +7,7 @@ const AddAssetForm = ({
     coinLabels,
     onAddNewAssetHandler,
     labelsToCoinsDict,
+    onSubmit,
 }) => {
     const [isSubmissionAllowed, setIsSubmissionAllowed] = useState(false);
     const [coinValue, setCoinValue] = useState("BTC");
@@ -38,6 +39,7 @@ const AddAssetForm = ({
             const toBeSubmitted = tempAssetValues;
             toBeSubmitted.coin = labelsToCoinsDict[toBeSubmitted.coin];
             console.log(toBeSubmitted);
+            onSubmit();
             onAddNewAssetHandler(toBeSubmitted);
         } else {
             alert("VALID COIN YET TO BE SELECTED");
@@ -50,6 +52,7 @@ const AddAssetForm = ({
                 <Grid item xs={6} md={3}>
                     <Autocomplete
                         id="coin"
+                        className={styles.formEntry}
                         value={coinValue}
                         onChange={handleCoinSubmitInputChange}
                         inputValue={tempAssetValues.coin}
@@ -74,6 +77,7 @@ const AddAssetForm = ({
                 <Grid item xs={6} md={3}>
                     <TextField
                         fullWidth
+                        className={styles.formEntry}
                         variant="outlined"
                         id="quantityPurchased"
                         label="Purchase Quanity"
@@ -84,6 +88,7 @@ const AddAssetForm = ({
                 <Grid item xs={6} md={3}>
                     <TextField
                         fullWidth
+                        className={styles.formEntry}
                         variant="outlined"
                         id="purchasePrice"
                         label="Purchase Price"
@@ -92,18 +97,21 @@ const AddAssetForm = ({
                     ></TextField>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                    <MobileDatePicker
-                        fullWidth
-                        label="Purchase Date"
-                        value={tempAssetValues.datePurchased}
-                        onChange={(newValue) => {
-                            setTempAssetValues((prevTempAssetValues) => ({
-                                ...prevTempAssetValues,
-                                datePurchased: newValue,
-                            }));
-                        }}
-                        renderInput={(params) => <TextField {...params} />}
-                    />
+                    <div className={styles.formEntry}>
+                        <MobileDatePicker
+                            fullWidth
+                            label="Purchase Date"
+                            value={tempAssetValues.datePurchased}
+                            wrapperClassName={styles.formEntry}
+                            onChange={(newValue) => {
+                                setTempAssetValues((prevTempAssetValues) => ({
+                                    ...prevTempAssetValues,
+                                    datePurchased: newValue,
+                                }));
+                            }}
+                            renderInput={(params) => <TextField {...params} />}
+                        />
+                    </div>
                 </Grid>
                 <Grid item xs={12}>
                     <Button

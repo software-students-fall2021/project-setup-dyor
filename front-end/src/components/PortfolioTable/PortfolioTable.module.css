@@ -1,50 +1,54 @@
 .button {
-  text-align: right;
-  padding: 10px;
-  align-items: flex-end;
+    text-align: right;
+    padding: 10px;
+    align-items: flex-end;
 }
 
 .tableBox {
-  padding-bottom: 10px;
-  /* border: 1px solid gray; */
-  /* border-radius: 15px; */
-  overflow: auto;
-  /* background-color: rgb(230, 248, 246); */
+    padding-bottom: 10px;
+    /* border: 1px solid gray; */
+    /* border-radius: 15px; */
+    overflow: auto;
+    /* background-color: rgb(230, 248, 246); */
 }
 
 .tableHeading {
-  font-size: 10px;
-  font-weight: bold;
-  padding: 1em 0.5em;
-  display: flex-end;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 1em 0.5em;
+    display: flex-end;
 }
 
 .coinImage {
-  width: 40px;
-  height: 40px;
+    width: 40px;
+    height: 40px;
 }
 
 .coinText {
-  font-size: 1em;
-  font-weight: 100;
+    font-size: 1em;
+    font-weight: 100;
 }
 
 .coinAggregate {
-  background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .normal {
-  color: black;
+    color: black;
 }
 
 .profit {
-  color: green;
+    color: green;
 }
 
 .loss {
-  color: red;
+    color: red;
 }
 
 .cell {
-  font-size: 6;
+    font-size: 6;
+}
+
+.noDecoration {
+    text-decoration: none;
 }
