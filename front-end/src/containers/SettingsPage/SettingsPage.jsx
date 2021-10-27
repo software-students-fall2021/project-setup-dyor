@@ -17,7 +17,7 @@ import './SettingsPage.css'
 const Currencies = ["$", "€", "£", "AED", "CAD", "¥"]
 const regions =['Africa', 'Asia', 'Central America', 'Europe', 'Middle East', 'North America', 'Carribean']
 
-export default function SettingsPage() {
+export default function SettingsPage({logoutHandler}) {
   const [isSwitched, setIsSwitched] = React.useState(false);
   const [currency, setCurrency] = React.useState(Currencies[0]);
   const [region, setRegion] = React.useState("Asia");
@@ -98,8 +98,8 @@ export default function SettingsPage() {
               aria-label="menu"
               sx={{ mr: 2 }}
             >
-              <Link className="link" to="/signupPage">
-                <LogoutIcon />
+              <Link className="link" to="/">
+                <LogoutIcon onClick={logoutHandler}/>
               </Link>
             </IconButton>
       </Paper>
