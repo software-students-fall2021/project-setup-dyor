@@ -11,10 +11,10 @@ export default function NewsTile({articleTiles, coin}) {
     const [num, setNum] = React.useState(2);
 
     const updateArticles = () => {
-        if (articleTiles.length !== 0 && articles.length !== num ){
+        if (articleTiles !==undefined && articleTiles.length !== 0 && articles.length !== num ){
             setArticles(articleTiles.slice(0, num))
         }
-        if(isLoading) 
+        if(articleTiles !==undefined && isLoading) 
             setIsLoading(false);
         
     }
