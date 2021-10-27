@@ -5,11 +5,12 @@ import './newsTile.css'
 
 const options = [1,2,3,4,5,6,7,8,9];
   
-export default function NewsTile({articleTiles, coin, number}) {
+export default function NewsTile({articleTiles, coin, number, images}) {
     const [articles, setArticles] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
     const [num, setNum] = React.useState(number);
 
+    // console.log(images)
     const updateArticles = () => {
         if (articleTiles !==undefined && articleTiles.length !== 0 && articles.length !== num ){
             setArticles(articleTiles.slice(0, num))
@@ -44,8 +45,9 @@ export default function NewsTile({articleTiles, coin, number}) {
                     </div>
                     {articles.map((article) => (
                         <Article 
-                            key = {article.title}
+                            key = {article.id}
                             article={article}
+                            images = {images}
                         />
                     ))}
                 </div>
