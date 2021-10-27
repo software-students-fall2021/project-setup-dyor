@@ -9,7 +9,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
-import './BottomBar.css'
+import "./BottomBar.css";
 
 export function BottomBar({ currentPage, setCurrentPage }) {
     const ref = React.useRef(null);
@@ -28,7 +28,7 @@ export function BottomBar({ currentPage, setCurrentPage }) {
                         setCurrentPage(newValue);
                     }}
                 >
-                    <Link to="/">
+                    <Link to="/dashboard">
                         <BottomNavigationAction
                             showLabel={true}
                             label="Dashboard"
@@ -60,5 +60,4 @@ export function BottomBar({ currentPage, setCurrentPage }) {
             </Paper>
         </Box>
     );
-
 }

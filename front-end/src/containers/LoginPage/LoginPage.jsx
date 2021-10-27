@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button, Stack, Textfield } from "@mui/material";
+import { Button, Stack, TextField, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const LoginPage = () => {
+const LoginPage = ({ loginHandler }) => {
     const [userInput, setUserInput] = useState({ email: "", password: "" });
 
     const handleInputChange = (event) => {
@@ -23,28 +23,33 @@ const LoginPage = () => {
             spacing={2}
         >
             <item>
-                <Textfield
+                <Typography>Welcome back!</Typography>
+            </item>
+            <item>
+                <TextField
                     fullWidth
                     variant="outlined"
                     id="email"
                     label="Email Address"
                     value={userInput.email}
                     onChange={handleInputChange}
-                ></Textfield>
+                ></TextField>
             </item>
             <item>
-                <Textfield
+                <TextField
                     fullWidth
                     variant="outlined"
                     id="password"
                     label="Password"
                     value={userInput.password}
                     onChange={handleInputChange}
-                ></Textfield>
+                ></TextField>
             </item>
             <item>
                 <Link to="/dashboard">
-                    <Button color="primary">Submit</Button>
+                    <Button color="primary" onClick={loginHandler}>
+                        Login
+                    </Button>
                 </Link>
             </item>
         </Stack>
