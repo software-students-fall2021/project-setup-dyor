@@ -64,7 +64,6 @@ export default function NFA() {
           {}
         );
         setTickers(() => tickersDict);
-        console.log(tickersDict);
       })
       .catch((err) => {
         console.log("Get Ticker Data Failed.");

@@ -7,15 +7,17 @@ import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
 import NewsTile from '../../components/NewsTile/newsTile';
 
 let articles = []
+const allImages = []
 
 export default function DashboardPage() {
   const [isLoading, setLoading] = React.useState(true)
+  const [getImages, setgetImages] = React.useState(true)
 
   const getArticles = async() => {
-    const date = new Date("2021-10-26");
-    const url = `https://newsapi.org/v2/everything?qInTitle=+cryptocurrency&from=${date}&language=en&sortBy=publishedAt&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=20`
+    // const date = new Date("2021-10-26");
+    const url = "https://my.api.mockaroo.com/articles.json?key=9371d6e0"
     await axios.get(url).then((res) => {
-      articles = res.data.articles
+      articles = res.data
     }).catch((err) =>{
       if (err.response) {
           console.log("Error response from API", err.response.status)
@@ -24,19 +26,40 @@ export default function DashboardPage() {
       } else {
           console.log("Crashed", err.response.status)
       }
-    })
+  })
     if(articles!==undefined && articles.length !== 0)
       setLoading(false)
   }
 
+  const getImagesAPI = async() => {
+    const images = "https://picsum.photos/v2/list?page=2&limit=20"
+    await axios.get(images).then((res) => {
+        for(let i=0; i<20; ++i){
+            allImages.push(res.data[i].download_url)
+        }
+    }).catch((err) =>{
+        if (err.response) {
+            console.log("Error response from API", err.response.status)
+        } else if (err.request) {
+            console.log("No response from API", err.response.status)
+        } 
+    })
+    if(allImages.length !== 0){
+        // console.log(allImages)
+        setgetImages(false)
+    }
+        
+  }
+
   React.useEffect(()=>{
     getArticles();
+    getImagesAPI();
   },[])
 
 
 
   return (
-    <>{!isLoading &&
+    <>{!isLoading && !getImages &&
     <Stack
       direction="column"
       justifyContent="space-evenly"
@@ -84,7 +107,7 @@ export default function DashboardPage() {
       </item>
       <item>
         <Paper elevation={2} className={styles.cardBox}>
-          <NewsTile coin="Crypto News" number={4} articleTiles= {articles} />
+          <NewsTile coin="Crypto News" number={4} articleTiles= {articles} images={allImages}/>
         </Paper>
       </item>
     </Stack>
