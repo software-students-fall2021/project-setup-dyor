@@ -1,0 +1,14 @@
+.orderedList {
+  list-style-type: circle;
+}
+
+.cardBox {
+  margin: 2%;
+  border-radius: 15px;
+  padding: 5%;
+}
+
+.headingDash {
+  padding-left: 4%;
+  padding-top: 5%;
+}
