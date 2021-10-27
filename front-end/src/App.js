@@ -12,8 +12,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import DateAdapter from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import IndividualCoinPage from "./containers/IndividualCoinPage/IndividualCoinPage";
+import LoginPage from "./containers/LoginPage/LoginPage";
 import SettingsPage from "./containers/SettingsPage/SettingsPage";
-
+import SignupPage from "./containers/SignupPage/SignupPage";
 
 const theme = createTheme({
     palette: {
@@ -29,38 +30,55 @@ const theme = createTheme({
 function App() {
     const [isLoggedIn, setLoggedIn] = React.useState(false);
 
+    const loginHandler = () => {
+        console.log("LOGGING IN");
+        setLoggedIn(() => true);
+    };
+
+    const logoutHandler = () => {
+        console.log("LOGGING OUT");
+        setLoggedIn(() => false);
+    };
+
     return (
         <LocalizationProvider dateAdapter={DateAdapter}>
             <ThemeProvider theme={theme}>
-                {isLoggedIn && (
-                    <BrowserRouter>
-                        <TopBar></TopBar>
-                        <Switch>
-                            <Route exact path="/">
-                                <DashboardPage />
-                            </Route>
-                            <Route path="/portfolio">
-                                <PortfolioPage />
-                            </Route>
-                            <Route path="/news">
-                                <NewsPage />
-                            </Route>
-                            <Route path="/nfa">
-                                <NFA />
-                            </Route>
-
-                            <Route
-                                path="/coinDetails:id"
-                                component={IndividualCoinPage}
-                            ></Route>
-                            <Route path="/settings">
-                                <SettingsPage />
-                            </Route>
-                        </Switch>
-                        <BottomBar></BottomBar>
-                    </BrowserRouter>
-                )}
-                {!isLoggedIn && <LandingPage setSign={setLoggedIn} />}
+                <BrowserRouter>
+                    {isLoggedIn && <TopBar></TopBar>}
+                    <Switch>
+                        <Route path="/dashboard">
+                            <DashboardPage />
+                        </Route>
+                        <Route path="/portfolio">
+                            <PortfolioPage />
+                        </Route>
+                        <Route path="/news">
+                            <NewsPage />
+                        </Route>
+                        <Route path="/nfa">
+                            <NFA />
+                        </Route>
+                        <Route
+                            path="/coinDetails:id"
+                            component={IndividualCoinPage}
+                        ></Route>
+                        <Route path="/loginPage">
+                            <LoginPage loginHandler={loginHandler}></LoginPage>
+                        </Route>
+                        <Route path="/signupPage">
+                            <SignupPage
+                                loginHandler={loginHandler}
+                            ></SignupPage>
+                        </Route>
+                        <Route path="/settings">
+                            <SettingsPage logoutHandler={logoutHandler} />
+                        </Route>
+                        <Route path="/">
+                            <LandingPage />
+                        </Route>
+                    </Switch>
+                    {isLoggedIn && <BottomBar></BottomBar>}
+                </BrowserRouter>
             </ThemeProvider>
         </LocalizationProvider>
     );

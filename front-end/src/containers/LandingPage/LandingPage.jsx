@@ -5,24 +5,24 @@ import { PortfolioCard } from "../../components/FeaturesforLandingPage/Portfolio
 import { CssBaseline } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: "100vh",
-    backgroundImage: `url(${process.env.PUBLIC_URL + "/Back_2.png"})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-  },
+    root: {
+        minHeight: "100vh",
+        backgroundImage: `url(${process.env.PUBLIC_URL + "/Back_2.png"})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+    },
 }));
 
-const LandingPage = ({setSign}) => {
-  const classes = useStyles();
+const LandingPage = () => {
+    const classes = useStyles();
 
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <Header setSign={setSign}/>
-      <PortfolioCard />
-    </div>
-  );
+    return (
+        <div className={classes.root}>
+            <CssBaseline />
+            <Header />
+            <PortfolioCard />
+        </div>
+    );
 };
 
 export default LandingPage;
