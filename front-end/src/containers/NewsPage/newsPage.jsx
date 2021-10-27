@@ -39,7 +39,6 @@ export default function NewsPage() {
             {coins.map((coin, index) => (
                 <NewsTile key={index} coin={coin} articleTiles= {articles[coin]} />
             ))}
-            <Footer className="footer" />
         </div>}
         </>
     );

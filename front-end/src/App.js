@@ -11,6 +11,7 @@ import LandingPage from "./containers/LandingPage/LandingPage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import DateAdapter from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
+import SettingsPage from "./containers/SettingsPage/SettingsPage";
 
 const theme = createTheme({
     palette: {
@@ -44,6 +45,9 @@ function App() {
                             </Route>
                             <Route path="/nfa">
                                 <NFA />
+                            </Route>
+                            <Route path="/settings">
+                                <SettingsPage />
                             </Route>
                         </Switch>
                         <BottomBar></BottomBar>
