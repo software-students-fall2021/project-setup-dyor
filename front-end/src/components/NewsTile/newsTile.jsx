@@ -5,10 +5,10 @@ import './newsTile.css'
 
 const options = [1,2,3,4,5,6,7,8,9];
   
-export default function NewsTile({articleTiles, coin}) {
+export default function NewsTile({articleTiles, coin, number}) {
     const [articles, setArticles] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
-    const [num, setNum] = React.useState(2);
+    const [num, setNum] = React.useState(number);
 
     const updateArticles = () => {
         if (articleTiles !==undefined && articleTiles.length !== 0 && articles.length !== num ){

@@ -13,7 +13,7 @@ export default function DropDownMenu({selectedValue, options, set, label=""}) {
 
   return (
     <div>
-      <FormControl className="form" sx={{ m: 2, minWidth: 70 }}>
+      <FormControl className="form" sx={{ m: 1, minWidth: 70 }}>
         <InputLabel id="demo-simple-select-autowidth-label">{label}</InputLabel>
         <Select
           className="selection"
@@ -22,7 +22,7 @@ export default function DropDownMenu({selectedValue, options, set, label=""}) {
           value={selectedValue}
           onChange={handleChange}
           autoWidth
-          label=""
+          label="Articles"
         >
           {options.map((option) => (
             <MenuItem className="menu_item" key={option} value={option} >

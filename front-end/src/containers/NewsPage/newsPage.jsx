@@ -36,7 +36,7 @@ export default function NewsPage() {
     return (<>
         {!isLoading && <div className="newspage">
             {coins.map((coin, index) => (
-                <NewsTile key={index} coin={coin} articleTiles= {articles[coin]} />
+                <NewsTile key={index} coin={coin} number={2} articleTiles= {articles[coin]} />
             ))}
         </div>}
         </>
