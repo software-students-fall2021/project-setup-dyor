@@ -1,6 +1,5 @@
 import * as React from 'react'
 import axios from 'axios'
-import Footer from '../../components/Footer/footer'
 import './newsPage.css'
 import NewsTile from '../../components/NewsTile/newsTile';
 

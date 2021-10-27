@@ -5,17 +5,16 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import './drop_down.css'
 
-export default function DropDownMenu({selectedValue, options, setArticleNum}) {
+export default function DropDownMenu({selectedValue, options, set, label=""}) {
 
   const handleChange = (event) => {
-    console.log(event.target.value)
-    setArticleNum(event.target.value);
+    set(event.target.value);
   };
 
   return (
     <div>
-      <FormControl className="form" sx={{ m: 1, minWidth: 70 }}>
-        <InputLabel id="demo-simple-select-autowidth-label">Articles</InputLabel>
+      <FormControl className="form" sx={{ m: 2, minWidth: 70 }}>
+        <InputLabel id="demo-simple-select-autowidth-label">{label}</InputLabel>
         <Select
           className="selection"
           labelId="demo-simple-select-autowidth-label"
@@ -23,7 +22,7 @@ export default function DropDownMenu({selectedValue, options, setArticleNum}) {
           value={selectedValue}
           onChange={handleChange}
           autoWidth
-          label="Number of Articles"
+          label=""
         >
           {options.map((option) => (
             <MenuItem className="menu_item" key={option} value={option} >

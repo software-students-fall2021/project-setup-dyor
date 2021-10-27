@@ -37,7 +37,8 @@ export default function NewsTile({articleTiles, coin}) {
                                 {coin}
                             </h3>
                             <span id="news_dropdown">
-                                <DropDownMenu selectedValue={num} setArticleNum={setNum} options= {options} className="dropdown_menu"/>
+                                <DropDownMenu selectedValue={num} label="Articles"
+                                set={setNum} options= {options} className="dropdown_menu"/>
                             </span> 
                         </div> 
                     </div>
