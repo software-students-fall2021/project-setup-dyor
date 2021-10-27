@@ -30,6 +30,7 @@ export default function SettingsPage() {
       </h2>
       <Paper className="settingsTile user" elevation={3}>
         <h4 className="userEmail">johndoe@dyor.com</h4>
+        <Link className="link" to="/resetPassword" >
         <IconButton
               className= "settingsArrow"
               edge="start"
@@ -39,6 +40,7 @@ export default function SettingsPage() {
             >
               <ArrowForwardIosIcon />
             </IconButton>
+        </Link>
       </Paper>
       <Paper className="settingsTile tools" elevation={3}>
         <Box className="setting notifications">
@@ -82,7 +84,9 @@ export default function SettingsPage() {
               aria-label="menu"
               sx={{ mr: 2 }}
             >
-              <ArrowForwardIosIcon />
+              <Link className="link" to="/helpCenter">
+                <ArrowForwardIosIcon />
+              </Link>
         </IconButton>
       </Paper>
       <Paper className="settingsTile user" elevation={3}>
@@ -94,8 +98,8 @@ export default function SettingsPage() {
               aria-label="menu"
               sx={{ mr: 2 }}
             >
-              <Link to="/signupPage">
-              <LogoutIcon />
+              <Link className="link" to="/signupPage">
+                <LogoutIcon />
               </Link>
             </IconButton>
       </Paper>

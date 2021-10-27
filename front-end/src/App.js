@@ -15,6 +15,8 @@ import IndividualCoinPage from "./containers/IndividualCoinPage/IndividualCoinPa
 import LoginPage from "./containers/LoginPage/LoginPage";
 import SettingsPage from "./containers/SettingsPage/SettingsPage";
 import SignupPage from "./containers/SignupPage/SignupPage";
+import HelpCenterPage from "./containers/HelpCenterPage/HelpCenterPage";
+import ResetPassword from "./containers/ResetPasswordPage/ResetPassword";
 
 const theme = createTheme({
     palette: {
@@ -72,6 +74,12 @@ function App() {
                         </Route>
                         <Route path="/settings">
                             <SettingsPage logoutHandler={logoutHandler} />
+                        </Route>
+                        <Route path="/resetPassword">
+                            <ResetPassword />
+                        </Route>
+                        <Route path="/helpCenter">
+                            <HelpCenterPage />
                         </Route>
                         <Route path="/">
                             <LandingPage />
