@@ -3,6 +3,9 @@ import Paper from '@mui/material/Paper'
 import './article.css'
 
 export default function Article({article}){
+    function parseHtml(description) {
+        return {__html: description};
+    }
 
     return (
         <Paper variant="outlined" className="article_paper">
@@ -16,9 +19,7 @@ export default function Article({article}){
                     <div className="description">
                         <h4 className="article_title"><a href={article.url} target="blank">{article.title}</a></h4>
                         <h5 className="extract_title">{article.author}</h5>
-                        <p className="article_story"> 
-                            {article.description}
-                        </p>
+                        <p className="article_story" dangerouslySetInnerHTML={parseHtml(article.description)} /> 
                     </div>
             </article>
         </Paper>

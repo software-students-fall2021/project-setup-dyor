@@ -3,16 +3,17 @@ import axios from 'axios'
 import './newsPage.css'
 import NewsTile from '../../components/NewsTile/newsTile';
 
-const coins = ["Cryptocurrency","Bitcoin", "Ethereum", "Polkadot"]
+const coins = ["Cryptocurrency","Bitcoin", "Ethereum", "Polkadot","Dogecoin", "Shiba"]
 const articles = {}
 
 export default function NewsPage() {
     const [isLoading, setLoading] = React.useState(true)
 
     const getArticles = async() => {
-        console.log("called")
         for (let i=0; i<coins.length; ++i){
-            const url = `https://newsapi.org/v2/everything?qInTitle=+${coins[i]}&from=2021-10-20&language=en&sortBy=popularity&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=20`
+            const date = new Date("2021-10-25");
+            console.log(date)
+            const url = `https://newsapi.org/v2/everything?qInTitle=+${coins[i]}&from=${date}&language=en&sortBy=relevancy&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=20`
             await axios.get(url).then((res) => {
                 articles[coins[i]] = res.data.articles
             }).catch((err) =>{

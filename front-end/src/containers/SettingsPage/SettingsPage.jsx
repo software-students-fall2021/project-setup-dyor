@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 import { Paper } from "@material-ui/core";
 import { Switch, Divider } from "@mui/material";
 import {Box, IconButton} from "@mui/material";
@@ -93,7 +94,9 @@ export default function SettingsPage() {
               aria-label="menu"
               sx={{ mr: 2 }}
             >
+              <Link to="/signupPage">
               <LogoutIcon />
+              </Link>
             </IconButton>
       </Paper>
       <Paper className="settingsTile user" elevation={3}>
@@ -105,7 +108,9 @@ export default function SettingsPage() {
               aria-label="menu"
               sx={{ mr: 2 }}
             >
-              <DeleteIcon color="warning" />
+              <Link to="/signupPage">
+                <DeleteIcon color="warning" />
+              </Link >
             </IconButton>
       </Paper>
     </Box>
