@@ -11,7 +11,9 @@ import LandingPage from "./containers/LandingPage/LandingPage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import DateAdapter from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
+import IndividualCoinPage from "./containers/IndividualCoinPage/IndividualCoinPage";
 import SettingsPage from "./containers/SettingsPage/SettingsPage";
+
 
 const theme = createTheme({
     palette: {
@@ -46,6 +48,11 @@ function App() {
                             <Route path="/nfa">
                                 <NFA />
                             </Route>
+
+                            <Route
+                                path="/coinDetails:id"
+                                component={IndividualCoinPage}
+                            ></Route>
                             <Route path="/settings">
                                 <SettingsPage />
                             </Route>
