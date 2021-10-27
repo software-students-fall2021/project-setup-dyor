@@ -12,6 +12,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import DateAdapter from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import IndividualCoinPage from "./containers/IndividualCoinPage/IndividualCoinPage";
+import LoginPage from "./containers/LoginPage/LoginPage";
 
 const theme = createTheme({
     palette: {
@@ -49,6 +50,10 @@ function App() {
                             <Route
                                 path="/coinDetails:id"
                                 component={IndividualCoinPage}
+                            ></Route>
+                            <Route
+                                path="/loginPage"
+                                component={LoginPage}
                             ></Route>
                         </Switch>
                         <BottomBar></BottomBar>

@@ -26,7 +26,6 @@ const AddAssetForm = ({
     const handleInputChange = (event) => {
         if (event) {
             const { id, value } = event.target;
-            console.log(`Temp Input Change with ${id}:${value}`);
             setTempAssetValues((prevTempAssetValues) => ({
                 ...prevTempAssetValues,
                 [id]: value,
