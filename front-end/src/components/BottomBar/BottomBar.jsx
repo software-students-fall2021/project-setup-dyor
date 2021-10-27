@@ -9,6 +9,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
+import './BottomBar.css'
 
 
 
@@ -16,7 +17,7 @@ export function BottomBar({currentPage, setCurrentPage}) {
   const ref = React.useRef(null);
 
   return (
-    <Box sx={{ pb: 7 }} ref={ref}>
+    <Box className="bottom-bar" sx={{ pb: 7 }} ref={ref}>
       <CssBaseline />
       <Paper
         sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
