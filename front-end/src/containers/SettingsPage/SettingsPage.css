@@ -1,0 +1,60 @@
+/* .stackItem1 {
+  padding: 10%;
+  border-radius: 15px;
+  margin: 2%;
+}
+
+.stackItem2 {
+  padding: 10%;
+  border-radius: 15px;
+  margin: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.heading {
+  padding: 10%;
+} */
+
+.settings {
+  background-color: #f4f5f5;
+}
+.settingsTitle{
+  padding: 10px;
+  margin: 0;
+}
+.settingsTile{
+  margin-bottom: 20px;
+}
+.user{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.userEmail, .logout {
+  margin-left: 20px;
+}
+.deleteAccount{
+  margin-left: 20px;
+  color: red;
+}
+.setting {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.iconAndLabel{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: auto;
+  margin-left: 8px; 
+}
+.handle{
+  margin-left: auto;
+}
+.notification-icon {
+  margin-right: 15px;
+}
