@@ -1,149 +1,140 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import { PortfolioTable } from "../../components/PortfolioTable/PortfolioTable";
 import Typography from "@mui/material/Typography";
-import styles from "./PortfolioPage.module.css";
-import { Box } from "@mui/system";
 import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
 import { Paper, Stack } from "@mui/material";
 import AddAssetForm from "../../components/Forms/AddAssetForm";
 import { LiveChartContainer } from "../LiveChartContainer/LiveChartContainer";
+import { PortfolioTable } from "../../components/PortfolioTable/PortfolioTable";
+import styles from "./PortfolioPage.module.css";
+import axios from "axios";
+import { invert } from "underscore";
 
 class OwnedAsset {
-  constructor(id, quantityPurchased, unitPrice, datePurchased) {
-    this.id = id;
-    this.quantityPurchased = quantityPurchased;
-    this.unitPrice = unitPrice;
-    const [year, month, day] = datePurchased.split("/").reverse();
-    this.datePurchased = Date(year, month, day);
-  }
+    constructor(id, quantityPurchased, unitPrice, datePurchased) {
+        this.id = id;
+        this.quantityPurchased = quantityPurchased;
+        this.unitPrice = unitPrice;
+        const [year, month, day] = datePurchased.split("/").reverse();
+        this.datePurchased = Date(year, month, day);
+    }
 }
 
 const DefaultUserAssets = [
-  new OwnedAsset("bitcoin", 2, 30000, "10/5/2021"),
-  new OwnedAsset("ethereum", 20, 2000, "12/06/2021"),
-  new OwnedAsset("polkadot", 2, 30, "13/08/2021"),
+    new OwnedAsset("bitcoin", 2, 30000, "10/5/2021"),
+    new OwnedAsset("ethereum", 20, 2000, "12/06/2021"),
+    new OwnedAsset("polkadot", 2, 30, "13/08/2021"),
 ];
 
 export function PortfolioPage() {
-  const [tickers, setTickers] = useState({});
-  const [coinValue, setCoinValue] = useState({ id: "bitcoin", label: "BTC" });
-  const [coinInputValue, setCoinInputValue] = useState("BTC");
-  let pricesWebSocket = useRef(null);
-  const [coinPrices, setCoinPrices] = useState([]);
-  const [userData, setUserData] = useState(DefaultUserAssets);
+    const [tickersDict, setTickersDict] = useState({});
+    const [invertedTickersDict, setInvertedTickersDict] = useState({});
+    const [tickersArr, setTickersArr] = useState([]);
+    const pricesWebSocket = useRef(null);
+    const [coinPrices, setCoinPrices] = useState([]);
+    const [userData, setUserData] = useState(DefaultUserAssets);
 
-  //This will obtain the initial set of coins
-  useEffect(() => {
-    //this will initiate a reach out to the websocket for dynamic prices
-    pricesWebSocket.current = new WebSocket(
-      "wss://ws.coincap.io/prices?assets=ALL"
-    );
-
-    pricesWebSocket.current.onerror = (event) => {
-      console.log("FAILURE IN WS");
-      pricesWebSocket.current.close();
-    };
-
-    axios
-      .request("https://api.coincap.io/v2/assets")
-      .then((response) => {
-        const dataArr = response.data.data.map(({ id, symbol }) => ({
-          id: id,
-          label: symbol,
-        }));
-        const tickersDict = dataArr.reduce(
-          (a, x) => ({ ...a, [x.id]: x.label }),
-          {}
+    //This will obtain the initial set of coins
+    useEffect(() => {
+        //this will initiate a reach out to the websocket for dynamic prices
+        pricesWebSocket.current = new WebSocket(
+            "wss://ws.coincap.io/prices?assets=ALL"
         );
-        setTickers(() => tickersDict);
-        console.log(tickersDict);
-      })
-      .catch((err) => {
-        console.log("Get Ticker Data Failed.");
-        console.log(err);
-      });
-  }, []);
 
-  //Will Update State to have present value of prices for all coins
-  if (pricesWebSocket.current !== null) {
-    pricesWebSocket.current.onmessage = (e) => {
-      const dataResponseArr = JSON.parse(e.data);
-      // console.log("RAW PRICES:");
-      // console.log(dataResponseArr);
-      // console.log("CUMULATED PRICES:");
-      setCoinPrices((setCoinPrices) => ({
-        ...coinPrices,
-        ...dataResponseArr,
-      }));
-      // console.log(coinPrices);
+        pricesWebSocket.current.onerror = (event) => {
+            console.log("FAILURE IN WS");
+            pricesWebSocket.current.close();
+        };
+        axios
+            .request("https://api.coincap.io/v2/assets")
+            .then((response) => {
+                const dataArr = response.data.data.map(({ id, symbol }) => ({
+                    id: id,
+                    label: symbol,
+                }));
+                setTickersArr(() => dataArr);
+                const tempTickersDict = dataArr.reduce(
+                    (a, x) => ({ ...a, [x.id]: x.label }),
+                    {}
+                );
+                setTickersDict(() => tempTickersDict);
+                setInvertedTickersDict(() => invert(tempTickersDict));
+            })
+            .catch((err) => {
+                console.log("Get Ticker Data Failed.");
+                console.log(err);
+            });
+    }, []);
+
+    //Will Update State to have present value of prices for all coins
+    if (pricesWebSocket.current !== null) {
+        pricesWebSocket.current.onmessage = (e) => {
+            const dataResponseArr = JSON.parse(e.data);
+            setCoinPrices((setCoinPrices) => ({
+                ...coinPrices,
+                ...dataResponseArr,
+            }));
+        };
+    }
+
+    //will not handle at the moment previously existing data for the sake of simplicity and each purchase will be treated a new distinct purchase even if the coin purchased is the same
+    const addNewUserAssetData = ({
+        coin,
+        quantityPurchased,
+        purchasePrice,
+        datePurchased,
+    }) => {
+        setUserData((prevUserData) => [
+            { id: coin, quantityPurchased, purchasePrice, datePurchased },
+            ...prevUserData,
+        ]);
     };
-  }
 
-  // return (
-  //     <Box
-  //         sx={{
-  //             display: "flex",
-  //             justifyContent: "center",
-  //         }}
-  //     >
-  //         <Autocomplete
-  //             id="Coin-Select"
-  //             value={coinValue}
-  //             onChange={(event, newValue) => {
-  //                 setCoinValue(newValue);
-  //                 console.log(newValue);
-  //             }}
-  //             inputValue={coinInputValue}
-  //             onInputChange={(event, newInputValue) => {
-  //                 setCoinInputValue(newInputValue);
-  //             }}
-  //             options={tickers}
-  //             sx={{ width: 200 }}
-  //             isOptionEqualToValue={(option, value) => option.id === value.id}
-  //             renderInput={(params) => <TextField {...params} label="Coin" />}
-  //         />
-  //         <h2>{`Price: ${coinPrice}`}</h2>
-  //     </Box>
-
-  return (
-    <Stack
-      direction="column"
-      justifyContent="space-evenly"
-      alignItems="stretch"
-      spacing={2}
-      bgcolor="rgb(230, 248, 246)"
-    >
-      <item>
-        <Typography
-          weight="bolder"
-          color="primary"
-          variant="h4"
-          className={styles.heading}
+    return (
+        <Stack
+            direction="column"
+            justifyContent="space-evenly"
+            alignItems="stretch"
+            spacing={2}
+            bgcolor="rgb(230, 248, 246)"
         >
-          Portfolio
-        </Typography>
-      </item>
-      <item>
-        <Paper elevation={2} className={styles.stackItem}>
-          <PortfolioTable
-            pricesData={coinPrices}
-            userData={userData}
-            coinLabels={tickers}
-          ></PortfolioTable>
-        </Paper>
-      </item>
-      <item>
-        <Paper elevation={2} className={styles.stackItem}>
-          <DailyGraph></DailyGraph>
-        </Paper>
-        <AddAssetForm></AddAssetForm>
-      </item>
-      <item>
-        <Paper elevation={2} className={styles.stackItem}>
-          <LiveChartContainer coinName="ADA"></LiveChartContainer>
-        </Paper>
-      </item>
-    </Stack>
-  );
+            <item>
+                <Typography
+                    weight="bolder"
+                    color="primary"
+                    variant="h4"
+                    className={styles.heading}
+                >
+                    Portfolio
+                </Typography>
+            </item>
+            <item>
+                <Paper elevation={2} className={styles.stackItem}>
+                    <PortfolioTable
+                        pricesData={coinPrices}
+                        userData={userData}
+                        coinLabels={tickersDict}
+                    ></PortfolioTable>
+                </Paper>
+            </item>
+            <item>
+                <Paper elevation={2} className={styles.stackItem}>
+                    <AddAssetForm
+                        coinLabels={tickersArr}
+                        onAddNewAssetHandler={addNewUserAssetData}
+                        labelsToCoinsDict={invertedTickersDict}
+                    ></AddAssetForm>
+                </Paper>
+            </item>
+            <item>
+                <Paper elevation={2} className={styles.stackItem}>
+                    <DailyGraph></DailyGraph>
+                </Paper>
+            </item>
+            <item>
+                <Paper elevation={2} className={styles.stackItem}>
+                    <LiveChartContainer coinName="ADA"></LiveChartContainer>
+                </Paper>
+            </item>
+        </Stack>
+    );
 }
