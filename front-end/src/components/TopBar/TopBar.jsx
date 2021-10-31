@@ -17,16 +17,17 @@ export default function TopBar() {
           <Box className={styles.logo}>
             <Typography className={styles.logoTitle}>DYOR</Typography>
           </Box>
-          <Box sx={{ alignItems: borderRight }}>
+          <Box className={styles.settingsIcon} sx={{ alignItems: borderRight }}>
+            <Link to="/settings">
             <IconButton
               edge="start"
               color="inherit"
               aria-label="menu"
               sx={{ mr: 2 }}
-              //onClick={() => setCurrentPage(4)}
             >
-              <SettingsIcon />
+              <SettingsIcon style={{color: 'white'}}/>
             </IconButton>
+            </Link>
           </Box>
         </Toolbar>
       </AppBar>
