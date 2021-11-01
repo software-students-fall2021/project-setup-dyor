@@ -1,0 +1,26 @@
+{
+  "name": "dyor_back-end",
+  "version": "0.1.0",
+  "description": "This is the back-end for the DYOR SWE Project, and represents its 2nd Sprint",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devStart": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/software-students-fall2021/project-setup-dyor.git"
+  },
+  "author": "Abdullah, Desmond, Hanzallah, Sashank, Talal, Umair",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/software-students-fall2021/project-setup-dyor/issues"
+  },
+  "homepage": "https://github.com/software-students-fall2021/project-setup-dyor#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
