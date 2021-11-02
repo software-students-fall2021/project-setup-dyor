@@ -39,7 +39,7 @@ router.post("/", (req, res) => {
 
 //Get news from mockaroo (Mocking it for the time being)
 router.get("/cryptoNews", (req, res) => {
-  if (cryptoNews.length === 0) {
+  if (database.cryptoNews.length === 0) {
     const articles = async () => {
       const isSucces = await cryptoAPI();
       if (isSucces === true)
@@ -48,7 +48,7 @@ router.get("/cryptoNews", (req, res) => {
     };
     articles();
   } else {
-    res.status(200).send(cryptoNews);
+    res.status(200).send(database.cryptoNews);
   }
 });
 

@@ -4,7 +4,6 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import {Link} from 'react-router-dom'
 import './HelpCenterPage.css'
 
 export default function HelpCenterPage(){
