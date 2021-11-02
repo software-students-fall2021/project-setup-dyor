@@ -7,22 +7,25 @@ import { PortfolioTable } from "../../components/PortfolioTable/PortfolioTable";
 import styles from "./PortfolioPage.module.css";
 import axios from "axios";
 import { invert } from "underscore";
+// import { response } from "../../../../back-end/app";
 
-class OwnedAsset {
-    constructor(id, quantityPurchased, unitPrice, datePurchased) {
-        this.id = id;
-        this.quantityPurchased = quantityPurchased;
-        this.unitPrice = unitPrice;
-        const [year, month, day] = datePurchased.split("/").reverse();
-        this.datePurchased = Date(year, month, day);
-    }
-}
+// class OwnedAsset {
+//     constructor(id, quantityPurchased, unitPrice, datePurchased) {
+//         this.id = id;
+//         this.quantityPurchased = quantityPurchased;
+//         this.unitPrice = unitPrice;
+//         const [year, month, day] = datePurchased.split("/").reverse();
+//         this.datePurchased = Date(year, month, day);
+//     }
+// }
 
-const DefaultUserAssets = [
-    new OwnedAsset("bitcoin", 2, 30000, "10/5/2021"),
-    new OwnedAsset("ethereum", 20, 2000, "12/06/2021"),
-    new OwnedAsset("polkadot", 2, 30, "13/08/2021"),
-];
+// const DefaultUserAssets = [
+//     new OwnedAsset("bitcoin", 2, 30000, "10/5/2021"),
+//     new OwnedAsset("ethereum", 20, 2000, "12/06/2021"),
+//     new OwnedAsset("polkadot", 2, 30, "13/08/2021"),
+// ];
+
+const userDataURL = "/userData";
 
 export function PortfolioPage() {
     const [tickersDict, setTickersDict] = useState({});
@@ -32,7 +35,7 @@ export function PortfolioPage() {
     const [tickersArr, setTickersArr] = useState([]);
     const pricesWebSocket = useRef(null);
     const [coinPrices, setCoinPrices] = useState([]);
-    const [userData, setUserData] = useState(DefaultUserAssets);
+    const [userData, setUserData] = useState([]);
 
     //This will obtain the initial set of coins
     useEffect(() => {
@@ -45,6 +48,18 @@ export function PortfolioPage() {
             console.log("FAILURE IN WS");
             pricesWebSocket.current.close();
         };
+
+        axios
+            .request(userDataURL)
+            .then((response) => {
+                console.log(response);
+                setUserData(() => response.data);
+            })
+            .catch((err) => {
+                console.log("Get User Data Failed.");
+                console.log(err);
+            });
+
         axios
             .request("https://api.coincap.io/v2/assets")
             .then((response) => {
