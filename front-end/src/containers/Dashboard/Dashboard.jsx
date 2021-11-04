@@ -14,27 +14,31 @@ export default function DashboardPage() {
   const [getImages, setgetImages] = React.useState(true);
 
   const getArticles = async () => {
-    await axios
-      .get("/cryptoNews")
-      .then((res) => {
-        articles = res.data;
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-
+    if (articles.length === 0) {
+      await axios
+        .get("/news/crypto")
+        .then((res) => {
+          articles = res.data;
+          console.log(articles);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
     if (articles.length !== 0) setLoading(false);
   };
 
   const getImagesAPI = async () => {
-    await axios
-      .get("/images")
-      .then((res) => {
-        allImages = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (allImages.length === 0) {
+      await axios
+        .get("/news/images")
+        .then((res) => {
+          allImages = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
     if (allImages.length !== 0) {
       setgetImages(false);
     }
@@ -97,7 +101,12 @@ export default function DashboardPage() {
           </item>
           <item>
             <Paper elevation={2} className={styles.cardBox}>
-              <NewsTile coin="Crypto News" number={4} articleTiles= {articles} images={allImages}/>
+              <NewsTile
+                coin='Crypto News'
+                number={4}
+                articleTiles={articles}
+                images={allImages}
+              />
             </Paper>
           </item>
         </Stack>

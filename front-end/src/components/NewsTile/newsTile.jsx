@@ -10,7 +10,8 @@ export default function NewsTile({ articleTiles, coin, number, images }) {
   const [isLoading, setIsLoading] = React.useState(true);
   const [num, setNum] = React.useState(number);
 
-  const updateArticles = () => {
+  // console.log(articleTiles);
+  React.useEffect(() => {
     if (
       articleTiles !== undefined &&
       articleTiles.length !== 0 &&
@@ -19,15 +20,7 @@ export default function NewsTile({ articleTiles, coin, number, images }) {
       setArticles(articleTiles.slice(0, num));
     }
     if (articleTiles !== undefined && isLoading) setIsLoading(false);
-  };
-
-  React.useEffect(() => {
-    updateArticles();
-  }, [num, articles]);
-
-  React.useEffect(() => {
-    updateArticles();
-  }, []);
+  }, [num, articles, articleTiles, isLoading]);
 
   return (
     <>
