@@ -12,28 +12,32 @@ export default function NewsPage() {
   const [getImages, setgetImages] = React.useState(true);
 
   const getArticles = async () => {
-    await axios
-      .get("/assetNews")
-      .then((res) => {
-        articles = res.data;
-        coins = Object.keys(articles);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-
-    if (Object.keys(articles) !== 0) setLoading(false);
+    if (Object.keys(articles).length === 0) {
+      await axios
+        .get("/news")
+        .then((res) => {
+          articles = res.data;
+          coins = Object.keys(articles);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
+    if (Object.keys(articles).length !== 0) setLoading(false);
   };
 
   const getImagesAPI = async () => {
-    await axios
-      .get("/images")
-      .then((res) => {
-        allImages = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (allImages.length === 0) {
+      await axios
+        .get("/news/images")
+        .then((res) => {
+          allImages = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
     if (allImages.length !== 0) {
       setgetImages(false);
     }

@@ -1,17 +1,63 @@
+const express = require("express");
 const axios = require("axios");
+const router = express.Router();
 const database = require("../data");
 var { userAssets, assetNews, allImages } = database;
 
 const coins = [];
 
-const getImagesAPI = async () => {
+//Get news from mockaroo (Mocking it for the time being)
+router.get("/crypto", (req, res) => {
+  if (database.cryptoNews.length === 0) {
+    const articles = async () => {
+      const isSucces = await getCryptoNews();
+      if (isSucces === true)
+        res.status(200).json({ data: database.cryptoNews });
+      else res.status(500).send("Could not get data from API");
+    };
+    articles();
+  } else {
+    res.status(200).send(database.cryptoNews);
+  }
+});
+
+router.get("/", (req, res) => {
+  if (Object.keys(assetNews).length === 0) {
+    const articles = async () => {
+      const isSucces = await getArticles();
+      if (isSucces === true) res.status(200).json(assetNews);
+      else res.status(500).send("Could not get data from API");
+    };
+    articles();
+  } else {
+    res.status(200).json(assetNews);
+  }
+});
+
+router.get("/images", (req, res) => {
+  if (allImages.length === 0) {
+    const images = async () => {
+      const isSucces = await getImages();
+      if (isSucces === true) res.status(200).json(allImages);
+      else res.status(500).send("Could not get data from API");
+    };
+    images();
+  }
+  else {
+    res.status(200).json(allImages);
+  }
+});
+
+const getImages = async () => {
   const images = "https://picsum.photos/v2/list?page=2&limit=20";
+  let isSucces = false;
   await axios
     .get(images)
     .then((res) => {
       for (let i = 0; i < 20; ++i) {
         allImages.push(res.data[i].download_url);
       }
+      isSucces = true;
     })
     .catch((err) => {
       if (err.response) {
@@ -20,6 +66,8 @@ const getImagesAPI = async () => {
         console.log("No response from API", err.response.status);
       }
     });
+  
+  return isSucces;
 };
 
 const getCryptoNews = async () => {
@@ -76,8 +124,4 @@ const getArticles = async () => {
   return isSucces;
 };
 
-var newsAPI = (module.exports = {
-  articlesAPI: getArticles,
-  imagesAPI: getImagesAPI,
-  cryptoAPI: getCryptoNews,
-});
+module.exports = router;

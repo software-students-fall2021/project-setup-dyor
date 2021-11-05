@@ -19,6 +19,9 @@ app.get("/", (req, res) => {
 
 //Importing and Using the userData route
 const userRouter = require("./routes/userData");
-app.use("/", userRouter);
+const newsRouter = require("./routes/getNews")
+
+app.use("/userData", userRouter);
+app.use("/news", newsRouter);
 
 module.exports = app;
