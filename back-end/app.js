@@ -36,4 +36,7 @@ app.use("/coinPriceTimeSeries", coinPriceTimeSeriesRouter);
 const coinPresentPriceAndChangeRouter = require("./routes/coinPresentPriceAndChange");
 app.use("/coinPresentPriceAndChange", coinPresentPriceAndChangeRouter);
 
+const newsRouter = require("./routes/getNews")
+app.use("/news", newsRouter);
+
 module.exports = app;
