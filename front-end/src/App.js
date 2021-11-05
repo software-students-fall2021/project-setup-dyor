@@ -61,7 +61,7 @@ function App() {
                             <NFA />
                         </Route>
                         <Route
-                            path="/coinDetails:id"
+                            path="/coinDetails/:userID/:assetID/:coinSymbol"
                             component={IndividualCoinPage}
                         ></Route>
                         <Route path="/loginPage">

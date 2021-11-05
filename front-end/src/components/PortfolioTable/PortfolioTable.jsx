@@ -6,19 +6,19 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Box } from "@mui/system";
-import { Button } from "@mui/material";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import styles from "./PortfolioTable.module.css";
 import Icon from "react-crypto-icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
-// const rounded2DP = (number) => Math.round(number * 100) / 100;
+import { presentPriceAndChangeURL } from "../../back-end_routes";
 
 const CoinImage = (props) => {
-    const coinID = props.id;
-    const coinSymbol =
-        props.symbolsDict[coinID] && props.symbolsDict[coinID].toLowerCase();
+    const userID = props.userID;
+    const coinID = props.coinID;
+    const coinSymbol = props.symbolsDict[coinID];
+    const lowerCoinSymbol =
+        (coinSymbol && coinSymbol.toLowerCase()) || "generic";
 
     const clickHandler = () => {
         console.log(`${coinID} has been clicked.`);
@@ -26,7 +26,7 @@ const CoinImage = (props) => {
 
     return (
         <Link
-            to={`/coinDetails${props.symbolsDict[coinID]}`}
+            to={`/coinDetails/${userID}/${coinID}/${coinSymbol}`}
             className={styles.noDecoration}
         >
             <Grid
@@ -38,11 +38,11 @@ const CoinImage = (props) => {
                 onClick={clickHandler}
             >
                 <Grid item>
-                    <Icon name={coinSymbol} size={32}></Icon>
+                    <Icon name={lowerCoinSymbol} size={32}></Icon>
                 </Grid>
                 <Grid item>
                     <Typography className={styles.coinText}>
-                        {(coinSymbol && coinSymbol.toUpperCase()) || "NA"}
+                        {coinSymbol || "NA"}
                     </Typography>
                 </Grid>
             </Grid>
@@ -68,26 +68,41 @@ const NumericEntry = ({
 };
 
 export function PortfolioTable(props) {
-    const [dailyPercentageChanges, setDailyPercentageChanges] = useState({});
+    const [dailyPricesAndChanges, setDailyPricesAndChanges] = useState({});
 
     useEffect(() => {
+        //get all previous day prices?
+        // axios
+        //     .request("https://api.coincap.io/v2/assets")
+        //     .then((response) => {
+        //         const dailyPriceChange = response.data.data.map(
+        //             ({ id, changePercent24Hr }) => ({
+        //                 id: id,
+        //                 priceChange: changePercent24Hr,
+        //             })
+        //         );
+        //         const dailyPriceChangeDict = dailyPriceChange.reduce(
+        //             (a, x) => ({ ...a, [x.id]: x.priceChange }),
+        //             {}
+        //         );
+        //         console.log(dailyPriceChangeDict);
+        //         setDailyPercentageChanges(() => dailyPriceChangeDict);
+        //     })
+        //     .catch((err) => {
+        //         console.log("Get Daily Change Data Failed.");
+        //         console.log(err);
+        //     });
+
         axios
-            .request("https://api.coincap.io/v2/assets")
+            .request(presentPriceAndChangeURL)
             .then((response) => {
-                const dailyPriceChange = response.data.data.map(
-                    ({ id, changePercent24Hr }) => ({
-                        id: id,
-                        priceChange: changePercent24Hr,
-                    })
-                );
-                const dailyPriceChangeDict = dailyPriceChange.reduce(
-                    (a, x) => ({ ...a, [x.id]: x.priceChange }),
-                    {}
-                );
-                setDailyPercentageChanges(() => dailyPriceChangeDict);
+                setDailyPricesAndChanges(() => response.data);
+                console.log(response.data);
             })
             .catch((err) => {
-                console.log("Get Daily Change Data Failed.");
+                console.log(
+                    "PORTFOLIO TABLE: GET DAILY PRICE AND CHANGE FAILED"
+                );
                 console.log(err);
             });
     }, []);
@@ -144,10 +159,14 @@ export function PortfolioTable(props) {
                     </TableHead>
                     <TableBody>
                         {props.userData.map((userDataElement) => {
-                            const coinPrice =
-                                props.pricesData[userDataElement.id];
+                            const lowerCaseID =
+                                userDataElement.id.toLowerCase();
+                            const coinPrice = props.pricesData[lowerCaseID];
                             const coinDailyChange =
-                                dailyPercentageChanges[userDataElement.id];
+                                (dailyPricesAndChanges[lowerCaseID] &&
+                                    dailyPricesAndChanges[lowerCaseID]
+                                        .priceChange) ||
+                                "";
                             const userProfit =
                                 (coinPrice - userDataElement.unitPrice) *
                                 userDataElement.quantityPurchased;
@@ -156,8 +175,11 @@ export function PortfolioTable(props) {
                                 <TableRow key={userDataElement.id}>
                                     <TableCell component="th" scope="row">
                                         <CoinImage
-                                            id={userDataElement.id}
-                                            symbolsDict={props.coinLabels}
+                                            userID={props.userID}
+                                            coinID={userDataElement.id}
+                                            symbolsDict={
+                                                props.coinNameToSymbolDict
+                                            }
                                         ></CoinImage>
                                     </TableCell>
                                     <TableCell align="right">
