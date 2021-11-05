@@ -13,41 +13,40 @@ export default function DashboardPage() {
   const [isLoading, setLoading] = React.useState(true);
   const [getImages, setgetImages] = React.useState(true);
 
-  const getArticles = async () => {
-    if (articles.length === 0) {
-      await axios
-        .get("/news/crypto")
-        .then((res) => {
-          articles = res.data;
-          console.log(articles);
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
-    }
-    if (articles.length !== 0) setLoading(false);
-  };
-
-  const getImagesAPI = async () => {
-    if (allImages.length === 0) {
-      await axios
-        .get("/news/images")
-        .then((res) => {
-          allImages = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    if (allImages.length !== 0) {
-      setgetImages(false);
-    }
-  };
-
   React.useEffect(() => {
+    const getArticles = async () => {
+      if (articles.length === 0) {
+        await axios
+          .get("/news/crypto")
+          .then((res) => {
+            articles = res.data;
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+      }
+      if (articles.length !== 0 && isLoading) setLoading(false);
+    };
+
+    const getImagesAPI = async () => {
+      if (allImages.length === 0) {
+        await axios
+          .get("/news/images")
+          .then((res) => {
+            allImages = res.data;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      if (allImages.length !== 0 && getImages) {
+        setgetImages(false);
+      }
+    };
+
     getArticles();
     getImagesAPI();
-  }, []);
+  }, [isLoading, getImages]);
 
   return (
     <>
