@@ -20,10 +20,12 @@ const userAssets = [
 var assetNews = {};
 var cryptoNews = [];
 var allImages = [];
+var tweets = [];
 
 var database = (module.exports = {
   userAssets: userAssets,
   assetNews: assetNews,
   cryptoNews: cryptoNews,
   allImages: allImages,
+  tweets : tweets
 });

@@ -1,6 +1,7 @@
 // import and instantiate express
 const express = require("express"); // CommonJS import style!
 const app = express(); // instantiate an Express object
+require("dotenv").config();
 
 const morgan = require("morgan"); // middleware for nice logging of incoming HTTP requests
 
@@ -20,8 +21,10 @@ app.get("/", (req, res) => {
 //Importing and Using the userData route
 const userRouter = require("./routes/userData");
 const newsRouter = require("./routes/getNews")
+const socialRouter = require("./routes/getSocials")
 
 app.use("/userData", userRouter);
 app.use("/news", newsRouter);
+app.use("/social", socialRouter);
 
 module.exports = app;
