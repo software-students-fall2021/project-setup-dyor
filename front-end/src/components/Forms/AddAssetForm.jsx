@@ -3,18 +3,14 @@ import { Grid, Autocomplete, TextField, Button } from "@mui/material";
 import styles from "./AddAssetForm.module.css";
 import MobileDatePicker from "@material-ui/lab/MobileDatePicker";
 
-const AddAssetForm = ({
-    coinLabels,
-    onAddNewAssetHandler,
-    labelsToCoinsDict,
-    onSubmit,
-}) => {
+const AddAssetForm = ({ coinLabels, onAddNewAssetHandler, onSubmit }) => {
     const [isSubmissionAllowed, setIsSubmissionAllowed] = useState(false);
-    const [coinValue, setCoinValue] = useState("BTC");
+    const [coinValue, setCoinValue] = useState("Bitcoin");
     const [tempAssetValues, setTempAssetValues] = useState({
-        coin: "BTC",
+        coin: "Bitcoin",
         quantityPurchased: 0,
         purchasePrice: 0,
+        datePurchased: new Date(),
     });
 
     const handleCoinSubmitInputChange = (event) => {
@@ -35,11 +31,21 @@ const AddAssetForm = ({
 
     const onSubmitHandler = () => {
         if (isSubmissionAllowed) {
-            const toBeSubmitted = tempAssetValues;
-            toBeSubmitted.coin = labelsToCoinsDict[toBeSubmitted.coin];
-            console.log(toBeSubmitted);
-            onSubmit();
-            onAddNewAssetHandler(toBeSubmitted);
+            try {
+                const toBeSubmitted = {
+                    coin: tempAssetValues.coin,
+                    quantityPurchased: Number(
+                        tempAssetValues.quantityPurchased
+                    ),
+                    purchasePrice: Number(tempAssetValues.purchasePrice),
+                    datePurchased: tempAssetValues.datePurchased,
+                };
+                console.log(toBeSubmitted);
+                onSubmit();
+                onAddNewAssetHandler(toBeSubmitted);
+            } catch (err) {
+                alert("INVALID NUMERIC INPUT");
+            }
         } else {
             alert("VALID COIN YET TO BE SELECTED");
         }
@@ -64,8 +70,14 @@ const AddAssetForm = ({
                             }));
                         }}
                         options={coinLabels}
+                        getOptionLabel={(option) => {
+                            if (option.hasOwnProperty("name")) {
+                                return option.name;
+                            }
+                            return option;
+                        }}
                         isOptionEqualToValue={(option, value) =>
-                            option.label === value
+                            option.name === value
                         }
                         variant="outlined"
                         renderInput={(params) => (

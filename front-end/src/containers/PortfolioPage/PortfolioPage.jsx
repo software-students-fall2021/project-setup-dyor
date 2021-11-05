@@ -6,33 +6,16 @@ import AddAssetForm from "../../components/Forms/AddAssetForm";
 import { PortfolioTable } from "../../components/PortfolioTable/PortfolioTable";
 import styles from "./PortfolioPage.module.css";
 import axios from "axios";
-import { invert } from "underscore";
-// import { response } from "../../../../back-end/app";
+import { userDataURL, coinLabelDataURL } from "../../back-end_routes";
 
-// class OwnedAsset {
-//     constructor(id, quantityPurchased, unitPrice, datePurchased) {
-//         this.id = id;
-//         this.quantityPurchased = quantityPurchased;
-//         this.unitPrice = unitPrice;
-//         const [year, month, day] = datePurchased.split("/").reverse();
-//         this.datePurchased = Date(year, month, day);
-//     }
-// }
-
-// const DefaultUserAssets = [
-//     new OwnedAsset("bitcoin", 2, 30000, "10/5/2021"),
-//     new OwnedAsset("ethereum", 20, 2000, "12/06/2021"),
-//     new OwnedAsset("polkadot", 2, 30, "13/08/2021"),
-// ];
-
-const userDataURL = "/userData";
+const defaultUser = "John";
 
 export function PortfolioPage() {
-    const [tickersDict, setTickersDict] = useState({});
-    const [invertedTickersDict, setInvertedTickersDict] = useState({});
+    const userID = defaultUser;
+    const [coinNameToSymbolDict, setCoinNameToSymbolDict] = useState({});
     const [newAssetAdditionPending, setNewAssetAdditionPending] =
         useState(false);
-    const [tickersArr, setTickersArr] = useState([]);
+    const [coinLabels, setCoinLabels] = useState([]);
     const pricesWebSocket = useRef(null);
     const [coinPrices, setCoinPrices] = useState([]);
     const [userData, setUserData] = useState([]);
@@ -49,10 +32,14 @@ export function PortfolioPage() {
             pricesWebSocket.current.close();
         };
 
+        //this will request the data pertaining to a particular user
         axios
-            .request(userDataURL)
+            .request(userDataURL, {
+                params: {
+                    userID,
+                },
+            })
             .then((response) => {
-                console.log(response);
                 setUserData(() => response.data);
             })
             .catch((err) => {
@@ -60,25 +47,31 @@ export function PortfolioPage() {
                 console.log(err);
             });
 
+        //this will request an array of all the coin data labels supported by our from the back-end, these have been defined by ourselves, and will largely be static only being update every now and then
         axios
-            .request("https://api.coincap.io/v2/assets")
+            .request(coinLabelDataURL)
             .then((response) => {
-                const dataArr = response.data.data.map(({ id, symbol }) => ({
-                    id: id,
-                    label: symbol,
-                }));
-                setTickersArr(() => dataArr);
+                const dataArr = response.data;
+
+                setCoinLabels(() => dataArr);
                 const tempTickersDict = dataArr.reduce(
-                    (a, x) => ({ ...a, [x.id]: x.label }),
+                    (prev, present) => ({
+                        ...prev,
+                        [present.name]: present.symbol,
+                    }),
                     {}
                 );
-                setTickersDict(() => tempTickersDict);
-                setInvertedTickersDict(() => invert(tempTickersDict));
+                //these dictionaries are created since we must transition from full names and ids frequently
+                setCoinNameToSymbolDict(() => tempTickersDict);
             })
             .catch((err) => {
-                console.log("Get Ticker Data Failed.");
+                console.log("Get Coin Label Data Failed.");
                 console.log(err);
             });
+
+        return () => {
+            pricesWebSocket.current.close();
+        };
     }, []);
 
     //Will Update State to have present value of prices for all coins
@@ -108,7 +101,12 @@ export function PortfolioPage() {
         datePurchased,
     }) => {
         setUserData((prevUserData) => [
-            { id: coin, quantityPurchased, purchasePrice, datePurchased },
+            {
+                id: coin,
+                quantityPurchased,
+                unitPrice: purchasePrice,
+                datePurchased,
+            },
             ...prevUserData,
         ]);
     };
@@ -134,9 +132,10 @@ export function PortfolioPage() {
             <item>
                 <Paper elevation={2} className={styles.stackItem}>
                     <PortfolioTable
+                        userID={userID}
                         pricesData={coinPrices}
                         userData={userData}
-                        coinLabels={tickersDict}
+                        coinNameToSymbolDict={coinNameToSymbolDict}
                         onClick={onAddNewAssetButtonClickHandler}
                     ></PortfolioTable>
                 </Paper>
@@ -149,9 +148,8 @@ export function PortfolioPage() {
                     }`}
                 >
                     <AddAssetForm
-                        coinLabels={tickersArr}
+                        coinLabels={coinLabels}
                         onAddNewAssetHandler={addNewUserAssetData}
-                        labelsToCoinsDict={invertedTickersDict}
                         onSubmit={onSubmitNewAssetButtonClickHandler}
                     ></AddAssetForm>
                 </Paper>
