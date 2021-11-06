@@ -5,6 +5,7 @@ import { Box } from "@mui/system";
 import { LiveChartContainer } from "../LiveChartContainer/LiveChartContainer";
 import axios from "axios";
 import { historicalPriceDataURL, userDataURL } from "../../back-end_routes";
+import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
 
 const IndividualCoinPage = () => {
     const { userID, assetID, coinSymbol } = useParams();
@@ -61,6 +62,10 @@ const IndividualCoinPage = () => {
             <h1>{assetID}</h1>
             <Paper elevation={2}>
                 <LiveChartContainer coinName={coinSymbol}></LiveChartContainer>
+                <DailyGraph
+                    assetDetails={assetDetails}
+                    historicalPriceData={historicalPriceData}
+                ></DailyGraph>
             </Paper>
         </Box>
     );

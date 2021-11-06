@@ -154,11 +154,6 @@ export function PortfolioPage() {
                     ></AddAssetForm>
                 </Paper>
             </item>
-            <item>
-                <Paper elevation={2} className={styles.stackItem}>
-                    <DailyGraph></DailyGraph>
-                </Paper>
-            </item>
         </Stack>
     );
 }
