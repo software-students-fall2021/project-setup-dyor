@@ -1,19 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-
 import Button from "@mui/material/Button";
-import { Typography, Stack } from "@mui/material";
+import { Typography, Stack, CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
 import WordCloud from "../../components/WordCloud/WordCloud";
 import ComboBox from "../../components/Search/Search";
 import NFASocialMedia from "../../components/NFASocialMedia/NFASocialMedia";
 import { NFATable } from "../../components/NFATable/NFATable";
-
 import styles from "./NFA.module.css";
+
 class OwnedAsset {
   constructor(id, quantityPurchased, unitPrice, datePurchased) {
     this.id = id;
@@ -30,16 +28,79 @@ const DefaultUserAssets = [
   new OwnedAsset("polkadot", 2, 30, "13/08/2021"),
 ];
 
+// let _tweets = [];
+const socialMedia = ["Facebook", "Twitter"];
+
+const userCoin = [
+  { label: "BTC" },
+  { label: "ETH" },
+  { label: "SHIB" },
+  { label: "DOGE" },
+  { label: "LTC" },
+  { label: "DOT" },
+];
+
+let facebook = [];
+let twitter = [];
+
 export default function NFA() {
-  const [media, setMedia] = React.useState(20);
+  const [media, setMedia] = React.useState(1);
+  const [coin, setCoin] = React.useState(userCoin[0].label);
+  const [posts, setPosts] = useState([]);
+  const [tickers, setTickers] = useState({});
+  const [coinPrices, setCoinPrices] = useState([]);
+  const [userData] = useState(DefaultUserAssets);
+  const [loading, setLoading] = useState(true);
+  let pricesWebSocket = useRef(null);
 
   const handleChange = (event) => {
     setMedia(event.target.value);
   };
-  let pricesWebSocket = useRef(null);
-  const [tickers, setTickers] = useState({});
-  const [coinPrices, setCoinPrices] = useState([]);
-  const [userData, setUserData] = useState(DefaultUserAssets);
+
+  const getPosts = async () => {
+    const social = socialMedia[media];
+    await axios
+      .get(`/social/${social}/${coin}`)
+      .then((res) => {
+        if (media === 0) facebook = res.data;
+        else twitter = res.data;
+
+        setPosts(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, [coin]);
+
+  useEffect(() => {
+    if (media === 0) {
+      if (facebook.length !== 0) {
+        setPosts(facebook)
+      }
+      else {
+        getPosts();
+      }
+    }
+    else {
+      if (twitter.length !== 0) {
+        setPosts(twitter);
+      }
+      else {
+        getPosts();
+      }
+    }
+    getPosts();
+  }, [media]);
+
+  useEffect(() => {
+    if (posts.length !== 0) {
+      setLoading(false);
+    }
+  }, [posts]);
 
   useEffect(() => {
     //this will initiate a reach out to the websocket for dynamic prices
@@ -70,6 +131,7 @@ export default function NFA() {
         console.log(err);
       });
   }, []);
+
   if (pricesWebSocket.current !== null) {
     pricesWebSocket.current.onmessage = (e) => {
       const dataResponseArr = JSON.parse(e.data);
@@ -80,78 +142,91 @@ export default function NFA() {
       }));
     };
   }
+
   return (
     <>
-      <Box className={styles.nfaPageDiv}>
-        <Stack
-          sx={{ padding: "5%" }}
-          direction="column"
-          justifyContent="center"
-          alignItems="stretch"
-          spacing={1}
-        >
-          <Typography weight="bold" color="primary" variant="h4">
-            NFA
-          </Typography>
-          <div>
-            <WordCloud />
-          </div>
+      {loading ? (
+        <div className={styles.circularProgress}>
+          <CircularProgress
+            className={styles.progressBar}
+            size={100}
+            thickness={2.0}
+          />
+        </div>
+      ) : (
+        <Box className={styles.nfaPageDiv}>
+          <Stack
+            sx={{ padding: "5%" }}
+            direction='column'
+            justifyContent='center'
+            alignItems='stretch'
+            spacing={1}>
+            <Typography weight='bold' color='primary' variant='h4'>
+              NFA
+            </Typography>
+            <div>
+              <WordCloud />
+            </div>
 
-          <div>
-            {/* The darker colored section. Contains: social media filter, search bar and the social media tiles */}
-            <div className={styles.bgColor}>
-              <div className={styles.displayInline}>
-                <div>
-                  <Typography weight="bold" color="primary" display="inline">
-                    Social Media Filter
-                  </Typography>
+            <div>
+              {/* The darker colored section. Contains: social media filter, search bar and the social media tiles */}
+              <div className={styles.bgColor}>
+                <div className={styles.displayInline}>
+                  <div>
+                    <Typography weight='bold' color='primary' display='inline'>
+                      Social Media Filter
+                    </Typography>
+                  </div>
+                  <div>
+                    <FormControl
+                      variant='standard'
+                      sx={{ m: 1, minWidth: 120 }}>
+                      <Select
+                        labelId='demo-simple-select-standard-label'
+                        id='demo-simple-select-standard'
+                        value={media}
+                        onChange={handleChange}
+                        label='Media'>
+                        <MenuItem value={0}>Facebook</MenuItem>
+                        <MenuItem value={1}>Twitter</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
                 </div>
-                <div>
-                  <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                    <Select
-                      labelId="demo-simple-select-standard-label"
-                      id="demo-simple-select-standard"
-                      value={media}
-                      onChange={handleChange}
-                      label="Media"
-                    >
-                      <MenuItem value={10}>Facebook</MenuItem>
-                      <MenuItem value={20}>Twitter</MenuItem>
-                      <MenuItem value={30}>Google</MenuItem>
-                    </Select>
-                  </FormControl>
+
+                <div className={styles.displayInline}>
+                  {/* This is the search bar  */}
+                  <ComboBox
+                    coins={userCoin}
+                    currentCoin={coin}
+                    changeCoin={setCoin}
+                  />
                 </div>
-              </div>
+                {/* This is the social media tiles  */}
+                <NFASocialMedia posts={posts} />
 
-              <div className={styles.displayInline}>
-                {/* This is the search bar  */}
-                <ComboBox />
-              </div>
-              {/* This is the social media tiles  */}
-              <NFASocialMedia />
-
-              <div className={styles.displayInline}>
-                <Button variant="contained" size="small">
-                  Sentiment Level Gauge
-                </Button>
+                <div className={styles.displayInline}>
+                  <Button variant='contained' size='small'>
+                    Sentiment Level Gauge
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div>
-            <Typography weight="bold" color="primary" display="inline">
-              Sentiment on your Portfolio
-            </Typography>
-          </div>
-          <div>
-            <NFATable
-              pricesData={coinPrices}
-              userData={userData}
-              coinLabels={tickers}
-            ></NFATable>
-          </div>
-        </Stack>
-      </Box>
+            <div>
+              <Typography weight='bold' color='primary' display='inline'>
+                Sentiment on your Portfolio
+              </Typography>
+            </div>
+            <div>
+              <NFATable
+                pricesData={coinPrices}
+                userData={userData}
+                coinLabels={tickers}></NFATable>
+            </div>
+          </Stack>
+        </Box>
+      )}
     </>
   );
 }

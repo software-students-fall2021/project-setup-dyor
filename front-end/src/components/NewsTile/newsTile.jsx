@@ -10,7 +10,6 @@ export default function NewsTile({ articleTiles, coin, number, images }) {
   const [isLoading, setIsLoading] = React.useState(true);
   const [num, setNum] = React.useState(number);
 
-  // console.log(articleTiles);
   React.useEffect(() => {
     if (
       articleTiles !== undefined &&
