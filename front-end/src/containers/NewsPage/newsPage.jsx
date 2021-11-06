@@ -1,30 +1,18 @@
 import * as React from "react";
 import axios from "axios";
 import NewsTile from "../../components/NewsTile/newsTile";
+import { CircularProgress } from "@mui/material";
+import { userDataURL } from "../../back-end_routes";
 import "./newsPage.css";
 
-var coins = [];
 var articles = {};
 let allImages = [];
 
 export default function NewsPage() {
+  const userID = "John";
   const [isLoading, setLoading] = React.useState(true);
   const [getImages, setgetImages] = React.useState(true);
-
-  const getArticles = async () => {
-    if (Object.keys(articles).length === 0) {
-      await axios
-        .get("/news")
-        .then((res) => {
-          articles = res.data;
-          coins = Object.keys(articles);
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
-    }
-    if (Object.keys(articles).length !== 0) setLoading(false);
-  };
+  const [userData, setUserData] = React.useState([]);
 
   const getImagesAPI = async () => {
     if (allImages.length === 0) {
@@ -44,21 +32,59 @@ export default function NewsPage() {
   };
 
   React.useEffect(() => {
+    //this will request the data pertaining to a particular user
+    axios
+      .request(userDataURL, {
+        params: {
+          userID,
+        },
+      })
+      .then((response) => {
+        setUserData(() => response.data);
+      })
+      .catch((err) => {
+        console.log("Get User Data Failed.");
+        console.log(err);
+      });
+  }, []);
+
+  React.useEffect(() => {
+    const getArticles = async () => {
+      if (Object.keys(articles).length === 0) {
+        await axios
+          .get("/news")
+          .then((res) => {
+            articles = res.data;
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+      }
+      if (Object.keys(articles).length !== 0) setLoading(false);
+    };
     getArticles();
     getImagesAPI();
-  }, []);
+  }, [userData]);
 
   return (
     <>
-      {!isLoading && !getImages && (
+      {isLoading || getImages ? (
+        <div className='circularProgress'>
+          <CircularProgress
+            className='progressBar'
+            size={100}
+            thickness={2.0}
+          />
+        </div>
+      ) : (
         <div className='newspage'>
-          {coins.map((coin, index) => (
+          {userData.map((data, index) => (
             <NewsTile
               key={index}
-              coin={coin}
+              coin={data.id}
               images={allImages}
               number={2}
-              articleTiles={articles[coin]}
+              articleTiles={articles[data.id]}
             />
           ))}
         </div>

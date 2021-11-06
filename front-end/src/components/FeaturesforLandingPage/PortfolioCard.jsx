@@ -53,7 +53,7 @@ export const PortfolioCard = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.root_about_us} id="About_us">
+      <div className={classes.root_about_us} id='About_us'>
         <Bounce>
           <h1 className={classes.title}>About Us</h1>
         </Bounce>
@@ -68,23 +68,23 @@ export const PortfolioCard = () => {
           </p>
         </Bounce>
       </div>
-      <div className={classes.topcard} id="Portfolio">
+      <div className={classes.topcard} id='Portfolio'>
         <Zoom>
           <ImageCard feature={features[0]} />
         </Zoom>
       </div>
 
-      <div className={classes.toGo} id="NFA">
+      <div className={classes.toGo} id='NFA'>
         <Zoom>
           <ImageCard feature={features[1]} />
         </Zoom>
       </div>
-      <div className={classes.toGo} id="SA">
+      <div className={classes.toGo} id='SA'>
         <Zoom>
           <ImageCard feature={features[2]} />
         </Zoom>
       </div>
-      <div className={classes.toGo} id="News">
+      <div className={classes.toGo} id='News'>
         <Zoom>
           <ImageCard feature={features[3]} />
         </Zoom>

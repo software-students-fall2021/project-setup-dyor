@@ -12,3 +12,8 @@
   padding-left: 4%;
   padding-top: 5%;
 }
+
+.circularProgress {
+  display: flex;
+  justify-content: center;
+}
