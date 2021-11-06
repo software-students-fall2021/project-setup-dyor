@@ -109,50 +109,50 @@ export function PortfolioPage() {
       ...prevUserData,
     ]);
   };
-
-  return (
-    <Stack
-      direction='column'
-      justifyContent='space-evenly'
-      alignItems='stretch'
-      spacing={2}
-      bgcolor='rgb(230, 248, 246)'>
-      <item>
-        <Typography
-          weight='bolder'
-          color='primary'
-          variant='h4'
-          className={styles.heading}>
-          Portfolio
-        </Typography>
-      </item>
-      <item>
-        <Paper elevation={2} className={styles.stackItem}>
-          <PortfolioTable
-            userID={userID}
-            pricesData={coinPrices}
-            userData={userData}
-            coinNameToSymbolDict={coinNameToSymbolDict}
-            onClick={onAddNewAssetButtonClickHandler}></PortfolioTable>
-        </Paper>
-      </item>
-      <item>
-        <Paper
-          elevation={2}
-          className={`${styles.stackItem} ${
-            newAssetAdditionPending ? "" : styles.hidden
-          }`}>
-          <AddAssetForm
-            coinLabels={coinLabels}
-            onAddNewAssetHandler={addNewUserAssetData}
-            onSubmit={onSubmitNewAssetButtonClickHandler}></AddAssetForm>
-        </Paper>
-      </item>
-      <item>
-        <Paper elevation={2} className={styles.stackItem}>
-          <DailyGraph></DailyGraph>
-        </Paper>
-      </item>
-    </Stack>
-  );
+  
+    return (
+        <Stack
+            direction="column"
+            justifyContent="space-evenly"
+            alignItems="stretch"
+            spacing={2}
+            bgcolor="rgb(230, 248, 246)"
+        >
+            <item>
+                <Typography
+                    weight="bolder"
+                    color="primary"
+                    variant="h4"
+                    className={styles.heading}
+                >
+                    Portfolio
+                </Typography>
+            </item>
+            <item>
+                <Paper elevation={2} className={styles.stackItem}>
+                    <PortfolioTable
+                        userID={userID}
+                        pricesData={coinPrices}
+                        userData={userData}
+                        coinNameToSymbolDict={coinNameToSymbolDict}
+                        onClick={onAddNewAssetButtonClickHandler}
+                    ></PortfolioTable>
+                </Paper>
+            </item>
+            <item>
+                <Paper
+                    elevation={2}
+                    className={`${styles.stackItem} ${
+                        newAssetAdditionPending ? "" : styles.hidden
+                    }`}
+                >
+                    <AddAssetForm
+                        coinLabels={coinLabels}
+                        onAddNewAssetHandler={addNewUserAssetData}
+                        onSubmit={onSubmitNewAssetButtonClickHandler}
+                    ></AddAssetForm>
+                </Paper>
+            </item>
+        </Stack>
+    );
 }
