@@ -16,13 +16,11 @@ app.use(express.urlencoded({ extended: true })); // decode url-encoded incoming 
 
 // route for HTTP GET requests to the root document
 app.get("/", (req, res) => {
-    res.status(200).json({ message: "Root: Hello, world!" });
+  res.status(200).json({ message: "Root: Hello, world!" });
 });
 
 //Importing and Using the userData route
 const userRouter = require("./routes/userData");
-const newsRouter = require("./routes/getNews")
-const socialRouter = require("./routes/getSocials")
 
 app.use("/userData", userRouter);
 
@@ -40,7 +38,10 @@ app.use("/coinPriceTimeSeries", coinPriceTimeSeriesRouter);
 const coinPresentPriceAndChangeRouter = require("./routes/coinPresentPriceAndChange");
 app.use("/coinPresentPriceAndChange", coinPresentPriceAndChangeRouter);
 
-const newsRouter = require("./routes/getNews")
+//General news and social media filters
+const newsRoutes = require("./routes/getNews");
+const newsRouter = newsRoutes.router;
+const socialRouter = require("./routes/getSocials");
 app.use("/news", newsRouter);
 app.use("/social", socialRouter);
 

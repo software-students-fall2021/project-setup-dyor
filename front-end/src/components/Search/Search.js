@@ -2,27 +2,18 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-export default function ComboBox({coin, currentCoin}) {
-  
+export default function ComboBox({ coins, changeCoin, currentCoin }) {
   return (
     <Autocomplete
-      value={coin}
+      value={currentCoin}
       onChange={(event, newValue) => {
-        currentCoin(newValue);
+        changeCoin(newValue.label);
       }}
       disablePortal
       id='combo-box-demo'
-      options={userCoin}
+      options={coins}
       sx={{ width: 300 }}
       renderInput={(params) => <TextField {...params} label='Your Coin' />}
     />
   );
 }
-
-const userCoin = [
-  { label: "Bitcoin" },
-  { label: "Etherium" },
-  { label: "Shiba" },
-  { label: "Dodge" },
-  { label: "Litecoin" },
-];

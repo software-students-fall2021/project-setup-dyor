@@ -14,3 +14,13 @@
 .bgColor {
   background-color: rgb(230, 248, 246);
 }
+
+.circularProgress {
+  display: flex;
+  justify-content: center;
+}
+
+.progressBar {
+  align-self: center;
+  margin-top: 100px;
+}
