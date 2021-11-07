@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 const database = require("../data");
-var { userAssets, assetNews, allImages } = database;
+var { cryptoSymbols, assetNews, allImages } = database;
 
 const coins = [];
 
@@ -11,8 +11,9 @@ router.get("/crypto", (req, res) => {
   if (database.cryptoNews.length === 0) {
     const articles = async () => {
       const isSucces = await getCryptoNews();
-      if (isSucces === true)
-        res.status(200).json({ data: database.cryptoNews });
+      if (isSucces === true) {
+        res.status(200).json(database.cryptoNews);
+      }
       else res.status(500).send("Could not get data from API");
     };
     articles();
@@ -42,8 +43,7 @@ router.get("/images", (req, res) => {
       else res.status(500).send("Could not get data from API");
     };
     images();
-  }
-  else {
+  } else {
     res.status(200).json(allImages);
   }
 });
@@ -66,7 +66,7 @@ const getImages = async () => {
         console.log("No response from API", err.response.status);
       }
     });
-  
+
   return isSucces;
 };
 
@@ -93,8 +93,8 @@ const getCryptoNews = async () => {
 };
 
 const getArticles = async () => {
-  for (let i = 0; i < userAssets.length; ++i) {
-    coins.push(userAssets[i].id);
+  for (let i = 0; i < cryptoSymbols.length; ++i) {
+    coins.push(cryptoSymbols[i].name);
   }
 
   // const date = new Date("2021-10-26");
@@ -107,10 +107,10 @@ const getArticles = async () => {
     .then((res) => {
       let j = 0;
       assetNews["cryptocurrency"] = res.data.slice(j, j + 10);
-      j = j + 10;
+      j = j + 5;
       for (let i = 0; i < coins.length; ++i) {
-        assetNews[coins[i]] = res.data.slice(j, j + 20);
-        j = j + 20;
+        assetNews[coins[i]] = res.data.slice(j, j + 10);
+        j = (j + 10) % 1000;
       }
       isSucces = true;
     })
@@ -124,4 +124,8 @@ const getArticles = async () => {
   return isSucces;
 };
 
-module.exports = router;
+var newsRoutes = (module.exports = {
+  router: router,
+  getCryptoNews: getCryptoNews
+});
+

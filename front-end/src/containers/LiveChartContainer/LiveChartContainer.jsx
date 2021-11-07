@@ -7,12 +7,7 @@ export const LiveChartContainer = (props) => {
     let coinArg = coinName + "USDT";
     return (
         <Paper elevation={2} style={{ borderRadius: "15px" }}>
-            <TradingViewWidget
-                symbol={coinArg}
-                width="320"
-                height="300"
-                style="1"
-            />
+            <TradingViewWidget symbol={coinArg} width={320} height={300} />
         </Paper>
     );
 };
