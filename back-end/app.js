@@ -45,4 +45,9 @@ const socialRouter = require("./routes/getSocials");
 app.use("/news", newsRouter);
 app.use("/social", socialRouter);
 
+//Routing for NFA
+const wordCloudRoute = require("./routes/nfa.js");
+// //Routes for wordcloud
+app.use("/nfa", wordCloudRoute);
+
 module.exports = app;
