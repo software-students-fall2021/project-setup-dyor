@@ -5,7 +5,7 @@ class OwnedAsset {
         this.quantityPurchased = quantityPurchased;
         this.unitPrice = unitPrice;
         const [year, month, day] = datePurchased.split("/").reverse();
-        this.datePurchased = Date(year, month, day);
+        this.datePurchased = new Date(year, month, day);
     }
 }
 
@@ -21,9 +21,9 @@ const Users = [
         data: {
             email: "john@gmail.com",
             assets: [
-                new OwnedAsset("Bitcoin", 2, 30000, "10/05/2021"),
-                new OwnedAsset("Ethereum", 20, 2000, "12/06/2021"),
-                new OwnedAsset("Polkadot", 2, 30, "13/08/2021"),
+                new OwnedAsset("Bitcoin", 2, 30000, "10/05/2020"),
+                new OwnedAsset("Ethereum", 20, 2000, "12/06/2020"),
+                new OwnedAsset("Polkadot", 2, 30, "13/08/2020"),
             ],
             password: "123456",
         },
