@@ -106,8 +106,6 @@ const getArticles = async () => {
     .get(url)
     .then((res) => {
       let j = 0;
-      assetNews["cryptocurrency"] = res.data.slice(j, j + 10);
-      j = j + 5;
       for (let i = 0; i < coins.length; ++i) {
         assetNews[coins[i]] = res.data.slice(j, j + 10);
         j = (j + 10) % 1000;

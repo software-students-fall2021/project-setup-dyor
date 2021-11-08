@@ -32,7 +32,7 @@ export default function SettingsPage({ logoutHandler }) {
   return (
     <Box className='settings'>
       <h2 className='settingsTitle'>Settings</h2>
-      <Paper className='settingsTile user' elevation={3}>
+      <Paper className='settingsTile user' elevation={0}>
         <h4 className='userEmail'>johndoe@dyor.com</h4>
         <Link className='link' to='/resetPassword'>
           <IconButton
@@ -45,7 +45,7 @@ export default function SettingsPage({ logoutHandler }) {
           </IconButton>
         </Link>
       </Paper>
-      <Paper className='settingsTile tools' elevation={3}>
+      <Paper className='settingsTile tools' elevation={0}>
         <Box className='setting notifications'>
           <Box className='iconAndLabel'>
             <NotificationsIcon className='notification-icon' />
@@ -85,7 +85,7 @@ export default function SettingsPage({ logoutHandler }) {
           />
         </Box>
       </Paper>
-      <Paper className='settingsTile user' elevation={3}>
+      <Paper className='settingsTile user' elevation={0}>
         <Box className='iconAndLabel'>
           <HelpCenterIcon className='notification-icon' />
           <h4 className='label'>Help Center</h4>
@@ -101,7 +101,7 @@ export default function SettingsPage({ logoutHandler }) {
           </Link>
         </IconButton>
       </Paper>
-      <Paper className='settingsTile user' elevation={3}>
+      <Paper className='settingsTile user' elevation={0}>
         <h4 className='logout'>Logout</h4>
         <IconButton
           className='settingsArrow'
@@ -114,7 +114,7 @@ export default function SettingsPage({ logoutHandler }) {
           </Link>
         </IconButton>
       </Paper>
-      <Paper className='settingsTile user' elevation={3}>
+      <Paper className='settingsTile user' elevation={0}>
         <h4 className='deleteAccount'>Delete Account</h4>
         <IconButton
           className='settingsArrow'
