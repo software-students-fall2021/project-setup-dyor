@@ -35,7 +35,7 @@ describe("SOCIALS", () => {
     }).timeout(4000);
 
     it("Should return status=404 and appropiate error message for invalid coin", async () => {
-      const coin = "xyz";
+      const coin = "XYZ";
       const res = await request(app).get(`/social/twitter/${coin}`);
       expect(res.status).to.equal(404);
       expect(res.body).to.be.an("object");

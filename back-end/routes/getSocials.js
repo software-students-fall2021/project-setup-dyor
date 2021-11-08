@@ -3,8 +3,8 @@ const needle = require("needle");
 const axios = require("axios");
 const router = express.Router();
 const database = require("../data");
-const { getCryptoNews } = require("./getNews");
-const { cryptoSymbols, cryptoNews } = database;
+const {crypto } = require("./getNews");
+const { cryptoNews, socials} = database;
 
 router.get("/:media/:id", (req, res) => {
   let coin = req.params.id;
@@ -24,15 +24,8 @@ router.get("/:media/:id", (req, res) => {
   }
 
   //Represent if the coin was found in the list of coins
-  coin = coin.toLowerCase();
-  for (let i = 0; i < cryptoSymbols.length; ++i) {
-    const sym = database.cryptoSymbols[i];
-    if (coin.toLowerCase() == sym.symbol.toLowerCase()) {
-      asset = sym;
-      index = i;
-      break;
-    }
-  }
+  coin = coin.toUpperCase();
+  asset = socials[coin];
   if (asset === undefined) {
     res.status(404).json({
       message: `INVALID POST REQUEST, coin ${coin} NOT FOUND.`,
@@ -44,39 +37,37 @@ router.get("/:media/:id", (req, res) => {
       if (asset.tweets.length === 0) {
         const tweets = async () => {
           const endpoint = "https://api.twitter.com/2/tweets/search/recent";
-          const isSucces = await getTweets(endpoint, coin, asset.name, index);
+          const isSucces = await getTweets(endpoint, coin, asset.name);
           if (isSucces === true) {
-            cryptoSymbols[index].fb = [
-              ...database.cryptoNews,
-              ...database.cryptoNews,
-            ];
-            res.status(200).json(cryptoSymbols[index].fb);
+            res.status(200).json(socials[coin].tweets);
+          }
+          else {
+            res.status(500).json({
+              message: "Could not get data from API",
+            })
           }
         };
         tweets();
       } else {
-        res.status(200).json(cryptoSymbols[index].tweets);
+        res.status(200).json(asset.tweets);
       }
     } else if (social === "facebook") {
       if (asset.fb.length === 0) {
         if (cryptoNews.length !== 0) {
-          cryptoSymbols[index].fb = [...cryptoNews, ...cryptoNews];
-          res.status(200).json(cryptoSymbols[index].fb);
+          asset.fb = database.cryptoNews;
+          res.status(200).json(asset.fb);
         } else {
           const fb = async () => {
-            const isSucces = await getCryptoNews();
+            const isSucces = await crypto();
             if (isSucces === true) {
-              cryptoSymbols[index].fb = [
-                ...database.cryptoNews,
-                ...database.cryptoNews,
-              ];
-              res.status(200).json(cryptoSymbols[index].fb);
+              asset.fb = database.cryptoNews;
+              res.status(200).json(asset.fb);
             }
           };
           fb();
         }
       } else {
-        res.status(200).json(cryptoSymbols[index].fb);
+        res.status(200).json(asset.fb);
       }
     } else {
       res.status(404).json({
@@ -95,7 +86,7 @@ router.get("/:media/:id", (req, res) => {
 // };
 
 //Get Tweets
-const getTweets = async (endpoint, shortForm, coin, index) => {
+const getTweets = async (endpoint, shortForm, coin) => {
   const token = process.env.TWITTER_BEARER_TOKEN;
   const query = `(#${coin} OR #${shortForm}) lang:en -is:retweet -is:reply is:verified`;
   let isSucces = false;
@@ -145,14 +136,14 @@ const getTweets = async (endpoint, shortForm, coin, index) => {
       const author = tweet.author_id;
       if (map.has(author)) {
         authorDetails = map.get(author);
-        cryptoSymbols[index].tweets.push({
+        socials[shortForm].tweets.push({
           name: authorDetails[0],
           username: authorDetails[1],
           tweet: tweet.text,
           url: url,
         });
       } else {
-        cryptoSymbols[index].tweets.push({
+        socials[shortForm].tweets.push({
           name: tweet.author_id,
           username: tweet.author_id,
           tweet: tweet.text,

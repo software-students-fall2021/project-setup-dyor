@@ -10,7 +10,82 @@ class OwnedAsset {
 }
 
 //News Data
-var assetNews = {};
+var assetNews = {}
+var assetSocials = {
+  BTC: {
+    name: "Bitcoin",
+    tweets: [],
+    fb: [],
+    news: [],
+  },
+  ETH: {
+    name: "Ethereum",
+    tweets: [],
+    fb: [],
+    news: [],
+  },
+  BNB: {
+    name: "Binance Coin",
+    tweets: [],
+    fb: [],
+    news: [],
+  },
+  USDT: {
+    name: "Tether",
+    tweets: [],
+    fb: [],
+    news: [],
+  },
+  SOL: {
+    name: "Solana",
+    tweets: [],
+    fb: [],
+    news: [],
+  },
+  ADA: {
+    name: "Cardano",
+    tweets: [],
+    fb: [],
+    news: [],
+  },
+  XRP: {
+    name: "XRP",
+    tweets: [],
+    fb: [],
+    news: [],
+  },
+  DOT: {
+    name: "Polkadot",
+    tweets: [],
+    fb: [],
+    news: [],
+  },
+  SHIB: {
+    name: "SHIBA INU",
+    tweets: [],
+    fb: [],
+    news: [],
+  },
+  DOGE: {
+    name: "Dogecoin",
+    tweets: [],
+    fb: [],
+    news: [],
+  },
+  USDC: {
+    name: "USD Coin",
+    tweets: [],
+    fb: [],
+    news: [],
+  },
+  LTC: {
+    name: "Litecoin",
+    tweets: [],
+    fb: [],
+    news: [],
+  },
+};
+
 var cryptoNews = [];
 var allImages = [];
 
@@ -836,6 +911,7 @@ const cryptoSymbolsData = [
 
 var database = (module.exports = {
   assetNews: assetNews,
+  socials: assetSocials,
   cryptoNews: cryptoNews,
   allImages: allImages,
   cryptoSymbols: cryptoSymbolsData,
