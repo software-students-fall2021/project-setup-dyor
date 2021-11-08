@@ -11,7 +11,7 @@ import ComboBox from "../../components/Search/Search";
 import NFASocialMedia from "../../components/NFASocialMedia/NFASocialMedia";
 import { NFATable } from "../../components/NFATable/NFATable";
 import styles from "./NFA.module.css";
-import { userDataURL } from "../../back-end_routes";
+import { userAssetDataURL } from "../../back-end_routes";
 
 class OwnedAsset {
   constructor(id, quantityPurchased, unitPrice, datePurchased) {
@@ -105,7 +105,7 @@ export default function NFA() {
   useEffect(() => {
     //this will initiate a reach out to the websocket for dynamic prices
     pricesWebSocket.current = new WebSocket(
-      "wss://ws.coincap.io/prices?assets=ALL"
+      "wss://ws.coincap.io/prices?assets=ALL",
     );
 
     pricesWebSocket.current.onerror = (event) => {
@@ -122,7 +122,7 @@ export default function NFA() {
         }));
         const tickersDict = dataArr.reduce(
           (a, x) => ({ ...a, [x.id]: x.label }),
-          {}
+          {},
         );
         setTickers(() => tickersDict);
       })
@@ -133,7 +133,7 @@ export default function NFA() {
 
     //this will request the data pertaining to a particular user
     axios
-      .request(userDataURL, {
+      .request(userAssetDataURL, {
         params: {
           userID,
         },

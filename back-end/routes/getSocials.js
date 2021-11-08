@@ -46,9 +46,11 @@ router.get("/:media/:id", (req, res) => {
           const endpoint = "https://api.twitter.com/2/tweets/search/recent";
           const isSucces = await getTweets(endpoint, coin, asset.name, index);
           if (isSucces === true) {
-            res.status(200).json(cryptoSymbols[index].tweets);
-          } else {
-            res.status(500).send("Could not get data from API");
+            cryptoSymbols[index].fb = [
+              ...database.cryptoNews,
+              ...database.cryptoNews,
+            ];
+            res.status(200).json(cryptoSymbols[index].fb);
           }
         };
         tweets();

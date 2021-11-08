@@ -9,24 +9,24 @@ export default function Article({ article, images }) {
 
   let index = Math.floor(Math.random() * 19);
   return (
-    <Paper variant='outlined' className='article_paper'>
-      <article className='article_content'>
-        <div className='image'>
+    <Paper variant="outlined" className="article_paper">
+      <article className="article_content">
+        <div className="image">
           <img
-            className='article_image'
+            className="article_image"
             src={images[index]}
-            alt='A crypto coin'
+            alt="A crypto coin"
           />
         </div>
-        <div className='description'>
-          <h4 className='article_title'>
-            <a href='https://www.coindesk.com/' target='blank'>
+        <div className="description">
+          <h4 className="article_title">
+            <a href="https://www.coindesk.com/" target="blank">
               {article.title}
             </a>
           </h4>
-          <h5 className='extract_title'>{article.author}</h5>
+          <h5 className="extract_title">{article.author}</h5>
           <p
-            className='article_story'
+            className="article_story"
             dangerouslySetInnerHTML={parseHtml(article.description)}
           />
         </div>

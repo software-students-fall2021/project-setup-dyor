@@ -24,18 +24,18 @@ export default function NewsTile({ articleTiles, coin, number, images }) {
   return (
     <>
       {!isLoading && (
-        <div className='news'>
-          <div className='news_content'>
-            <div className='news_header'>
-              <div className='news_type'>
-                <h3 className='news_title'>{coin.toUpperCase()}</h3>
-                <span id='news_dropdown'>
+        <div className="news">
+          <div className="news_content">
+            <div className="news_header">
+              <div className="news_type">
+                <h3 className="news_title">{coin.toUpperCase()}</h3>
+                <span id="news_dropdown">
                   <DropDownMenu
                     selectedValue={num}
-                    label='Articles'
+                    label="Articles"
                     set={setNum}
                     options={options}
-                    className='dropdown_menu'
+                    className="dropdown_menu"
                   />
                 </span>
               </div>

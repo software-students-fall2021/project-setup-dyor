@@ -62,13 +62,13 @@ router.get("/", (req, res) => {
     if (getUser) {
       if (assetID) {
         const getAsset = getUser.data.assets.find(
-          (asset) => asset.id === assetID
+          (asset) => asset.id === assetID,
         );
         if (getAsset) {
           res.status(200).json(getAsset);
         } else {
           console.log(
-            `INVALID GET REQUEST, assetID ${assetID} for userID ${userID} NOT FOUND.`
+            `INVALID GET REQUEST, assetID ${assetID} for userID ${userID} NOT FOUND.`,
           );
           res.status(500).json({
             message: `INVALID GET REQUEST, assetID ${assetID} for userID ${userID} NOT FOUND.`,
@@ -84,9 +84,9 @@ router.get("/", (req, res) => {
       });
     }
   } else {
-    console.log(`INVALID GET REQUEST, userID IS REQUIRED PARAMETERS`);
+    console.log(`INVALID GET REQUEST, userID IS REQUIRED PARAMETER`);
     res.status(500).json({
-      message: `INVALID GET REQUEST, userID IS REQUIRED PARAMETERS`,
+      message: `INVALID GET REQUEST, userID IS REQUIRED PARAMETER`,
     });
   }
 });

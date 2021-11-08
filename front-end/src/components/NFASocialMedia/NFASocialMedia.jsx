@@ -30,32 +30,35 @@ export default function NFASocialMedia({ posts }) {
     <>
       <Stack
         sx={{ padding: "5%" }}
-        direction='column'
-        justifyContent='center'
-        alignItems='stretch'
-        spacing={0.5}>
+        direction="column"
+        justifyContent="center"
+        alignItems="stretch"
+        spacing={0.5}
+      >
         <div>
           {articles.map((post) => (
             <NFASocialMediaTile article={post} />
           ))}
         </div>
-        <div className='readmore'>
+        <div className="readmore">
           <IconButton
-            className='expandmore'
-            edge='start'
-            color='info'
-            aria-label='menu'
+            className="expandmore"
+            edge="start"
+            color="info"
+            aria-label="menu"
             onClick={() => readMore("more")}
-            sx={{ mr: 2 }}>
+            sx={{ mr: 2 }}
+          >
             <ExpandMoreIcon />
           </IconButton>
           <IconButton
-            className='expandless'
-            edge='start'
-            color='warning'
-            aria-label='menu'
+            className="expandless"
+            edge="start"
+            color="warning"
+            aria-label="menu"
             onClick={() => readMore("less")}
-            sx={{ mr: 2 }}>
+            sx={{ mr: 2 }}
+          >
             <ExpandLessIcon />
           </IconButton>
         </div>

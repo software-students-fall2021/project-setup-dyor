@@ -30,100 +30,104 @@ export default function SettingsPage({ logoutHandler }) {
   const [region, setRegion] = React.useState("Asia");
 
   return (
-    <Box className='settings'>
-      <h2 className='settingsTitle'>Settings</h2>
-      <Paper className='settingsTile user' elevation={0}>
-        <h4 className='userEmail'>johndoe@dyor.com</h4>
-        <Link className='link' to='/resetPassword'>
+    <Box className="settings">
+      <h2 className="settingsTitle">Settings</h2>
+      <Paper className="settingsTile user" elevation={0}>
+        <h4 className="userEmail">johndoe@dyor.com</h4>
+        <Link className="link" to="/resetPassword">
           <IconButton
-            className='settingsArrow'
-            edge='start'
-            color='inherit'
-            aria-label='menu'
-            sx={{ mr: 2 }}>
+            className="settingsArrow"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
             <ArrowForwardIosIcon />
           </IconButton>
         </Link>
       </Paper>
-      <Paper className='settingsTile tools' elevation={0}>
-        <Box className='setting notifications'>
-          <Box className='iconAndLabel'>
-            <NotificationsIcon className='notification-icon' />
-            <span className='label'>Notifications</span>
+      <Paper className="settingsTile tools" elevation={0}>
+        <Box className="setting notifications">
+          <Box className="iconAndLabel">
+            <NotificationsIcon className="notification-icon" />
+            <span className="label">Notifications</span>
           </Box>
           <Switch
-            className='handle'
+            className="handle"
             checked={isSwitched}
             onChange={() => setIsSwitched(!isSwitched)}
             inputProps={{ "aria-label": "controlled" }}
           />
         </Box>
-        <Divider variant='inset' />
-        <Box className='setting currency'>
-          <Box className='iconAndLabel'>
-            <LocalAtmIcon className='notification-icon' />
-            <span className='label'>Currency</span>
+        <Divider variant="inset" />
+        <Box className="setting currency">
+          <Box className="iconAndLabel">
+            <LocalAtmIcon className="notification-icon" />
+            <span className="label">Currency</span>
           </Box>
           <DropDownMenu
-            className='handle'
+            className="handle"
             selectedValue={currency}
             options={Currencies}
             set={setCurrency}
           />
         </Box>
-        <Divider variant='inset' />
-        <Box className='setting regions'>
-          <Box className='iconAndLabel'>
-            <LanguageIcon className='notification-icon' />
-            <span className='label'>News Region</span>
+        <Divider variant="inset" />
+        <Box className="setting regions">
+          <Box className="iconAndLabel">
+            <LanguageIcon className="notification-icon" />
+            <span className="label">News Region</span>
           </Box>
           <DropDownMenu
-            className='handle'
+            className="handle"
             selectedValue={region}
             options={regions}
             set={setRegion}
           />
         </Box>
       </Paper>
-      <Paper className='settingsTile user' elevation={0}>
-        <Box className='iconAndLabel'>
-          <HelpCenterIcon className='notification-icon' />
-          <h4 className='label'>Help Center</h4>
+      <Paper className="settingsTile user" elevation={0}>
+        <Box className="iconAndLabel">
+          <HelpCenterIcon className="notification-icon" />
+          <h4 className="label">Help Center</h4>
         </Box>
         <IconButton
-          className='settingsArrow'
-          edge='start'
-          color='inherit'
-          aria-label='menu'
-          sx={{ mr: 2 }}>
-          <Link className='link' to='/helpCenter'>
+          className="settingsArrow"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+        >
+          <Link className="link" to="/helpCenter">
             <ArrowForwardIosIcon />
           </Link>
         </IconButton>
       </Paper>
-      <Paper className='settingsTile user' elevation={0}>
-        <h4 className='logout'>Logout</h4>
+      <Paper className="settingsTile user" elevation={0}>
+        <h4 className="logout">Logout</h4>
         <IconButton
-          className='settingsArrow'
-          edge='start'
-          color='inherit'
-          aria-label='menu'
-          sx={{ mr: 2 }}>
-          <Link className='link' to='/'>
+          className="settingsArrow"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+        >
+          <Link className="link" to="/">
             <LogoutIcon onClick={logoutHandler} />
           </Link>
         </IconButton>
       </Paper>
-      <Paper className='settingsTile user' elevation={0}>
-        <h4 className='deleteAccount'>Delete Account</h4>
+      <Paper className="settingsTile user" elevation={0}>
+        <h4 className="deleteAccount">Delete Account</h4>
         <IconButton
-          className='settingsArrow'
-          edge='start'
-          color='inherit'
-          aria-label='menu'
-          sx={{ mr: 2 }}>
-          <Link to='/signupPage'>
-            <DeleteIcon color='warning' />
+          className="settingsArrow"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+        >
+          <Link to="/signupPage">
+            <DeleteIcon color="warning" />
           </Link>
         </IconButton>
       </Paper>
