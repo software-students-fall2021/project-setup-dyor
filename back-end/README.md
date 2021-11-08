@@ -9,10 +9,13 @@ Run `nodemon server` in terminal.
 ```
 
 - Start the front-end (React.js)
+
+```
 In another terminal, change directory to front-end folder
 Run `npm install` to install all dependencies.
 Run `npm start` to load the front-end.
 You should be redirected to your default browser.
+```
 
 
 ## Instructions for Developers
