@@ -7,8 +7,8 @@ var { cryptoSymbols, assetNews, allImages } = database;
 const coins = [];
 
 //Get news from mockaroo (Mocking it for the time being)
-router.get("/crypto", (req, res) => {
-  if (database.cryptoNews.length === 0) {
+router.get("/", (req, res) => {
+  if (Object.keys(assetNews).length === 0) {
     const articles = async () => {
       const isSucces = await getCryptoNews();
       if (isSucces === true) {
@@ -17,20 +17,47 @@ router.get("/crypto", (req, res) => {
     };
     articles();
   } else {
-    res.status(200).send(database.cryptoNews);
+    res.status(200).json(assetNews);
   }
 });
 
-router.get("/", (req, res) => {
-  if (Object.keys(assetNews).length === 0) {
+router.get("/asset/:coin", (req, res) => {
+  let asset = req.params.coin;
+  let flag = false;
+  for (let i = 0; i < cryptoSymbols.length; ++i) {
+    if (cryptoSymbols[i].name.toLowerCase() === asset.toLowerCase()) {
+      flag = true;
+      break;
+    }
+  }
+  if (flag) {
+    if (database.cryptoNews.length === 0) {
+      const articles = async () => {
+        const isSucces = await getArticles();
+        if (isSucces === true) {
+          res.status(200).json(database.assetNews[asset]);
+        } else res.status(500).send("Could not get data from API");
+      };
+      articles();
+    } else {
+      res.status(200).send(database.cryptoNews);
+    }
+  } else {
+    res.status(404).send("Page not found");
+  }
+});
+
+router.get("/crypto", (req, res) => {
+  if (database.cryptoNews.length === 0) {
     const articles = async () => {
-      const isSucces = await getArticles();
-      if (isSucces === true) res.status(200).json(assetNews);
-      else res.status(500).send("Could not get data from API");
+      const isSucces = await getCrytoNews();
+      if (isSucces === true) {
+        res.status(200).json(database.cryptoNews);
+      } else res.status(500).send("Could not get data from API");
     };
     articles();
   } else {
-    res.status(200).json(assetNews);
+    res.status(200).send(database.cryptoNews);
   }
 });
 
@@ -69,7 +96,7 @@ const getImages = async () => {
   return isSucces;
 };
 
-const getCryptoNews = async () => {
+const getCrytoNews = async () => {
   database.cryptoNews = [];
   const url = "https://my.api.mockaroo.com/crypto.json?key=9371d6e0";
   let isSucces = false;
@@ -93,7 +120,7 @@ const getCryptoNews = async () => {
 
 const getArticles = async () => {
   for (let i = 0; i < cryptoSymbols.length; ++i) {
-    coins.push(cryptoSymbols[i].name);
+    coins.push(cryptoSymbols[i].name.toLowerCase());
   }
 
   // const date = new Date("2021-10-26");
@@ -123,5 +150,7 @@ const getArticles = async () => {
 
 var newsRoutes = (module.exports = {
   router: router,
-  getCryptoNews: getCryptoNews,
+  getCrytoNews: getCrytoNews,
+  getAllNews: getArticles,
+  getImages: getImages,
 });
