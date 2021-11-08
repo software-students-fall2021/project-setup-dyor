@@ -13,13 +13,13 @@ router.get("/:media/:id", (req, res) => {
   let asset = undefined;
 
   if (coin === undefined) {
-    res.status(500).json({
-      message: `INVALID POST REQUEST, coin undefined.`,
+    res.status(404).json({
+      message: "Page not found",
     });
   }
   if (social === undefined) {
-    res.status(500).json({
-      message: `INVALID POST REQUEST, social media undefined.`,
+    res.status(404).json({
+      message: "Page not found",
     });
   }
 
@@ -34,46 +34,52 @@ router.get("/:media/:id", (req, res) => {
     }
   }
   if (asset === undefined) {
-    console.log(`INVALID POST REQUEST, userID ${userID} NOT FOUND.`);
-    res.status(500).json({
+    res.status(404).json({
       message: `INVALID POST REQUEST, coin ${coin} NOT FOUND.`,
     });
-  }
-
-  //If no social media
-  social = social.toLowerCase();
-  if (social.toLowerCase() === "twitter") {
-    if (asset.tweets.length === 0) {
-      const tweets = async () => {
-        const endpoint = "https://api.twitter.com/2/tweets/search/recent";
-        const isSucces = await getTweets(endpoint, coin, asset.name, index);
-        if (isSucces === true) {
-          res.status(200).json(cryptoSymbols[index].tweets);
-        } else {
-          res.status(500).send("Could not get data from API");
-        }
-      };
-      tweets();
-    } else {
-      res.status(200).json(cryptoSymbols[index].tweets);
-    }
   } else {
-    if (asset.fb.length === 0) {
-      if (cryptoNews.length !== 0) {
-        cryptoSymbols[index].fb = [...cryptoNews, ...cryptoNews];
-        res.status(200).json(cryptoSymbols[index].fb);
-      } else {
-        const fb = async () => {
-          const isSucces = await getCryptoNews();
+    //If no social media
+    social = social.toLowerCase();
+    if (social.toLowerCase() === "twitter") {
+      if (asset.tweets.length === 0) {
+        const tweets = async () => {
+          const endpoint = "https://api.twitter.com/2/tweets/search/recent";
+          const isSucces = await getTweets(endpoint, coin, asset.name, index);
           if (isSucces === true) {
-            cryptoSymbols[index].fb = [...database.cryptoNews, ...database.cryptoNews];
-            res.status(200).json(cryptoSymbols[index].fb);
+            res.status(200).json(cryptoSymbols[index].tweets);
+          } else {
+            res.status(500).send("Could not get data from API");
           }
         };
-        fb();
+        tweets();
+      } else {
+        res.status(200).json(cryptoSymbols[index].tweets);
+      }
+    } else if (social === "facebook") {
+      if (asset.fb.length === 0) {
+        if (cryptoNews.length !== 0) {
+          cryptoSymbols[index].fb = [...cryptoNews, ...cryptoNews];
+          res.status(200).json(cryptoSymbols[index].fb);
+        } else {
+          const fb = async () => {
+            const isSucces = await getCryptoNews();
+            if (isSucces === true) {
+              cryptoSymbols[index].fb = [
+                ...database.cryptoNews,
+                ...database.cryptoNews,
+              ];
+              res.status(200).json(cryptoSymbols[index].fb);
+            }
+          };
+          fb();
+        }
+      } else {
+        res.status(200).json(cryptoSymbols[index].fb);
       }
     } else {
-      res.status(200).json(cryptoSymbols[index].fb);
+      res.status(404).json({
+        message: `Page not found`,
+      });
     }
   }
 });
