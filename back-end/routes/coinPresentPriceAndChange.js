@@ -46,11 +46,15 @@ router.get("/:coinID", (req, res) => {
     .request(`https://api.coincap.io/v2/assets/${coinID}`)
     .then((response) => {
       console.log(`coinID = ${coinID}`);
-      const presentPriceAndChange = {
-        price: response.data.data.priceUsd,
-        priceChange: response.data.data.changePercent24Hr,
-      };
-      res.status(200).json(presentPriceAndChange);
+      if (coinID === response.data.data.id) {
+        const presentPriceAndChange = {
+          price: response.data.data.priceUsd,
+          priceChange: response.data.data.changePercent24Hr,
+        };
+        res.status(200).json(presentPriceAndChange);
+      } else {
+        throw err;
+      }
     })
     .catch((err) => {
       console.log(err);
