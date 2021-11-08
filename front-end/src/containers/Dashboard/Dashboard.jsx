@@ -10,10 +10,10 @@ let articles = [];
 let allImages = [];
 
 export default function DashboardPage() {
-    const [isLoading, setLoading] = React.useState(true);
-    const [getImages, setgetImages] = React.useState(true);
-  
-   React.useEffect(() => {
+  const [isLoading, setLoading] = React.useState(true);
+  const [getImages, setgetImages] = React.useState(true);
+
+  React.useEffect(() => {
     const getArticles = async () => {
       if (articles.length === 0) {
         await axios
@@ -47,7 +47,7 @@ export default function DashboardPage() {
     getArticles();
     getImagesAPI();
   }, [isLoading, getImages]);
-  
+
   return (
     <>
       <Stack

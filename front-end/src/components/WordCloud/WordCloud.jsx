@@ -1,25 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Paper from "@mui/material/Paper";
 import "./WordCloud.css";
 
 function WordCloud() {
-  const [wordCloud, setWordCloud] = useState();
-  const getWordCloud = async () => {
-    const url = `https://quickchart.io/wordcloud?text=This girl is on fire.&format=png`;
-    const res = await axios.get(url);
-    setWordCloud(res);
-    // console.log("The returned image", res);
-  };
+  const canvasA = useRef(null);
 
   useEffect(() => {
-    getWordCloud();
+    // getting the wordcloud
+    const image = new Image();
+    const canvas = canvasA.current.getContext("2d");
+
+    axios
+      .get("/nfa/wordcloud")
+      .then((res) => {
+        image.src = res.data["data"];
+      })
+      .catch((err) => {
+        return err;
+      });
+
+    image.onload = () => {
+      canvas.drawImage(image, 0, 0);
+    };
   }, []);
-  const imgSrc = `https://picsum.photos/300/200`;
+
   return (
     <>
       <Paper variant="outlined" className="fill">
-        <img alt="random for now" src={imgSrc} className="wordCloudImage" />
+        <canvas ref={canvasA} width={310} height={150} />
       </Paper>
     </>
   );
