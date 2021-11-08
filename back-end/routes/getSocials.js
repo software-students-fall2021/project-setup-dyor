@@ -66,7 +66,10 @@ router.get("/:media/:id", (req, res) => {
         const fb = async () => {
           const isSucces = await getCryptoNews();
           if (isSucces === true) {
-            cryptoSymbols[index].fb = [...database.cryptoNews, ...database.cryptoNews];
+            cryptoSymbols[index].fb = [
+              ...database.cryptoNews,
+              ...database.cryptoNews,
+            ];
             res.status(200).json(cryptoSymbols[index].fb);
           }
         };

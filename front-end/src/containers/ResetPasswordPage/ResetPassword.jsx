@@ -5,7 +5,6 @@ import { Paper } from "@mui/material";
 import style from "../LoginPage/LoginPage.module.css";
 
 const ResetPassword = () => {
-
   return (
     <div className={style.bgColor}>
       <Stack
@@ -24,8 +23,8 @@ const ResetPassword = () => {
               variant="outlined"
               id="email"
               label="Current Password"
-            //   value={}
-            //   onChange={}
+              //   value={}
+              //   onChange={}
             ></TextField>
           </item>
           <item>
@@ -34,8 +33,8 @@ const ResetPassword = () => {
               variant="outlined"
               id="password"
               label="New Password"
-            //   value={}
-            //   onChange={}
+              //   value={}
+              //   onChange={}
             ></TextField>
           </item>
           <item>
@@ -44,8 +43,8 @@ const ResetPassword = () => {
               variant="outlined"
               id="password"
               label="Confirm Password"
-            //   value={}
-            //   onChange={}
+              //   value={}
+              //   onChange={}
             ></TextField>
           </item>
           <div className={style.centerButton}>

@@ -10,21 +10,22 @@ export default function NFASocialMediaTile({ article }) {
 
   return (
     <Box>
-      <Paper variant='outlined' className=''>
-        <article className='article_content'>
-          <div className=''>
-            <h4 className=''>
+      <Paper variant="outlined" className="">
+        <article className="article_content">
+          <div className="">
+            <h4 className="">
               <a
                 href={article.url ?? "https://www.coindesk.com/"}
-                target='blank'>
+                target="blank"
+              >
                 {article.name ?? article.title}
               </a>
             </h4>
-            <h5 className=''>@{article.username ?? article.author}</h5>
+            <h5 className="">@{article.username ?? article.author}</h5>
             <p
-              className=''
+              className=""
               dangerouslySetInnerHTML={parseHtml(
-                article.tweet ?? article.description
+                article.tweet ?? article.description,
               )}
             />
           </div>

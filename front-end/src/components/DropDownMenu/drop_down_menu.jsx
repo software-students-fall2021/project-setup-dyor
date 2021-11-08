@@ -1,12 +1,16 @@
-import * as React from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import './drop_down.css'
+import * as React from "react";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import "./drop_down.css";
 
-export default function DropDownMenu({selectedValue, options, set, label=""}) {
-
+export default function DropDownMenu({
+  selectedValue,
+  options,
+  set,
+  label = "",
+}) {
   const handleChange = (event) => {
     set(event.target.value);
   };
@@ -25,7 +29,7 @@ export default function DropDownMenu({selectedValue, options, set, label=""}) {
           label="Articles"
         >
           {options.map((option) => (
-            <MenuItem className="menu_item" key={option} value={option} >
+            <MenuItem className="menu_item" key={option} value={option}>
               {option}
             </MenuItem>
           ))}
@@ -34,4 +38,3 @@ export default function DropDownMenu({selectedValue, options, set, label=""}) {
     </div>
   );
 }
-
