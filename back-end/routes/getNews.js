@@ -13,8 +13,7 @@ router.get("/crypto", (req, res) => {
       const isSucces = await getCryptoNews();
       if (isSucces === true) {
         res.status(200).json(database.cryptoNews);
-      }
-      else res.status(500).send("Could not get data from API");
+      } else res.status(500).send("Could not get data from API");
     };
     articles();
   } else {
@@ -126,6 +125,5 @@ const getArticles = async () => {
 
 var newsRoutes = (module.exports = {
   router: router,
-  getCryptoNews: getCryptoNews
+  getCryptoNews: getCryptoNews,
 });
-
