@@ -9,7 +9,7 @@ let endpoint;
 // for now using mockaroo to mock the behavior of api
 const getCryptoInfo = async () => {
   database.cryptoData = [];
-  const url = "https://my.api.mockaroo.com/tweets.json?key=9371d6e0";
+  const url = "https://my.api.mockaroo.com/tweets.json?key=a2c1d970";
   let isSucces = false;
 
   await axios
@@ -37,9 +37,16 @@ router.get("/wordcloud", (req, res) => {
     recievedData = await getCryptoInfo();
     if (recievedData === true) {
       tickers = database.cryptoData.map((a) => a.description);
+      endpoint = `https://quickchart.io/wordcloud?text=${tickers}&format=png&width=310&height=150`;
+    } else {
+      res.status(500);
     }
-    endpoint = `https://quickchart.io/wordcloud?text=${tickers}&format=png&width=310&height=150`;
-    res.json({ data: endpoint });
+
+    if (endpoint) {
+      res.status(200).json({ data: endpoint });
+    } else {
+      res.status(500);
+    }
   };
   getData();
 });
