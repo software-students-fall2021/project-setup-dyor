@@ -2,7 +2,7 @@ import * as React from "react";
 import axios from "axios";
 import NewsTile from "../../components/NewsTile/newsTile";
 import { CircularProgress } from "@mui/material";
-import { userDataURL } from "../../back-end_routes";
+import { userAssetDataURL } from "../../back-end_routes";
 import "./newsPage.css";
 
 var articles = {};
@@ -34,7 +34,7 @@ export default function NewsPage() {
   React.useEffect(() => {
     //this will request the data pertaining to a particular user
     axios
-      .request(userDataURL, {
+      .request(userAssetDataURL, {
         params: {
           userID,
         },
@@ -69,15 +69,15 @@ export default function NewsPage() {
   return (
     <>
       {isLoading || getImages ? (
-        <div className='circularProgress'>
+        <div className="circularProgress">
           <CircularProgress
-            className='progressBar'
+            className="progressBar"
             size={100}
             thickness={2.0}
           />
         </div>
       ) : (
-        <div className='newspage'>
+        <div className="newspage">
           {userData.map((data, index) => (
             <NewsTile
               key={index}

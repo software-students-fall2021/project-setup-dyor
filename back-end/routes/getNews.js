@@ -10,9 +10,10 @@ const coins = [];
 router.get("/", (req, res) => {
   if (Object.keys(assetNews).length === 0) {
     const articles = async () => {
-      const isSucces = await getArticles();
-      if (isSucces === true) res.status(200).json(assetNews);
-      else res.status(500).send("Could not get data from API");
+      const isSucces = await getCryptoNews();
+      if (isSucces === true) {
+        res.status(200).json(database.cryptoNews);
+      } else res.status(500).send("Could not get data from API");
     };
     articles();
   } else {

@@ -19,14 +19,14 @@ export default function TopBar() {
           </Box>
           <Box className={styles.settingsIcon} sx={{ alignItems: borderRight }}>
             <Link to="/settings">
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <SettingsIcon style={{color: 'white'}}/>
-            </IconButton>
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+              >
+                <SettingsIcon style={{ color: "white" }} />
+              </IconButton>
             </Link>
           </Box>
         </Toolbar>

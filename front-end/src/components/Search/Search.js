@@ -10,10 +10,10 @@ export default function ComboBox({ coins, changeCoin, currentCoin }) {
         changeCoin(newValue.label);
       }}
       disablePortal
-      id='combo-box-demo'
+      id="combo-box-demo"
       options={coins}
       sx={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label='Your Coin' />}
+      renderInput={(params) => <TextField {...params} label="Your Coin" />}
     />
   );
 }

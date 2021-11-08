@@ -20,9 +20,8 @@ app.get("/", (req, res) => {
 });
 
 //Importing and Using the userData route
-const userRouter = require("./routes/userData");
-
-app.use("/userData", userRouter);
+const userAssetDataRouter = require("./routes/userAssetData");
+app.use("/userAssetData", userAssetDataRouter);
 
 //Importing and Using the coinLabelData route
 const coinLabelRouter = require("./routes/coinLabelData");

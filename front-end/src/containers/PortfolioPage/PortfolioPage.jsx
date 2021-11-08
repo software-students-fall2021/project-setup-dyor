@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Typography from "@mui/material/Typography";
-import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
 import { Paper, Stack } from "@mui/material";
 import AddAssetForm from "../../components/Forms/AddAssetForm";
 import { PortfolioTable } from "../../components/PortfolioTable/PortfolioTable";
 import styles from "./PortfolioPage.module.css";
 import axios from "axios";
-import { userDataURL, coinLabelDataURL } from "../../back-end_routes";
+import { userAssetDataURL, coinLabelDataURL } from "../../back-end_routes";
 
 const defaultUser = "John";
 
@@ -23,7 +22,7 @@ export function PortfolioPage() {
   useEffect(() => {
     //this will initiate a reach out to the websocket for dynamic prices
     pricesWebSocket.current = new WebSocket(
-      "wss://ws.coincap.io/prices?assets=ALL"
+      "wss://ws.coincap.io/prices?assets=ALL",
     );
 
     pricesWebSocket.current.onerror = (event) => {
@@ -33,7 +32,7 @@ export function PortfolioPage() {
 
     //this will request the data pertaining to a particular user
     axios
-      .request(userDataURL, {
+      .request(userAssetDataURL, {
         params: {
           userID,
         },
@@ -58,7 +57,7 @@ export function PortfolioPage() {
             ...prev,
             [present.name]: present.symbol,
           }),
-          {}
+          {},
         );
         //these dictionaries are created since we must transition from full names and ids frequently
         setCoinNameToSymbolDict(() => tempTickersDict);
@@ -109,50 +108,50 @@ export function PortfolioPage() {
       ...prevUserData,
     ]);
   };
-  
-    return (
-        <Stack
-            direction="column"
-            justifyContent="space-evenly"
-            alignItems="stretch"
-            spacing={2}
-            bgcolor="rgb(230, 248, 246)"
+
+  return (
+    <Stack
+      direction="column"
+      justifyContent="space-evenly"
+      alignItems="stretch"
+      spacing={2}
+      bgcolor="rgb(230, 248, 246)"
+    >
+      <item>
+        <Typography
+          weight="bolder"
+          color="primary"
+          variant="h4"
+          className={styles.heading}
         >
-            <item>
-                <Typography
-                    weight="bolder"
-                    color="primary"
-                    variant="h4"
-                    className={styles.heading}
-                >
-                    Portfolio
-                </Typography>
-            </item>
-            <item>
-                <Paper elevation={2} className={styles.stackItem}>
-                    <PortfolioTable
-                        userID={userID}
-                        pricesData={coinPrices}
-                        userData={userData}
-                        coinNameToSymbolDict={coinNameToSymbolDict}
-                        onClick={onAddNewAssetButtonClickHandler}
-                    ></PortfolioTable>
-                </Paper>
-            </item>
-            <item>
-                <Paper
-                    elevation={2}
-                    className={`${styles.stackItem} ${
-                        newAssetAdditionPending ? "" : styles.hidden
-                    }`}
-                >
-                    <AddAssetForm
-                        coinLabels={coinLabels}
-                        onAddNewAssetHandler={addNewUserAssetData}
-                        onSubmit={onSubmitNewAssetButtonClickHandler}
-                    ></AddAssetForm>
-                </Paper>
-            </item>
-        </Stack>
-    );
+          Portfolio
+        </Typography>
+      </item>
+      <item>
+        <Paper elevation={2} className={styles.stackItem}>
+          <PortfolioTable
+            userID={userID}
+            pricesData={coinPrices}
+            userData={userData}
+            coinNameToSymbolDict={coinNameToSymbolDict}
+            onClick={onAddNewAssetButtonClickHandler}
+          ></PortfolioTable>
+        </Paper>
+      </item>
+      <item>
+        <Paper
+          elevation={2}
+          className={`${styles.stackItem} ${
+            newAssetAdditionPending ? "" : styles.hidden
+          }`}
+        >
+          <AddAssetForm
+            coinLabels={coinLabels}
+            onAddNewAssetHandler={addNewUserAssetData}
+            onSubmit={onSubmitNewAssetButtonClickHandler}
+          ></AddAssetForm>
+        </Paper>
+      </item>
+    </Stack>
+  );
 }
