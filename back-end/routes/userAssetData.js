@@ -92,4 +92,20 @@ router.get("/", (req, res) => {
 });
 
 //Deletion to be implemented by Hanzallah
+
+router.delete("/", (req, res) => {
+  const assetID = req.query.coinID;
+  const userID = req.query.userID;
+
+  const getUser = Users.find((userDetails) => userDetails.id === userID);
+  const getAsset = getUser.data.assets.find((asset) => asset.id === assetID);
+
+  if (userID){
+    if (assetID){
+      res.status(200).json(getAsset);
+      getUser.data.assets = getUser.data.assets.filter((OwnedAsset) => OwnedAsset.id !== assetID)
+    }
+  }
+});
+
 module.exports = router;
