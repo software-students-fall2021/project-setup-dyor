@@ -11,7 +11,8 @@ import styles from "./PortfolioTable.module.css";
 import Icon from "react-crypto-icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { presentPriceAndChangeURL } from "../../back-end_routes";
+import { presentPriceAndChangeURL, userAssetDataURL } from "../../back-end_routes";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const CoinImage = (props) => {
   const userID = props.userID;
@@ -66,8 +67,16 @@ const NumericEntry = ({
   return <Typography className={styleClass}>{outputString}</Typography>;
 };
 
+function useForceUpdate(){
+  const [value, setValue] = useState(0); // integer state
+  console.log(value);
+  return () => setValue(value => value + 1); // update the state to force render
+}
+
 export function PortfolioTable(props) {
   const [dailyPricesAndChanges, setDailyPricesAndChanges] = useState({});
+  const [showDelete, setShowDelete] = useState(false);
+  const forceUpdate = useForceUpdate();
 
   useEffect(() => {
     //get all previous day prices?
@@ -104,6 +113,25 @@ export function PortfolioTable(props) {
       });
   }, []);
 
+  const deleteButtonHandler = () => {
+    setShowDelete(prevShowDelete => !prevShowDelete);
+    };
+
+  const onDeleteAsset = (name, user) => {
+    axios
+      .delete(userAssetDataURL, {
+        params: {
+          coinID: name,
+          userID: user,
+        }
+      })
+      .catch((err) => {
+        console.log("Deletion Unsuccessful");
+        console.log(err);
+    })
+    forceUpdate();
+  };
+
   return (
     <>
       <Box className={styles.tableBox}>
@@ -116,6 +144,11 @@ export function PortfolioTable(props) {
           </colgroup>
           <TableHead>
             <TableRow style={{ height: 5 }}>
+            {showDelete ? <TableCell>
+                <Typography className={styles.tableHeading} variant="h7">
+                     <>   </>
+                </Typography>
+              </TableCell> : <></>}
               <TableCell>
                 <Typography className={styles.tableHeading} variant="h7">
                   Coin
@@ -152,6 +185,10 @@ export function PortfolioTable(props) {
 
               return (
                 <TableRow key={userDataElement.id}>
+                  {showDelete ?
+                  <TableCell component="th" scope="row">
+                    <Button onClick={() => onDeleteAsset(userDataElement.id, "John")}><DeleteIcon></DeleteIcon></Button>
+                  </TableCell> : <></>}
                   <TableCell component="th" scope="row">
                     <CoinImage
                       userID={props.userID}
@@ -186,7 +223,12 @@ export function PortfolioTable(props) {
           </TableBody>
         </Table>
         <Box className={styles.button}>
-          <Button variant="contained" color="primary" onClick={props.onClick}>
+          <Button variant="contained" color="secondary" onClick={deleteButtonHandler}>
+            Delete Asset
+          </Button>
+        </Box>
+        <Box className={styles.button}>
+          <Button variant="contained" color="primary" onClick={props.onAddAsset}>
             Add Asset
           </Button>
         </Box>

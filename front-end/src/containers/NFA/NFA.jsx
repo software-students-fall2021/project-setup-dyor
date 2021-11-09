@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { Typography, Stack, CircularProgress } from "@mui/material";
-import { Box } from "@mui/system";
+import { bgcolor, Box, typography } from "@mui/system";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -11,7 +11,7 @@ import ComboBox from "../../components/Search/Search";
 import NFASocialMedia from "../../components/NFASocialMedia/NFASocialMedia";
 import { NFATable } from "../../components/NFATable/NFATable";
 import styles from "./NFA.module.css";
-import { userAssetDataURL } from "../../back-end_routes";
+import { userAssetDataURL, sentimentAnalysisURL } from "../../back-end_routes";
 
 class OwnedAsset {
   constructor(id, quantityPurchased, unitPrice, datePurchased) {
@@ -52,6 +52,8 @@ export default function NFA() {
   const [posts, setPosts] = useState([]);
   const [tickers, setTickers] = useState({});
   const [coinPrices, setCoinPrices] = useState([]);
+  const [sentimentData, setSentimentData] = useState({});
+
 
   const [loading, setLoading] = useState(false);
   let pricesWebSocket = useRef(null);
@@ -148,6 +150,16 @@ export default function NFA() {
         console.log("Get User Data Failed.");
         console.log(err);
       });
+
+      axios
+      .get(sentimentAnalysisURL)
+      .then((response) => {
+        // console.log(response.data);
+        setSentimentData(response.data);
+      }).catch((err) => {
+        console.log("Get Sentiment Data Failed.");
+        console.log(err);
+      })
   }, []);
 
   if (pricesWebSocket.current !== null) {
@@ -160,6 +172,13 @@ export default function NFA() {
       }));
     };
   }
+
+  const sentimentScore = 0;
+  if (sentimentData === true) {
+    sentimentScore = sentimentData['data'][0].sell_pressure - sentimentData['data'][0].buy_pressure;
+  };
+  // sentimentData['data'][0].buy_pressure
+
 
   return (
     <>
@@ -228,7 +247,10 @@ export default function NFA() {
 
                 <div className={styles.displayInline}>
                   <Button variant="contained" size="small">
-                    Sentiment Level Gauge
+                    Market Sentiment:
+                      <Typography>
+                      {sentimentScore<0 ? <Typography color="red"> Bearish</Typography> : <Typography color="yellow"> Bullish</Typography>}
+                    </Typography>
                   </Button>
                 </div>
               </div>
