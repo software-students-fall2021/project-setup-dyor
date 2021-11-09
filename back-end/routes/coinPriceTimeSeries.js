@@ -14,16 +14,27 @@ router.get("/", (req, res) => {
   const limit = req.query.limit;
   const apikey = process.env.COIN_API_KEY;
 
-  const resultDate = new Date(time_end);
-  const formattedResultDate = moment(resultDate).format("MM-DD-YYYY");
+  const formatted_time_start = moment(new Date(req.query.time_start)).format(
+    "MM-DD-YYYY",
+  );
+  const formatted_time_end = moment(new Date(req.query.time_end)).format(
+    "MM-DD-YYYY",
+  );
+
+  console.log(formatted_time_start);
+  console.log(formatted_time_end);
 
   fs.readFile(
-    `./public/timeSeriesData/${coin_symbol}_${formattedResultDate}.json`,
+    `./public/timeSeriesData/${coin_symbol}_${formatted_time_start}_${formatted_time_end}.json`,
     "utf-8",
     (err, jsonString) => {
       //if the data has not been previously written to file it will now be fetched
       if (err) {
-        console.log(`DATA ${coin_symbol}_${formattedResultDate} NOT PRESENT`);
+        console.log("FILE NOT PRESENT");
+
+        console.log(
+          `DATA ${coin_symbol}_${formatted_time_start}_${formatted_time_end} NOT PRESENT`,
+        );
         axios
           .request(
             `https://${baseURL}/v1/exchangerate/${coin_symbol}/USD/history`,
@@ -41,7 +52,7 @@ router.get("/", (req, res) => {
             try {
               const stringData = JSON.stringify(response.data);
               fs.writeFile(
-                `./public/timeSeriesData/${coin_symbol}_${formattedResultDate}.json`,
+                `./public/timeSeriesData/${coin_symbol}_${formatted_time_start}_${formatted_time_end}.json`,
                 stringData,
                 (err) => {
                   if (err) console.log(err);
@@ -60,9 +71,10 @@ router.get("/", (req, res) => {
             });
           });
       } else {
+        console.log("FILE PRESENT");
         //if the data has been previously written to file it shall be fetched from thereon
         console.log(
-          `DATA ${coin_symbol}_${formattedResultDate} ALREADY PRESENT`,
+          `DATA ${coin_symbol}_${formatted_time_start}_${formatted_time_end} ALREADY PRESENT`,
         );
         // console.log(jsonString);
         try {
