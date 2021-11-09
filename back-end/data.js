@@ -92,7 +92,7 @@ var allImages = [];
 //will be a database that will store all the data pertaining to all the users, each user will have some assets that he owns, and password details
 const Users = [
   {
-    id: "John",
+    id: "john@gmail.com",
     data: {
       email: "john@gmail.com",
       assets: [

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios'
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Paper } from "@mui/material";
@@ -16,6 +17,13 @@ const LoginPage = ({ loginHandler }) => {
       }));
     }
   };
+
+  const handleLogin = (e) => {
+    e.preventDefault()
+    axios.post('http://localhost:3001/auth/login', userInput)
+      .then(() => console.log('logged in'))
+      .catch(err => console.log(err))
+  }
 
   return (
     <div className={style.bgColor}>
@@ -54,7 +62,7 @@ const LoginPage = ({ loginHandler }) => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={loginHandler}
+                onClick={handleLogin}
               >
                 Login
               </Button>
