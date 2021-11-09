@@ -134,7 +134,7 @@ export function PortfolioPage() {
             pricesData={coinPrices}
             userData={userData}
             coinNameToSymbolDict={coinNameToSymbolDict}
-            onClick={onAddNewAssetButtonClickHandler}
+            onAddAsset={onAddNewAssetButtonClickHandler}
           ></PortfolioTable>
         </Paper>
       </item>
