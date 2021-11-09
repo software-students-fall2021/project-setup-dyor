@@ -45,7 +45,6 @@ export function DailyGraph({ assetDetails, historicalPriceData }) {
   const [period, setPeriod] = useState("WEEK");
 
   useEffect(() => {
-    console.log("HELLO");
     console.log("assetDetails");
     console.log(assetDetails);
     console.log("historicalPriceData");
