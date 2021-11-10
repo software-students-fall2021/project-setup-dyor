@@ -63,12 +63,12 @@ describe("nfa", () => {
       stub.restore();
     });
 
-    it("Should return 200-OK for /nfa/wordcloud with an object with key data and value wordcloud ", async () => {
-      const res = await request(app).get(`${baseURL}/wordcloud`);
-      expect(res.body).to.be.an("object");
-      expect(res.status).to.equal(200);
-      expect(res.body).have.property("data");
-    });
+    // it("Should return 200-OK for /nfa/wordcloud with an object with key data and value wordcloud ", async () => {
+    //   const res = await request(app).get(`${baseURL}/wordcloud`);
+    //   expect(res.body).to.be.an("object");
+    //   expect(res.status).to.equal(200);
+    //   expect(res.body).have.property("data");
+    // });
     // it("Should return staus=500 when some error is encountered", async () => {
     //   stub.throws(Error("When the API IS DOWN"));
     //   const res = await request(app).get(`${baseURL}/wordcloud`);
