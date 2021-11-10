@@ -3,8 +3,10 @@ const needle = require("needle");
 const axios = require("axios");
 const router = express.Router();
 const database = require("../data");
-const {crypto } = require("./getNews");
-const { cryptoNews, socials} = database;
+const { crypto } = require("./getNews");
+const { cryptoNews, socials } = database;
+const fs = require("fs");
+const keyword_extractor = require("keyword-extractor");
 
 router.get("/:media/:id", (req, res) => {
   let coin = req.params.id;
@@ -40,11 +42,10 @@ router.get("/:media/:id", (req, res) => {
           const isSucces = await getTweets(endpoint, coin, asset.name);
           if (isSucces === true) {
             res.status(200).json(socials[coin].tweets);
-          }
-          else {
+          } else {
             res.status(500).json({
               message: "Could not get data from API",
-            })
+            });
           }
         };
         tweets();
@@ -151,6 +152,32 @@ const getTweets = async (endpoint, shortForm, coin) => {
         });
       }
     }
+    try {
+      //  Extract the keywords
+
+      const stringData = JSON.stringify(
+        socials[shortForm].tweets.map((data) => data.tweet + " "),
+      ).replace(/[^a-zA-Z ]/g, "");
+      const extraction_result = keyword_extractor.extract(stringData, {
+        language: "english",
+        remove_digits: true,
+        remove_duplicates: false,
+      });
+
+      fs.writeFile(
+        `./public/socials/${shortForm}.json`,
+        '["' + extraction_result.join(" ").substring(0, 1500) + '"]',
+        (err) => {
+          if (err) console.log(err);
+          else {
+            console.log("Succesful Writing.");
+          }
+        },
+      );
+    } catch (err) {
+      console.log("STRINGIFY FAILED FOR NEW DATA.");
+    }
+
     isSucces = true;
   } else {
     console.log("Unsuccesful request");
