@@ -23,8 +23,8 @@ router.get("/asset/:coin", (req, res) => {
   let asset = req.params.coin;
   if (asset === undefined) {
     res.status(404).json({
-      message: "Page not found"
-    })
+      message: "Page not found",
+    });
   }
   let flag = false;
   for (let coin in socials) {
@@ -46,110 +46,49 @@ router.get("/asset/:coin", (req, res) => {
       res.status(200).send(database.assetNews[asset]);
     }
   } else {
-    res.status(404).json({message: "Page not found"});
+    res.status(404).json({ message: "Page not found" });
   }
 });
-
-router.get("/crypto", (req, res) => {
-  if (database.cryptoNews.length === 0) {
-    const articles = async () => {
-      const isSucces = await getCrytoNews();
-      if (isSucces === true) {
-        res.status(200).json(database.cryptoNews);
-      } else res.status(500).send("Could not get data from API");
-    };
-    articles();
-  } else {
-    res.status(200).send(database.cryptoNews);
-  }
-});
-
-router.get("/images", (req, res) => {
-  if (allImages.length === 0) {
-    const images = async () => {
-      const isSucces = await getImages();
-      if (isSucces === true) res.status(200).json(allImages);
-      else res.status(500).send("Could not get data from API");
-    };
-    images();
-  } else {
-    res.status(200).json(allImages);
-  }
-});
-
-const getImages = async () => {
-  const images = "https://picsum.photos/v2/list?page=2&limit=20";
-  let isSucces = false;
-  await axios
-    .get(images)
-    .then((res) => {
-      for (let i = 0; i < 20; ++i) {
-        allImages.push(res.data[i].download_url);
-      }
-      isSucces = true;
-    })
-    .catch((err) => {
-      if (err.response) {
-        console.log("Error response from API", err.response.status);
-      } else if (err.request) {
-        console.log("No response from API", err.response.status);
-      }
-    });
-
-  return isSucces;
-};
-
-const getCrytoNews = async () => {
-  database.cryptoNews = [];
-  const url = "https://my.api.mockaroo.com/crypto.json?key=69c880d0";
-  let isSucces = false;
-
-  await axios
-    .get(url)
-    .then((res) => {
-      database.cryptoNews = res.data;
-      isSucces = true;
-    })
-    .catch((err) => {
-      if (err.response) {
-        console.log("Error response from API", err.response.status);
-      } else if (err.request) {
-        console.log("No response from API", err.response.status);
-      }
-    });
-
-  return isSucces;
-};
 
 const getArticles = async () => {
-  // const date = new Date("2021-10-26");
-  const url = "https://my.api.mockaroo.com/articles.json?key=69c880d0";
-  // const url = `https://newsapi.org/v2/everything?qInTitle=+${coins[i]}&from=${date}&language=en&sortBy=relevancy&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&pageSize=20`
+  const coins = [...getCoins(), "crypto"];
+  const today = new Date().toISOString().slice(0, 10);
 
   let isSucces = false;
-  await axios
-    .get(url)
-    .then((res) => {
-      let j = 0;
-      for (let coin in socials) {
-        assetNews[socials[coin].name] = res.data.slice(j, j + 20);
-        j = (j + 10) % 200;
-      }
-      isSucces = true;
-    })
-    .catch((err) => {
-      if (err.response) {
-        console.log("Error response from API", err.response.status);
-      } else if (err.request) {
-        console.log("No response from API", err.response.status);
-      }
-    });
+  console.log(today);
+
+  for (let i = 0; i < coins.length; ++i) {
+    const url = `https://newsapi.org/v2/everything?q=+${coins[i]}&from=${today}&language=en&sortBy=relevancy&apiKey=${process.env.NEWS_API_KEY}&pageSize=20`;
+    await axios
+      .get(url)
+      .then((res) => {
+        assetNews[coins[i]] = res.data.articles;
+        console.log(coins[i], assetNews[coins[i]].length);
+        isSucces = true;
+      })
+      .catch((err) => {
+        if (err.response) {
+          console.log("Error response from API", err.response.stausText);
+        } else if (err.request) {
+          console.log("No response from API", err.response.stausText);
+        }
+      });
+  }
+
   return isSucces;
+};
+
+const getCoins = () => {
+  //News for top 10 popular coins
+  let coins = [];
+  for (let coin in socials) {
+    coins.push(socials[coin].name);
+  }
+
+  return coins;
 };
 
 var newsRoutes = (module.exports = {
   router: router,
-  crypto: getCrytoNews,
   getAllNews: getArticles,
-  getImages: getImages,
 });

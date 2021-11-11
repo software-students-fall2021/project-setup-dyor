@@ -14,3 +14,9 @@
 .article_description {
   display: block;
 }
+
+.post{
+  word-break: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}

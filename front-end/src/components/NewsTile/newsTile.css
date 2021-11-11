@@ -7,13 +7,14 @@
     margin-top: 10px;
     margin-bottom: 10px; 
 }
-.news_type{
-    margin: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
+
 #news_dropdown{
     margin-left: auto;
+}
+
+.readmore {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
 }

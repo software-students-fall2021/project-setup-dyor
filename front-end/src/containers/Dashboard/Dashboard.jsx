@@ -6,47 +6,29 @@ import axios from "axios";
 import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
 import NewsTile from "../../components/NewsTile/newsTile";
 
-let articles = [];
-let allImages = [];
 
 export default function DashboardPage() {
   const [isLoading, setLoading] = React.useState(true);
-  const [getImages, setgetImages] = React.useState(true);
+  const [articles, setArticles] = React.useState({})
 
   React.useEffect(() => {
     const getArticles = async () => {
-      if (articles.length === 0) {
         await axios
-          .get("/news/crypto")
+          .get("/news")
           .then((res) => {
-            articles = res.data;
+            setArticles(res.data);
           })
           .catch((err) => {
             console.log(err.response);
           });
-      }
-      if (articles.length !== 0 && isLoading) setLoading(false);
-    };
-
-    const getImagesAPI = async () => {
-      if (allImages.length === 0) {
-        await axios
-          .get("/news/images")
-          .then((res) => {
-            allImages = res.data;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-      if (allImages.length !== 0 && getImages) {
-        setgetImages(false);
-      }
-    };
-
+    }
     getArticles();
-    getImagesAPI();
-  }, [isLoading, getImages]);
+  },[])
+
+  React.useEffect(() => {
+    // console.log(articles)
+    if (articles.length !== 0 && isLoading) setLoading(false);
+  }, [isLoading, articles]);
 
   return (
     <>
@@ -100,15 +82,14 @@ export default function DashboardPage() {
           </Paper>
         </item>
         <item className={styles.circularProgress}>
-          {isLoading || getImages ? (
+          {isLoading ? (
             <CircularProgress />
           ) : (
             <Paper elevation={2} className={styles.cardBox}>
               <NewsTile
                 coin="Crypto News"
                 number={4}
-                articleTiles={articles}
-                images={allImages}
+                data={articles["crypto"]}
               />
             </Paper>
           )}
