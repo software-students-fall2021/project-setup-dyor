@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { Typography, Stack, CircularProgress } from "@mui/material";
-import { bgcolor, Box, typography } from "@mui/system";
+import { Box} from "@mui/system";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -13,15 +13,15 @@ import { NFATable } from "../../components/NFATable/NFATable";
 import styles from "./NFA.module.css";
 import { userAssetDataURL, sentimentAnalysisURL } from "../../back-end_routes";
 
-class OwnedAsset {
-  constructor(id, quantityPurchased, unitPrice, datePurchased) {
-    this.id = id;
-    this.quantityPurchased = quantityPurchased;
-    this.unitPrice = unitPrice;
-    const [year, month, day] = datePurchased.split("/").reverse();
-    this.datePurchased = Date(year, month, day);
-  }
-}
+// class OwnedAsset {
+//   constructor(id, quantityPurchased, unitPrice, datePurchased) {
+//     this.id = id;
+//     this.quantityPurchased = quantityPurchased;
+//     this.unitPrice = unitPrice;
+//     const [year, month, day] = datePurchased.split("/").reverse();
+//     this.datePurchased = Date(year, month, day);
+//   }
+// }
 
 // const DefaultUserAssets = [
 //   new OwnedAsset("bitcoin", 2, 30000, "10/5/2021"),
@@ -30,7 +30,8 @@ class OwnedAsset {
 // ];
 
 // let _tweets = [];
-const socialMedia = ["Facebook", "Twitter"];
+
+const socialMedia = ["Reddit", "Twitter"];
 
 const userCoin = [
   { label: "BTC" },
@@ -40,9 +41,6 @@ const userCoin = [
   { label: "LTC" },
   { label: "DOT" },
 ];
-
-let facebook = [];
-let twitter = [];
 
 export default function NFA() {
   const userID = "John";
@@ -54,55 +52,36 @@ export default function NFA() {
   const [coinPrices, setCoinPrices] = useState([]);
   const [sentimentData, setSentimentData] = useState({});
 
-
   const [loading, setLoading] = useState(false);
   let pricesWebSocket = useRef(null);
 
   const handleChange = (event) => {
+    setLoading(true);
     setMedia(event.target.value);
   };
 
-  const getPosts = async () => {
-    const social = socialMedia[media];
-    await axios
-      .get(`/social/${social}/${coin}`)
-      .then((res) => {
-        if (media === 0) facebook = res.data;
-        else twitter = res.data;
-
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  };
-
   useEffect(() => {
+    setLoading(true);
+    const getPosts = async () => {
+      const social = socialMedia[media];
+      await axios
+        .get(`/social/${social}/${coin}`)
+        .then((res) => {
+          setPosts(res.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    };
     getPosts();
-  }, [coin]);
+  }, [coin, media]);
+
 
   useEffect(() => {
-    if (media === 0) {
-      if (facebook.length !== 0) {
-        setPosts(facebook);
-      } else {
-        getPosts();
-      }
-    } else {
-      if (twitter.length !== 0) {
-        setPosts(twitter);
-      } else {
-        getPosts();
-      }
-    }
-    getPosts();
-  }, [media]);
-
-  useEffect(() => {
-    if (posts.length !== 0) {
+    if (posts.length !== 0 && loading) {
       setLoading(false);
     }
-  }, [posts]);
+  },[posts]);
 
   useEffect(() => {
     //this will initiate a reach out to the websocket for dynamic prices
@@ -142,9 +121,6 @@ export default function NFA() {
       })
       .then((response) => {
         setUserData(() => response.data);
-        // userCoin = userData.forEach((data) => {
-        //   returndata.id;
-        // });
       })
       .catch((err) => {
         console.log("Get User Data Failed.");
@@ -173,7 +149,7 @@ export default function NFA() {
     };
   }
 
-  const sentimentScore = 0;
+  let sentimentScore = 0;
   if (sentimentData === true) {
     sentimentScore = sentimentData['data'][0].sell_pressure - sentimentData['data'][0].buy_pressure;
   };
@@ -182,15 +158,6 @@ export default function NFA() {
 
   return (
     <>
-      {loading ? (
-        <div className={styles.circularProgress}>
-          <CircularProgress
-            className={styles.progressBar}
-            size={100}
-            thickness={2.0}
-          />
-        </div>
-      ) : (
         <Box className={styles.nfaPageDiv}>
           <Stack
             sx={{ padding: "5%" }}
@@ -227,7 +194,7 @@ export default function NFA() {
                         onChange={handleChange}
                         label="Media"
                       >
-                        <MenuItem value={0}>Facebook</MenuItem>
+                        <MenuItem value={0}>Reddit</MenuItem>
                         <MenuItem value={1}>Twitter</MenuItem>
                       </Select>
                     </FormControl>
@@ -241,15 +208,23 @@ export default function NFA() {
                     currentCoin={coin}
                     changeCoin={setCoin}
                   />
+              </div>
+              {loading ? (
+                <div className={styles.circularProgress}>
+                  <CircularProgress
+                    className={styles.progressBar}
+                    size={50}
+                    thickness={2.0}
+                  />
                 </div>
-                {/* This is the social media tiles  */}
-                <NFASocialMedia posts={posts} />
-
+                ) : (
+                  <NFASocialMedia media={media} posts={posts} />
+                )}
                 <div className={styles.displayInline}>
                   <Button variant="contained" size="small">
                     Market Sentiment:
-                      <Typography>
-                      {sentimentScore<0 ? <Typography color="red"> Bearish</Typography> : <Typography color="yellow"> Bullish</Typography>}
+                  <Typography style={{ marginRight: "5px" }}>
+                      {sentimentScore<0 ? <Typography color="red"> Bearish</Typography> : <Typography color="yellow">Bullish</Typography>}
                     </Typography>
                   </Button>
                 </div>
@@ -270,7 +245,6 @@ export default function NFA() {
             </div>
           </Stack>
         </Box>
-      )}
     </>
   );
 }

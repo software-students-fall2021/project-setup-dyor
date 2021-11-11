@@ -3,10 +3,16 @@ import { Box } from "@mui/system";
 import Paper from "@mui/material/Paper";
 import "./NFASocialMedia.css";
 
-export default function NFASocialMediaTile({ article }) {
-  function parseHtml(description) {
+export default function NFASocialMediaTile({media, article }) {
+  function parseHtml(description) { 
+    if (description.length > 300) {
+      description = description.substr(0, description.lastIndexOf(' ', 300));
+      description += " ..."
+    }
     return { __html: description };
   }
+
+  const post = media === 0 ? article.data : article;
 
   return (
     <Box>
@@ -15,17 +21,17 @@ export default function NFASocialMediaTile({ article }) {
           <div className="">
             <h4 className="">
               <a
-                href={article.url ?? "https://www.coindesk.com/"}
+                href={post.url ?? `https://www.reddit.com`}
                 target="blank"
               >
-                {article.name ?? article.title}
+                {post.title ?? post.name}
               </a>
             </h4>
-            <h5 className="">@{article.username ?? article.author}</h5>
+            <h5 className="">@{post.username ?? post.author}</h5>
             <p
-              className=""
+              className="post"
               dangerouslySetInnerHTML={parseHtml(
-                article.tweet ?? article.description,
+                post.tweet ?? post.selftext ?? post.selftext_html
               )}
             />
           </div>
