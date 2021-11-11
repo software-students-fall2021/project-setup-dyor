@@ -38,6 +38,7 @@
     "axios": "^0.24.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "keyword-extractor": "^0.0.20",
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "needle": "^3.0.0"

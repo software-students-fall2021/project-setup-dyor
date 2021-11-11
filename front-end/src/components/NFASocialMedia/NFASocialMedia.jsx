@@ -5,7 +5,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import "./NFASocialMedia.css";
 
-export default function NFASocialMedia({ posts }) {
+export default function NFASocialMedia({ media, posts }) {
+
   const [articles, setArticles] = useState([]);
   const [num, setNum] = useState(3);
   const [isloading, setLoading] = useState(true);
@@ -20,11 +21,11 @@ export default function NFASocialMedia({ posts }) {
   }
 
   useEffect(() => {
-    if (posts !== undefined && posts.length !== 0) {
+    if (articles.length !== num && posts !== undefined && posts.length !== 0) {
       setArticles(posts.slice(0, num));
     }
-    if (posts !== undefined && isloading) setLoading(false);
-  }, [num, posts]);
+    if (articles.length !== 0 && isloading) setLoading(false);
+  }, [num,posts,articles,isloading]);
 
   return (
     <>
@@ -37,7 +38,7 @@ export default function NFASocialMedia({ posts }) {
       >
         <div>
           {articles.map((post) => (
-            <NFASocialMediaTile article={post} />
+            <NFASocialMediaTile media={media} article={post} />
           ))}
         </div>
         <div className="readmore">

@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { makeStyles } from "@mui/styles";
 import Header from "../../components/HeaderforLandingPage/Header";
 import { PortfolioCard } from "../../components/FeaturesforLandingPage/PortfolioCard";
@@ -16,6 +17,21 @@ const useStyles = makeStyles((theme) => ({
 const LandingPage = () => {
   const classes = useStyles();
 
+  React.useEffect(() => {
+    console.log("i was called");
+  const getArticles = async () => {
+      await axios
+        .get("/news")
+        .then((res) => {
+          console.log("Asset news called successfully");
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+  }
+  getArticles();
+  }, [])
+  
   return (
     <div className={classes.root}>
       <CssBaseline />

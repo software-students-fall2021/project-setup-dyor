@@ -9,7 +9,7 @@ describe("NEWS", () => {
       const res = await request(app).get("/news");
       expect(res.status).to.equal(200);
       expect(res.body).to.be.an("object");
-      expect(res.body).to.have.property("bitcoin");
+      expect(res.body).to.have.property("Bitcoin");
     }).timeout(5000);
   });
 
@@ -60,4 +60,4 @@ describe("IMAGES", () => {
       expect(res.body).to.be.an("array");
     });
   }).timeout(3000);
-})
+});

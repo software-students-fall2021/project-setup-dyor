@@ -3,14 +3,14 @@ const needle = require("needle");
 const axios = require("axios");
 const router = express.Router();
 const database = require("../data");
-const { getCryptoNews } = require("./getNews");
-const { cryptoSymbols, cryptoNews } = database;
+const { socials } = database;
+// const fs = require("fs");
+// const keyword_extractor = require("keyword-extractor");`
 
+let redditPosts = [];
 router.get("/:media/:id", (req, res) => {
   let coin = req.params.id;
   let social = req.params.media;
-  let index = undefined;
-  let asset = undefined;
 
   if (coin === undefined) {
     res.status(404).json({
@@ -24,16 +24,8 @@ router.get("/:media/:id", (req, res) => {
   }
 
   //Represent if the coin was found in the list of coins
-  coin = coin.toLowerCase();
-  for (let i = 0; i < cryptoSymbols.length; ++i) {
-    const sym = database.cryptoSymbols[i];
-    if (coin.toLowerCase() == sym.symbol.toLowerCase()) {
-      asset = sym;
-      index = i;
-      break;
-    }
-  }
-  if (asset === undefined) {
+  coin = coin.toUpperCase();
+  if (socials[coin] === undefined) {
     res.status(404).json({
       message: `INVALID POST REQUEST, coin ${coin} NOT FOUND.`,
     });
@@ -41,42 +33,38 @@ router.get("/:media/:id", (req, res) => {
     //If no social media
     social = social.toLowerCase();
     if (social.toLowerCase() === "twitter") {
-      if (asset.tweets.length === 0) {
+      if (socials[coin].tweets.length === 0) {
         const tweets = async () => {
           const endpoint = "https://api.twitter.com/2/tweets/search/recent";
-          const isSucces = await getTweets(endpoint, coin, asset.name, index);
+          const isSucces = await getTweets(endpoint, coin, socials[coin].name);
           if (isSucces === true) {
-            cryptoSymbols[index].fb = [
-              ...database.cryptoNews,
-              ...database.cryptoNews,
-            ];
-            res.status(200).json(cryptoSymbols[index].fb);
+            res.status(200).json(socials[coin].tweets);
+          } else {
+            res.status(500).json({
+              message: "Could not get data from API",
+            });
           }
         };
         tweets();
       } else {
-        res.status(200).json(cryptoSymbols[index].tweets);
+        res.status(200).json(socials[coin].tweets);
       }
-    } else if (social === "facebook") {
-      if (asset.fb.length === 0) {
-        if (cryptoNews.length !== 0) {
-          cryptoSymbols[index].fb = [...cryptoNews, ...cryptoNews];
-          res.status(200).json(cryptoSymbols[index].fb);
-        } else {
-          const fb = async () => {
-            const isSucces = await getCryptoNews();
-            if (isSucces === true) {
-              cryptoSymbols[index].fb = [
-                ...database.cryptoNews,
-                ...database.cryptoNews,
-              ];
-              res.status(200).json(cryptoSymbols[index].fb);
-            }
-          };
-          fb();
-        }
+    } else if (social === "reddit") {
+      if (socials[coin].reddit.length === 0) {
+        const reddit = async () => {
+          const isSucces = await getReddit(coin);
+          if (isSucces === true) {
+            socials[coin].reddit = redditPosts;
+            res.status(200).json(redditPosts);
+          } else {
+            res.status(500).json({
+              message: "Could not get data from API",
+            });
+          }
+        };
+        reddit();
       } else {
-        res.status(200).json(cryptoSymbols[index].fb);
+        res.status(200).json(socials[coin].reddit);
       }
     } else {
       res.status(404).json({
@@ -86,16 +74,8 @@ router.get("/:media/:id", (req, res) => {
   }
 });
 
-// //Get FB news
-// const getFB = async () => {
-//   let isSuccess = false;
-//   isSuccess = await getCryptoNews();
-//   console.log("Issucces", isSuccess);
-//   return isSuccess;
-// };
-
 //Get Tweets
-const getTweets = async (endpoint, shortForm, coin, index) => {
+const getTweets = async (endpoint, shortForm, coin) => {
   const token = process.env.TWITTER_BEARER_TOKEN;
   const query = `(#${coin} OR #${shortForm}) lang:en -is:retweet -is:reply is:verified`;
   let isSucces = false;
@@ -145,14 +125,14 @@ const getTweets = async (endpoint, shortForm, coin, index) => {
       const author = tweet.author_id;
       if (map.has(author)) {
         authorDetails = map.get(author);
-        cryptoSymbols[index].tweets.push({
+        socials[shortForm].tweets.push({
           name: authorDetails[0],
           username: authorDetails[1],
           tweet: tweet.text,
           url: url,
         });
       } else {
-        cryptoSymbols[index].tweets.push({
+        socials[shortForm].tweets.push({
           name: tweet.author_id,
           username: tweet.author_id,
           tweet: tweet.text,
@@ -160,10 +140,67 @@ const getTweets = async (endpoint, shortForm, coin, index) => {
         });
       }
     }
+
+    try {
+      //  Extract the keywords
+      const stringData = JSON.stringify(
+        socials[shortForm].tweets.map((data) => data.tweet + " "),
+      ).replace(/[^a-zA-Z ]/g, "");
+      const extraction_result = keyword_extractor.extract(stringData, {
+        language: "english",
+        remove_digits: true,
+        remove_duplicates: false,
+      });
+
+      fs.writeFile(
+        `./public/socials/${shortForm}.json`,
+        '["' + extraction_result.join(" ").substring(0, 1500) + '"]',
+        (err) => {
+          if (err) console.log(err);
+          else {
+            console.log("Succesful Writing.");
+          }
+        },
+      );
+    } catch (err) {
+      console.log("STRINGIFY FAILED FOR NEW DATA.");
+    }
+
     isSucces = true;
   } else {
     console.log("Unsuccesful request");
   }
+  return isSucces;
+  
+};
+
+//Get Reddit
+const getReddit = async (shortForm) => {
+  let isSucces = false;
+
+  const channels = {
+    BTC: "bitcoin",
+    ETH: "ethereum",
+    SHIB: "shiba",
+    DOGE: "dogecoin",
+    LTC: "litecoin",
+    DOT: "dot",
+  };
+
+  const url = `https://www.reddit.com/r/${channels[shortForm]}/hot.json?limit=100`;
+  await axios
+    .get(url)
+    .then((res) => {
+      redditPosts = res.data.data.children.filter(
+        (post) => post.data.selftext !== "",
+      );
+      console.log(redditPosts.length);
+      isSucces = true;
+    })
+    .catch((err) => {
+      console.log("Error from API", err.response.statusCode);
+    });
+
   return isSucces;
 };
 

@@ -49,4 +49,7 @@ const wordCloudRoute = require("./routes/nfa.js");
 // //Routes for wordcloud
 app.use("/nfa", wordCloudRoute);
 
+const sentimentRouter = require("./routes/sentimentAnalysis");
+app.use("/sentimentAnalysis", sentimentRouter);
+
 module.exports = app;
