@@ -17,6 +17,7 @@ export function PortfolioPage() {
   const pricesWebSocket = useRef(null);
   const [coinPrices, setCoinPrices] = useState([]);
   const [userData, setUserData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   //This will obtain the initial set of coins
   useEffect(() => {
@@ -70,7 +71,7 @@ export function PortfolioPage() {
     return () => {
       pricesWebSocket.current.close();
     };
-  }, []);
+  }, [refresh]);
 
   //Will Update State to have present value of prices for all coins
   if (pricesWebSocket.current !== null) {
@@ -89,6 +90,10 @@ export function PortfolioPage() {
 
   const onSubmitNewAssetButtonClickHandler = () => {
     setNewAssetAdditionPending(() => false);
+  };
+
+  const onSetRefresh = () => {
+    setRefresh((prevRefresh) => !prevRefresh);
   };
 
   //will not handle at the moment previously existing data for the sake of simplicity and each purchase will be treated a new distinct purchase even if the coin purchased is the same
@@ -135,6 +140,7 @@ export function PortfolioPage() {
             userData={userData}
             coinNameToSymbolDict={coinNameToSymbolDict}
             onAddAsset={onAddNewAssetButtonClickHandler}
+            onRefresh={onSetRefresh}
           ></PortfolioTable>
         </Paper>
       </item>
