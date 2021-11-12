@@ -17,15 +17,18 @@ describe("SOCIALS", () => {
       expect(res.body[64]).to.have.property("url");
     }).timeout(5000);
 
-    it("Should return status=200 and appropiate data array of cryptoNews for GET /news/crypto", async () => {
-      const res = await request(app).get("/news/crypto");
+    it("Should return status=200 and appropiate data object for valid media and asset", async () => {
+      const media = "reddit";
+      const coin = "doge";
+      const res = await request(app).get(`/social/${media}/${coin}`);
       expect(res.status).to.equal(200);
       expect(res.body).to.be.an("array");
-      expect(res.body[0]).to.have.property("id");
-      expect(res.body[0]).to.have.property("title");
-      expect(res.body[9]).to.have.property("author");
-      expect(res.body[7]).to.have.property("description");
-    });
+      expect(res.body[0]).to.have.property("data");
+      expect(res.body[9]).to.have.property("kind");
+      expect(res.body[7].data).to.have.property("author");
+      expect(res.body[6].data).to.have.property("url");
+    }).timeout(5000);
+
 
     it("Should return status=404 and appropiate error message for invalid media", async () => {
       const media = "google";
