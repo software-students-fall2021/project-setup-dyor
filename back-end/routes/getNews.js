@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 const database = require("../data");
-var { socials, assetNews, allImages } = database;
+var { socials, assetNews} = database;
 
 //Get news from mockaroo (Mocking it for the time being)
 router.get("/", (req, res) => {
@@ -55,7 +55,6 @@ const getArticles = async () => {
   const today = new Date().toISOString().slice(0, 10);
 
   let isSucces = false;
-  console.log(today);
 
   for (let i = 0; i < coins.length; ++i) {
     const url = `https://newsapi.org/v2/everything?q=+${coins[i]}&from=${today}&language=en&sortBy=relevancy&apiKey=${process.env.NEWS_API_KEY}&pageSize=20`;
@@ -63,7 +62,6 @@ const getArticles = async () => {
       .get(url)
       .then((res) => {
         assetNews[coins[i]] = res.data.articles;
-        console.log(coins[i], assetNews[coins[i]].length);
         isSucces = true;
       })
       .catch((err) => {

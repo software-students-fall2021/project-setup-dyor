@@ -179,7 +179,7 @@ const getReddit = async (shortForm) => {
   const channels = {
     BTC: "bitcoin",
     ETH: "ethereum",
-    SHIB: "shiba",
+    SHIB: "Shibacoin",
     DOGE: "dogecoin",
     LTC: "litecoin",
     DOT: "dot",
