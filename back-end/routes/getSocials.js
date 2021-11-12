@@ -153,7 +153,7 @@ const getTweets = async (endpoint, shortForm, coin) => {
       });
 
       fs.writeFile(
-        `./public/socials/${shortForm}.json`,
+        `./public/socials/${coin}.json`,
         '["' + extraction_result.join(" ").substring(0, 1500) + '"]',
         (err) => {
           if (err) console.log(err);
@@ -171,7 +171,6 @@ const getTweets = async (endpoint, shortForm, coin) => {
     console.log("Unsuccesful request");
   }
   return isSucces;
-  
 };
 
 //Get Reddit
