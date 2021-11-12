@@ -9,14 +9,11 @@ import { Box } from "@mui/system";
 import { Grid } from "@material-ui/core";
 import styles from "./NFATable.module.css";
 import Icon from "react-crypto-icons";
-<<<<<<< HEAD
 import axios from "axios";
 import { coinPredict } from "../../back-end_routes";
-=======
 // import axios from "axios";
 // import { coinPredict } from "../../back-end_routes";
 import { Link } from "react-router-dom";
->>>>>>> 8f2488ee36f4421da33c9f638d2963dff02bf6c6
 
 const CoinImage = (props) => {
   const userID = props.userID;
@@ -266,10 +263,6 @@ export function NFATable(props) {
                           obj.id === userDataElement.id ? obj.prediction : "",
                         )
                       : 0}
-<<<<<<< HEAD
-
-=======
->>>>>>> 8f2488ee36f4421da33c9f638d2963dff02bf6c6
                   </TableCell>
                 </TableRow>
               );
