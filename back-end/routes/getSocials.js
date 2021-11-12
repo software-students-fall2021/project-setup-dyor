@@ -4,8 +4,8 @@ const axios = require("axios");
 const router = express.Router();
 const database = require("../data");
 const { socials } = database;
-// const fs = require("fs");
-// const keyword_extractor = require("keyword-extractor");`
+const fs = require("fs");
+const keyword_extractor = require("keyword-extractor");
 
 let redditPosts = [];
 router.get("/:media/:id", (req, res) => {
@@ -151,7 +151,6 @@ const getTweets = async (endpoint, shortForm, coin) => {
         remove_digits: true,
         remove_duplicates: false,
       });
-
       fs.writeFile(
         `./public/socials/${shortForm}.json`,
         '["' + extraction_result.join(" ").substring(0, 1500) + '"]',
@@ -171,7 +170,6 @@ const getTweets = async (endpoint, shortForm, coin) => {
     console.log("Unsuccesful request");
   }
   return isSucces;
-  
 };
 
 //Get Reddit
@@ -181,7 +179,7 @@ const getReddit = async (shortForm) => {
   const channels = {
     BTC: "bitcoin",
     ETH: "ethereum",
-    SHIB: "shiba",
+    SHIB: "Shibacoin",
     DOGE: "dogecoin",
     LTC: "litecoin",
     DOT: "dot",
@@ -194,6 +192,29 @@ const getReddit = async (shortForm) => {
       redditPosts = res.data.data.children.filter(
         (post) => post.data.selftext !== "",
       );
+      try {
+        const stringData = JSON.stringify(
+          redditPosts.map((data1) => data1.data.selftext + " "),
+        );
+
+        const extraction_result = keyword_extractor.extract(stringData, {
+          language: "english",
+          remove_digits: true,
+          remove_duplicates: false,
+        });
+        fs.writeFile(
+          `./public/socials/${shortForm}.json`,
+          '["' + extraction_result.join(" ").substring(0, 1000) + '"]',
+          (err) => {
+            if (err) console.log(err);
+            else {
+              console.log("Succesful Writing.");
+            }
+          },
+        );
+      } catch (err) {
+        console.log("STRINGIFY FAILED FOR NEW DATA.");
+      }
       console.log(redditPosts.length);
       isSucces = true;
     })

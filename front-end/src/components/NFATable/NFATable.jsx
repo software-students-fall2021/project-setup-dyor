@@ -9,30 +9,48 @@ import { Box } from "@mui/system";
 import { Grid } from "@material-ui/core";
 import styles from "./NFATable.module.css";
 import Icon from "react-crypto-icons";
+<<<<<<< HEAD
 import axios from "axios";
 import { coinPredict } from "../../back-end_routes";
+=======
+// import axios from "axios";
+// import { coinPredict } from "../../back-end_routes";
+import { Link } from "react-router-dom";
+>>>>>>> 8f2488ee36f4421da33c9f638d2963dff02bf6c6
 
 const CoinImage = (props) => {
-  const coinID = props.id;
-  const coinSymbol =
-    props.symbolsDict[coinID] && props.symbolsDict[coinID].toLowerCase();
+  const userID = props.userID;
+  const coinID = props.coinID;
+  const coinSymbol = props.symbolsDict[coinID];
+  const lowerCoinSymbol = (coinSymbol && coinSymbol.toLowerCase()) || "generic";
+
+  const clickHandler = () => {
+    console.log(`${coinID} has been clicked.`);
+  };
 
   return (
-    <Grid
-      container
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
+    <Link
+      to={`/coinDetails/${userID}/${coinID}/${coinSymbol}`}
+      className={styles.noDecoration}
     >
-      <Grid item>
-        <Icon name={coinSymbol} size={32}></Icon>
+      <Grid
+        container
+        direction="columnn"
+        alignItems="center"
+        justifyContent="center"
+        className={styles.coinAggregate}
+        onClick={clickHandler}
+      >
+        <Grid item>
+          <Icon name={lowerCoinSymbol} size={32}></Icon>
+        </Grid>
+        <Grid item>
+          <Typography className={styles.coinText}>
+            {coinSymbol || "NA"}
+          </Typography>
+        </Grid>
       </Grid>
-      <Grid item>
-        <Typography className={styles.coinText}>
-          {(coinSymbol && coinSymbol.toUpperCase()) || "NA"}
-        </Typography>
-      </Grid>
-    </Grid>
+    </Link>
   );
 };
 
@@ -203,14 +221,16 @@ export function NFATable(props) {
           </TableHead>
           <TableBody>
             {props.userData.map((userDataElement) => {
-              const coinPrice = props.pricesData[userDataElement.id];
+              const lowerCaseID = userDataElement.id.toLowerCase();
+              const coinPrice = props.pricesData[lowerCaseID];
 
               return (
                 <TableRow key={userDataElement.id}>
                   <TableCell component="th" scope="row">
                     <CoinImage
-                      id={userDataElement.id}
-                      symbolsDict={props.coinLabels}
+                      userID={props.userID}
+                      coinID={userDataElement.id}
+                      symbolsDict={props.coinNameToSymbolDict}
                     ></CoinImage>
                   </TableCell>
                   <TableCell align="center">
@@ -246,7 +266,10 @@ export function NFATable(props) {
                           obj.id === userDataElement.id ? obj.prediction : "",
                         )
                       : 0}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8f2488ee36f4421da33c9f638d2963dff02bf6c6
                   </TableCell>
                 </TableRow>
               );
