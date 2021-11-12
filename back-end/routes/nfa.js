@@ -32,6 +32,7 @@ let endpoint;
 
 router.get("/wordcloud/:id", (req, res) => {
   let coin = req.params.id;
+
   fs.readFile(`./public/socials/${coin}.json`, "utf-8", (err, jsonString) => {
     //if the data has not been previously written to file it will now be fetched
     if (err) {
