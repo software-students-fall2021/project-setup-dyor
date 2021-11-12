@@ -1,14 +1,27 @@
 const router = require("express").Router();
 const data = require('../data')
-const fs = require('fs')
+const jwt = require("jsonwebtoken");
+const jwtSecret = process.env.JWT_SECRET || "foo";
+
+function generateToken(user) {
+  const payload = {
+    subject: user.id,
+    email: user.email,
+  };
+  const options = {
+    expiresIn: "3600s",
+  };
+  return jwt.sign(payload, jwtSecret, options);
+}
 
 router.post('/login', (req, res) => {
-    const {email, password} = req.body
+    const { email, password } = req.body
 
     data.Users.map(user => {
         if (user.id == email) {
             if (user.data.password == password) {
-                console.log('login success')
+                const token = generateToken(user)
+                res.status(200).json({ email: email, token: token })
             } else {
                 console.log('password incorrect')
             }
