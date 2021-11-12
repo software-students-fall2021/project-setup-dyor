@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+// import axios from "axios";
 import Paper from "@mui/material/Paper";
 import "./WordCloud.css";
 
-function WordCloud() {
+function WordCloud(props) {
   const canvasA = useRef(null);
 
   useEffect(() => {
@@ -11,20 +11,15 @@ function WordCloud() {
     const image = new Image();
     const canvas = canvasA.current.getContext("2d");
 
-    axios
-      .get("/nfa/wordcloud")
-      .then((res) => {
-        image.src = res.data["data"];
-      })
-      .catch((err) => {
-        return err;
-      });
+    image.src = props.wcData;
 
     image.onload = () => {
+      canvas.fillStyle = "white";
+      canvas.fillRect(0, 0, 310, 150);
       canvas.drawImage(image, 0, 0);
     };
-  }, []);
-
+  }, [props.wcData]);
+  // console.log(props.wcData);
   return (
     <>
       <Paper variant="outlined" className="fill">
