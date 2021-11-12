@@ -52,4 +52,7 @@ app.use("/nfa", wordCloudRoute);
 const sentimentRouter = require("./routes/sentimentAnalysis");
 app.use("/sentimentAnalysis", sentimentRouter);
 
+const predictionRouter = require("./routes/coinPredict");
+app.use("/coinPredict", predictionRouter);
+
 module.exports = app;
