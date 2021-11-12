@@ -17,6 +17,7 @@ import SettingsPage from "./containers/SettingsPage/SettingsPage";
 import SignupPage from "./containers/SignupPage/SignupPage";
 import HelpCenterPage from "./containers/HelpCenterPage/HelpCenterPage";
 import ResetPassword from "./containers/ResetPasswordPage/ResetPassword";
+import PrivateRoute from "./components/PrivateRoutes/PrivateRoute";
 
 const theme = createTheme({
   palette: {

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Button, Stack, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Paper } from "@mui/material";
 import style from "./LoginPage.module.css";
 
 const LoginPage = ({ loginHandler }) => {
   const [userInput, setUserInput] = useState({ email: "", password: "" });
+  const history = useHistory();
 
   const handleInputChange = (event) => {
     if (event) {
@@ -15,6 +17,19 @@ const LoginPage = ({ loginHandler }) => {
         [id]: value,
       }));
     }
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/auth/login", userInput)
+      .then((res) => {
+        const { token } = res.data;
+        window.localStorage.setItem("token", token);
+        console.log(`Logged in! Here is your token: ${token}`);
+        history.push("/dashboard");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -51,11 +66,7 @@ const LoginPage = ({ loginHandler }) => {
           </item>
           <div className={style.centerButton}>
             <Link to="/dashboard">
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={loginHandler}
-              >
+              <Button variant="contained" color="primary" onClick={handleLogin}>
                 Login
               </Button>
             </Link>
