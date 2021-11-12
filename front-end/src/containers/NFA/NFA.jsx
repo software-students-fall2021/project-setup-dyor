@@ -11,7 +11,11 @@ import ComboBox from "../../components/Search/Search";
 import NFASocialMedia from "../../components/NFASocialMedia/NFASocialMedia";
 import { NFATable } from "../../components/NFATable/NFATable";
 import styles from "./NFA.module.css";
-import { userAssetDataURL, sentimentAnalysisURL } from "../../back-end_routes";
+import {
+  userAssetDataURL,
+  sentimentAnalysisURL,
+  coinLabelDataURL,
+} from "../../back-end_routes";
 
 // class OwnedAsset {
 //   constructor(id, quantityPurchased, unitPrice, datePurchased) {
@@ -52,6 +56,8 @@ export default function NFA() {
   const [coinPrices, setCoinPrices] = useState([]);
   const [sentimentData, setSentimentData] = useState({});
   const [WC, setWC] = useState(null);
+  const [coinLabels, setCoinLabels] = useState([]);
+  const [coinNameToSymbolDict, setCoinNameToSymbolDict] = useState({});
 
   const [loading, setLoading] = useState(true);
   let pricesWebSocket = useRef(null);
@@ -128,6 +134,27 @@ export default function NFA() {
       })
       .catch((err) => {
         console.log("Get User Data Failed.");
+        console.log(err);
+      });
+
+    axios
+      .request(coinLabelDataURL)
+      .then((response) => {
+        const dataArr = response.data;
+
+        setCoinLabels(() => dataArr);
+        const tempTickersDict = dataArr.reduce(
+          (prev, present) => ({
+            ...prev,
+            [present.name]: present.symbol,
+          }),
+          {},
+        );
+        //these dictionaries are created since we must transition from full names and ids frequently
+        setCoinNameToSymbolDict(() => tempTickersDict);
+      })
+      .catch((err) => {
+        console.log("Get Coin Label Data Failed.");
         console.log(err);
       });
 
@@ -266,9 +293,11 @@ export default function NFA() {
           </div>
           <div>
             <NFATable
+              userID={userID}
               pricesData={coinPrices}
               userData={userData}
-              coinLabels={tickers}
+              // coinLabels={tickers}
+              coinNameToSymbolDict={coinNameToSymbolDict}
             ></NFATable>
           </div>
         </Stack>
