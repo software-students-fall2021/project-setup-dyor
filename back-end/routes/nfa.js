@@ -36,10 +36,12 @@ router.get("/wordcloud/:id", (req, res) => {
   fs.readFile(`./public/socials/${coin}.json`, "utf-8", (err, jsonString) => {
     //if the data has not been previously written to file it will now be fetched
     if (err) {
-      console.log(`DATA NOT PRESENT`);
+      // console.log(`DATA NOT PRESENT`);
+      // res.status(500);
+      res.status(500).json({ error: "Error Getting the wordcloud" });
     } else {
       //if the data has been previously written to file it shall be fetched from thereon
-      console.log(`DATA ALREADY PRESENT`);
+      // console.log(`DATA ALREADY PRESENT`);
 
       // console.log(jsonString);
       try {

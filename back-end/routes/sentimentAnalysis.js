@@ -15,11 +15,10 @@ router.get("/", (req, res) => {
       res.status(200).json(response.data);
     })
     .catch((err) => {
-      if (err.response) {
-        console.log("Error response from API", err.response.status);
-      } else if (err.request) {
-        console.log("No response from API", err.response.status);
-      }
+      console.log(err);
+      res.status(500).json({
+        message: `INVALID GET REQUEST`,
+      });
     });
 });
 
