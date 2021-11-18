@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 const database = require("../data");
-var { socials, assetNews} = database;
+var { socials, assetNews } = database;
 
 //Get news from mockaroo (Mocking it for the time being)
 router.get("/", (req, res) => {
