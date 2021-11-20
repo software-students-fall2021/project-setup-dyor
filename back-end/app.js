@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: true })); // decode url-encoded incoming 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Root: Hello, world!" });
 });
+
 app.get(
   "/signedinuser",
   passport.authenticate("jwt", { session: false }),
@@ -28,34 +29,7 @@ app.get(
     res.json({ user: req.user });
   },
 );
-// const teamMemberModel = require("./schemas/teamMemberModel");
-// route for testing MongoDB access
-// app.get("/test", async (req, res) => {
-//   await mongoose
-//     .connect(
-//       `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_TEST_DB}?retryWrites=true&w=majority`,
-//     )
-//     .catch((err) => {
-//       console.log(err);
-//     });
 
-//   const teamMembers = await teamMemberModel.find({});
-
-//   res.status(200).json({ teamMembers });
-// });
-
-mongoose
-  .connect(
-    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_TEST_DB}?retryWrites=true&w=majority`,
-  )
-  .catch((err) => {
-    console.log(err);
-  });
-
-// To test on the local databse
-// mongoose.connect(`mongodb://localhost/APIAuth`).catch((err) => {
-//   console.log(err);
-// });
 //Importing and Using the userData route
 const userAssetDataRouter = require("./routes/userAssetData");
 app.use("/userAssetData", userAssetDataRouter);
@@ -75,11 +49,12 @@ const coinPresentPriceAndChangeRouter = require("./routes/coinPresentPriceAndCha
 app.use("/coinPresentPriceAndChange", coinPresentPriceAndChangeRouter);
 
 //General news and social media filters
-const newsRoutes = require("./routes/getNews");
-const newsRouter = newsRoutes.router;
-const socialRouter = require("./routes/getSocials");
+const newsRouter = require("./routes/getNews");
+const twitterRouter = require("./routes/getTwitter");
+const redditRouter = require("./routes/getReddit");
 app.use("/news", newsRouter);
-app.use("/social", socialRouter);
+app.use("/twitter", twitterRouter);
+app.use("/reddit", redditRouter);
 
 //Routing for NFA
 const wordCloudRoute = require("./routes/nfa.js");
@@ -95,5 +70,6 @@ app.use("/sentimentAnalysis", sentimentRouter);
 const predictionRouter = require("./routes/coinPredict");
 // const teamMember = require("./schemas/teamMemberModel");
 app.use("/coinPredict", predictionRouter);
+
 
 module.exports = app;

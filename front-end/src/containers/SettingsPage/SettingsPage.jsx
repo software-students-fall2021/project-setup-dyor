@@ -6,7 +6,6 @@ import { Box, IconButton } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
-import LanguageIcon from "@mui/icons-material/Language";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -14,20 +13,10 @@ import DropDownMenu from "../../components/DropDownMenu/drop_down_menu";
 import "./SettingsPage.css";
 
 const Currencies = ["$", "€", "£", "AED", "CAD", "¥"];
-const regions = [
-  "Africa",
-  "Asia",
-  "Central America",
-  "Europe",
-  "Middle East",
-  "North America",
-  "Carribean",
-];
 
 export default function SettingsPage({ logoutHandler }) {
   const [isSwitched, setIsSwitched] = React.useState(false);
   const [currency, setCurrency] = React.useState(Currencies[0]);
-  const [region, setRegion] = React.useState("Asia");
 
   return (
     <Box className="settings">
@@ -72,19 +61,6 @@ export default function SettingsPage({ logoutHandler }) {
             set={setCurrency}
           />
         </Box>
-        <Divider variant="inset" />
-        <Box className="setting regions">
-          <Box className="iconAndLabel">
-            <LanguageIcon className="notification-icon" />
-            <span className="label">News Region</span>
-          </Box>
-          <DropDownMenu
-            className="handle"
-            selectedValue={region}
-            options={regions}
-            set={setRegion}
-          />
-        </Box>
       </Paper>
       <Paper className="settingsTile user" elevation={0}>
         <Box className="iconAndLabel">
@@ -126,8 +102,8 @@ export default function SettingsPage({ logoutHandler }) {
           aria-label="menu"
           sx={{ mr: 2 }}
         >
-          <Link to="/signupPage">
-            <DeleteIcon color="warning" />
+          <Link to="/">
+            <DeleteIcon onClick={logoutHandler} color="warning" />
           </Link>
         </IconButton>
       </Paper>
