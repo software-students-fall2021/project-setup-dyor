@@ -36,12 +36,19 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-promise-router": "^4.1.0",
+    "joi": "^17.4.2",
+    "jsonwebtoken": "^8.5.1",
     "keyword-extractor": "^0.0.20",
     "moment": "^2.29.1",
     "mongoose": "^5.12.1",
     "morgan": "^1.10.0",
-    "needle": "^3.0.0"
+    "needle": "^3.0.0",
+    "passport": "^0.5.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
   }
 }

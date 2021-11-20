@@ -11,6 +11,7 @@ const options = {
   useUnifiedTopology: true,
   useFindAndModify: false,
 };
+
 mongoose
   .connect(dbURI, options)
   .then((res) => {
@@ -22,6 +23,7 @@ mongoose
   .catch((error) => {
     console.error(error);
   });
+
 // a function to stop listening to the port
 // const close = () => {
 //   listener.close();
