@@ -13,6 +13,12 @@
   .helpCenterTile{
     margin-bottom: 20px;
   }
+  .header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+  }
   .help {
     display: flex;
     justify-content: center;
