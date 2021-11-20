@@ -9,24 +9,31 @@ import NewsTile from "../../components/NewsTile/newsTile";
 
 export default function DashboardPage() {
   const [isLoading, setLoading] = React.useState(true);
-  const [articles, setArticles] = React.useState({})
+  const [articles, setArticles] = React.useState([]);
 
   React.useEffect(() => {
     const getArticles = async () => {
-        await axios
-          .get("/news")
-          .then((res) => {
-            setArticles(res.data);
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
+      await axios
+        .get("/news/cryptocurrency")
+        .then((res) => {
+          setArticles(res.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+      await axios
+      .put("/twitter")
+      .then((res) => {
+        console.log("Asset twitter called successfully");
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
     }
     getArticles();
   },[])
 
   React.useEffect(() => {
-    // console.log(articles)
     if (articles.length !== 0 && isLoading) setLoading(false);
   }, [isLoading, articles]);
 
@@ -89,7 +96,7 @@ export default function DashboardPage() {
               <NewsTile
                 coin="Crypto News"
                 number={4}
-                data={articles["crypto"]}
+                data={articles}
               />
             </Paper>
           )}
