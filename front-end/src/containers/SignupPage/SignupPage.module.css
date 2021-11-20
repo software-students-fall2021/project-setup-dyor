@@ -10,7 +10,7 @@
 .cardBox {
   background: rgb(230, 248, 246);
   margin: auto;
-  margin-top: 20%;
+  margin-top: 10%;
   border-radius: 15px;
   padding: 3%;
   width: 80%;
@@ -26,7 +26,14 @@
   justify-content: center;
   margin-top: 5%;
 }
-
+.header{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 5%;
+  padding-left: 20px;
+}
 .centerButton Button {
   text-decoration: none;
 }
+
