@@ -1,5 +1,6 @@
 import NFA from "./containers/NFA/NFA";
-import * as React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import DashboardPage from "./containers/Dashboard/Dashboard";
 import NewsPage from "./containers/NewsPage/newsPage";
 import { PortfolioPage } from "./containers/PortfolioPage/PortfolioPage";
@@ -31,6 +32,7 @@ const theme = createTheme({
 
 function App() {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
+  const [email, setEmail] = React.useState();
 
   const loginHandler = () => {
     console.log("LOGGING IN");
@@ -39,26 +41,69 @@ function App() {
 
   const logoutHandler = () => {
     console.log("LOGGING OUT");
-    setLoggedIn(() => false);
+    setLoggedIn(false);
   };
+
+  // check everytime the page render if the user is logged in or not (compare the token from the local storage)
+  useEffect(() => {
+    axios(` signedinuser`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.user) {
+          setLoggedIn(true);
+          setEmail(response.data.email);
+        } else {
+          setLoggedIn(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <LocalizationProvider dateAdapter={DateAdapter}>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          {isLoggedIn && <TopBar></TopBar>}
           <Switch>
             <Route path="/dashboard">
-              <DashboardPage />
+              {isLoggedIn && (
+                <>
+                  <TopBar></TopBar>
+                  <DashboardPage />
+                  <BottomBar></BottomBar>
+                </>
+              )}
             </Route>
             <Route path="/portfolio">
-              <PortfolioPage />
+              {isLoggedIn && (
+                <>
+                  <TopBar></TopBar>
+                  <PortfolioPage />
+                  <BottomBar></BottomBar>
+                </>
+              )}
             </Route>
             <Route path="/news">
-              <NewsPage />
+              {isLoggedIn && (
+                <>
+                  <TopBar></TopBar>
+                  <NewsPage />
+                  <BottomBar></BottomBar>
+                </>
+              )}
             </Route>
             <Route path="/nfa">
-              <NFA />
+              {isLoggedIn && (
+                <>
+                  <TopBar></TopBar>
+                  <NFA />
+                  <BottomBar></BottomBar>
+                </>
+              )}
             </Route>
             <Route
               path="/coinDetails/:userID/:assetID/:coinSymbol"
@@ -83,7 +128,6 @@ function App() {
               <LandingPage />
             </Route>
           </Switch>
-          {isLoggedIn && <BottomBar></BottomBar>}
         </BrowserRouter>
       </ThemeProvider>
     </LocalizationProvider>
