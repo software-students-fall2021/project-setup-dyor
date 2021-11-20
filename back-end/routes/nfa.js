@@ -42,11 +42,8 @@ router.get("/wordcloud/:id", (req, res) => {
     } else {
       //if the data has been previously written to file it shall be fetched from thereon
       // console.log(`DATA ALREADY PRESENT`);
-
-      // console.log(jsonString);
       try {
         tickers = JSON.parse(jsonString);
-        // console.log(tickers);
         endpoint = `https://quickchart.io/wordcloud?text=${tickers}&format=png&width=310&height=150`;
         res.status(200).json({ data: endpoint });
       } catch (err) {

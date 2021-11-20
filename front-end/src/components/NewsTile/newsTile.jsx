@@ -6,7 +6,6 @@ import Article from "../Article/article";
 import "./newsTile.css";
 
 export default function NewsTile({ data, coin, number }) {
-
   const [articles, setArticles] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [num, setNum] = React.useState(number);
@@ -25,7 +24,7 @@ export default function NewsTile({ data, coin, number }) {
       data !== undefined &&
       data.length !== 0 &&
       articles.length !== num &&
-      num < data.length
+      num <= data.length
     ) {
       setArticles(data.slice(0, num));
     }

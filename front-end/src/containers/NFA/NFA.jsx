@@ -35,7 +35,7 @@ import {
 
 // let _tweets = [];
 
-const socialMedia = ["Reddit", "Twitter"];
+const socialMedia = ["reddit", "twitter"];
 
 const userCoin = [
   { label: "BTC" },
@@ -72,7 +72,7 @@ export default function NFA() {
     const getPosts = async () => {
       const social = socialMedia[media];
       await axios
-        .get(`/social/${social}/${coin}`)
+        .get(`/${social}/${coin}`)
         .then((res) => {
           setPosts(res.data);
         })
@@ -179,7 +179,7 @@ export default function NFA() {
           return err;
         });
     }
-  }, [loading]);
+  }, [loading, coin]);
 
   if (pricesWebSocket.current !== null) {
     pricesWebSocket.current.onmessage = (e) => {
