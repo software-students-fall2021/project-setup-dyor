@@ -43,6 +43,7 @@ const SignupPage = ({ loginHandler}) => {
           <div className={style.centerButton}>
             <Typography className={style.greetings}>Welcome!</Typography>
           </div>
+
           <div>
             <TextField
               fullWidth
@@ -68,7 +69,7 @@ const SignupPage = ({ loginHandler}) => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={loginHandler}
+                // onClick={loginHandler}
               >
                 Signup
               </Button>
