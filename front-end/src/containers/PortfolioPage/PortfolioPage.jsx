@@ -34,8 +34,8 @@ export function PortfolioPage() {
     //this will request the data pertaining to a particular user
     axios
       .request(userAssetDataURL, {
-        params: {
-          userID,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
       .then((response) => {
@@ -103,15 +103,39 @@ export function PortfolioPage() {
     purchasePrice,
     datePurchased,
   }) => {
-    setUserData((prevUserData) => [
-      {
-        id: coin,
-        quantityPurchased,
-        unitPrice: purchasePrice,
-        datePurchased,
-      },
-      ...prevUserData,
-    ]);
+    const newAsset = {
+      id: coin,
+      quantityPurchased,
+      unitPrice: purchasePrice,
+      datePurchased,
+    };
+    axios
+      .post(
+        userAssetDataURL,
+        {
+          ...newAsset,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        },
+      )
+      .then((response) => {
+        console.log(response);
+        setUserData((prevUserData) => [
+          {
+            ...newAsset,
+          },
+          ...prevUserData,
+        ]);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(
+          `Asset Addition Failed. Try again. Note that duplicate assets may not be added.`,
+        );
+      });
   };
 
   return (

@@ -125,8 +125,8 @@ export default function NFA() {
     //this will request the data pertaining to a particular user
     axios
       .request(userAssetDataURL, {
-        params: {
-          userID,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
       .then((response) => {

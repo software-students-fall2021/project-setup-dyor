@@ -1,7 +1,7 @@
 const JWT = require("jsonwebtoken");
 const express = require("express");
 
-const User = require("../models/users");
+const { User } = require("../models/users");
 
 // setting up the token (payload)
 signToken = (user) => {

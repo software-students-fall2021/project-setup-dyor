@@ -2,12 +2,36 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const Schema = mongoose.Schema;
 
+const userAssetSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  quantityPurchased: {
+    type: Number,
+    required: true,
+  },
+  unitPrice: {
+    type: Number,
+    required: true,
+  },
+  datePurchased: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+});
+
 const userSchema = new Schema({
   email: {
     type: String,
     required: true,
     unique: true,
     lowercase: true,
+  },
+  data: {
+    assets: { type: [userAssetSchema], default: [] },
   },
   password: {
     type: String,
@@ -37,6 +61,8 @@ userSchema.methods.isValidPassword = async function (newPassword) {
   }
 };
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
+const UserAsset = mongoose.model("UserAsset", userAssetSchema);
 
-module.exports = User;
+module.exports.User = User;
+module.exports.UserAsset = UserAsset;

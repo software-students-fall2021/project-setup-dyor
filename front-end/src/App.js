@@ -32,7 +32,7 @@ const theme = createTheme({
 
 function App() {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
-  const [email, setEmail] = React.useState();
+  // const [email, setEmail] = React.useState();
 
   const loginHandler = () => {
     console.log("LOGGING IN");
@@ -46,15 +46,14 @@ function App() {
 
   // check everytime the page render if the user is logged in or not (compare the token from the local storage)
   useEffect(() => {
-    axios(` signedinuser`, {
+    axios("/signedinuser", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
       .then((response) => {
-        if (response.data.user) {
+        if (response.data.id) {
           setLoggedIn(true);
-          setEmail(response.data.email);
         } else {
           setLoggedIn(false);
         }

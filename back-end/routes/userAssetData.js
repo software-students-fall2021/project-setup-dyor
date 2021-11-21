@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const database = require("../data");
-const { Users } = database;
+// const database = require("../data");
+const passport = require("passport");
+const { async } = require("regenerator-runtime");
+// const { Users } = database;
+const { User } = require("../models/users");
 
 //Expects a JSON Object of the Form as Input
 // {
@@ -15,97 +18,182 @@ const { Users } = database;
 // The addition will have to be done for a particular userID, a default userID of John exists in the Data
 // This will assist Talal in his task greatly, he must now only create appropiate modify the existing submission forms
 
-router.post("/", (req, res) => {
-  const userID = req.query.userID;
-  if (userID) {
-    const { id, quantityPurchased, unitPrice, stringDate } = req.body;
-    const datePurchased = new Date(stringDate);
-    const newUserAsset = {
-      id,
-      quantityPurchased,
-      unitPrice,
-      datePurchased,
-    };
-    if (!id || !quantityPurchased || !unitPrice || !datePurchased) {
-      res.status(400).send({
-        ...newUserAsset,
-        message: "Invalid Input.",
-      });
-    } else {
-      const getUser = Users.find((userDetails) => userDetails.id === userID);
-      if (getUser) {
-        getUser.data.assets.push(newUserAsset);
-        res.status(200).json(newUserAsset);
-      } else {
-        console.log(`INVALID POST REQUEST, userID ${userID} NOT FOUND.`);
-        res.status(500).json({
-          message: `INVALID POST REQUEST, userID ${userID} NOT FOUND.`,
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const userID = req.user.id;
+    if (userID) {
+      const { id, quantityPurchased, unitPrice, datePurchased } = req.body;
+      const newUserAsset = {
+        name: id,
+        quantityPurchased,
+        unitPrice,
+        datePurchased,
+      };
+      console.log(newUserAsset);
+      if (!id || !quantityPurchased || !unitPrice || !datePurchased) {
+        res.status(400).send({
+          Input: { ...newUserAsset },
+          userMessage: "Invalid Input.",
         });
+      } else {
+        const userDBObj = await User.findById(userID);
+        if (!userDBObj) {
+          console.log(
+            "User though authenticated, cannot be found in DB for POST /userAssetData",
+          );
+          res.status(400).json({
+            userMessage:
+              "User though authenticated, cannot be found in DB for POST /userAssetData",
+          });
+        }
+
+        //this determines whether we are to push or assign
+        if (userDBObj.data.assets) {
+          //if we have to check whether or not the same asset previously exists, if it does the post will fail
+          const matchesFound = userDBObj.data.assets.filter(
+            (asset) => asset.name === newUserAsset.name,
+          ).length;
+          if (matchesFound) {
+            console.log(
+              "Unsuccesful POST /userAssetData, an asset pertaining to a given coin may be added only once",
+            );
+            res.status(400).json({
+              userMessage:
+                "Unsuccesful POST /userAssetData, an asset pertaining to a given coin may be added only once",
+            });
+            return;
+          }
+          userDBObj.data.assets.push({ ...newUserAsset });
+        } else {
+          userDBObj.data = { ...userDBObj.dat, assets: [{ ...newUserAsset }] };
+        }
+
+        try {
+          const updatedCollection = await userDBObj.save();
+          if (updatedCollection) {
+            res.status(200).json({
+              userMessage: "SUCCESSFUL POST /userAssetData REQUEST ",
+            });
+          } else {
+            console.log(
+              "SOMETHING TERRIBLE HAS HAPPENED WITH THE DB POST /userAssetData REQUEST, SAVE FAILED ",
+            );
+            res.status(400).json({
+              userMessage:
+                "SOMETHING TERRIBLE HAS HAPPENED WITH THE DB POST /userAssetData REQUEST, SAVE FAILED ",
+              output: updatedCollection,
+            });
+          }
+        } catch (err) {
+          console.log("UNSUCCESSFUL POST /userAssetData REQUEST");
+          console.log(err);
+          res.status(400).json({
+            userMessage: "UNSUCCESSFUL POST /userAssetData REQUEST ",
+          });
+        }
       }
+    } else {
+      res.status(400).json({
+        userMessage:
+          "UNEXPECTED BEHAVIOR IN AUTHENTICATION POST /userAssetData REQUEST ",
+      });
     }
-  } else {
-    console.log("INVALID POST REQUEST, userID IS REQUIRED PARAMETER");
-    res.status(500).json({
-      message: "INVALID POST REQUEST, userID IS REQUIRED PARAMETER",
-    });
-  }
-});
+  },
+);
 
 // Will return the asset object assosciated with a particular asset id where asset id is the name of the coin, and an error otherwise
 // A default UserID of John exists and he owns three assets namely "Bitcoin", "Ethereum", "Polkadot"
-router.get("/", (req, res) => {
-  const userID = req.query.userID;
-  const assetID = req.query.assetID;
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const userID = req.user.id;
+    const assetID = req.query.assetID || "";
+    const userDBObj = await User.findById(userID);
+    const assetDBObj = userDBObj.data.assets.filter(
+      (asset) => asset.name !== assetID,
+    );
 
-  if (userID) {
-    const getUser = Users.find((userDetails) => userDetails.id === userID);
-    if (getUser) {
-      if (assetID) {
-        const getAsset = getUser.data.assets.find(
-          (asset) => asset.id === assetID,
-        );
-        if (getAsset) {
-          res.status(200).json(getAsset);
-        } else {
-          console.log(
-            `INVALID GET REQUEST, assetID ${assetID} for userID ${userID} NOT FOUND.`,
-          );
-          res.status(500).json({
-            message: `INVALID GET REQUEST, assetID ${assetID} for userID ${userID} NOT FOUND.`,
-          });
-        }
-      } else {
-        res.status(200).json(getUser.data.assets);
-      }
-    } else {
-      console.log(`INVALID GET REQUEST, userID ${userID} NOT FOUND.`);
-      res.status(500).json({
-        message: `INVALID GET REQUEST, userID ${userID} NOT FOUND.`,
+    if (!userDBObj) {
+      res.status(400).json({
+        userMessage:
+          "User though authenticated, cannot be found in DB for GET /userAssetData",
       });
     }
-  } else {
-    console.log(`INVALID GET REQUEST, userID IS REQUIRED PARAMETER`);
-    res.status(500).json({
-      message: `INVALID GET REQUEST, userID IS REQUIRED PARAMETER`,
-    });
-  }
-});
+
+    //rest syntax does not work for some reason
+    const revisedData = assetDBObj.map((asset) => ({
+      id: asset.name,
+      quantityPurchased: asset.quantityPurchased,
+      unitPrice: asset.unitPrice,
+      datePurchased: asset.datePurchased,
+    }));
+
+    res.status(200).json(revisedData);
+  },
+);
 
 //Deletion to be implemented by Hanzallah
-
-router.delete("/", (req, res) => {
-  const assetID = req.query.coinID;
-  const userID = req.query.userID;
-
-  const getUser = Users.find((userDetails) => userDetails.id === userID);
-  const getAsset = getUser.data.assets.find((asset) => asset.id === assetID);
-
-  if (userID){
-    if (assetID){
-      res.status(200).json(getAsset);
-      getUser.data.assets = getUser.data.assets.filter((OwnedAsset) => OwnedAsset.id !== assetID)
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const userID = req.user.id;
+    const assetID = req.query.assetID || "";
+    if (!assetID) {
+      res.status(400).json({
+        userMessage: "No asset specified for DELETE /userAssetData",
+      });
+      return;
     }
-  }
-});
+
+    const userDBObj = await User.findById(userID);
+    if (!userDBObj) {
+      res.status(400).json({
+        userMessage:
+          "User though authenticated, cannot be found in DB for DELETE /userAssetData",
+      });
+      return;
+    }
+
+    if (userDBObj.data.assets) {
+      userDBObj.data.assets = userDBObj.data.assets.filter(
+        (asset) => asset.name !== assetID,
+      );
+
+      try {
+        const updatedCollection = await userDBObj.save();
+        if (updatedCollection) {
+          res.status(200).json({
+            userMessage: "SUCCESSFUL DELETE /userAssetData REQUEST ",
+          });
+        } else {
+          console.log(
+            "SOMETHING TERRIBLE HAS HAPPENED WITH THE DB DELETE /userAssetData REQUEST, SAVE FAILED ",
+          );
+          res.status(400).json({
+            userMessage:
+              "SOMETHING TERRIBLE HAS HAPPENED WITH THE DB DELTE /userAssetData REQUEST, SAVE FAILED ",
+            output: updatedCollection,
+          });
+        }
+      } catch (err) {
+        console.log("UNSUCCESSFUL DELETE /userAssetData REQUEST");
+        console.log(err);
+        res.status(400).json({
+          userMessage: "UNSUCCESSFUL DELETE /userAssetData REQUEST ",
+        });
+        return;
+      }
+    } else {
+      res.status(400).json({
+        userMessage: "User does not have any assets to delete",
+      });
+      return;
+    }
+  },
+);
 
 module.exports = router;
