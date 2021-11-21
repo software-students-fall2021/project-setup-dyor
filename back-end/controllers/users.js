@@ -1,7 +1,7 @@
 const JWT = require("jsonwebtoken");
 const express = require("express");
 
-const User = require("../models/users");
+const { User } = require("../models/users");
 
 // setting up the token (payload)
 signToken = (user) => {
@@ -19,6 +19,7 @@ signToken = (user) => {
 module.exports = {
   signUp: async (req, res, next) => {
     console.log("User Controller signup called");
+
     const { email, password } = req.value.body;
 
     // checking if the user is alredy created with the given email
@@ -40,6 +41,8 @@ module.exports = {
   },
 
   signIn: async (req, res, next) => {
+    console.log("User Controller Login called");
+    console.log(req);
     const token = signToken(req.user);
     res
       .status(200)

@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { Box, IconButton, Button, Stack, TextField, Typography } from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {
+  Box,
+  IconButton,
+  Button,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 import { Paper } from "@mui/material";
 import style from "./SignupPage.module.css";
+import axios from "axios";
 
-const SignupPage = ({ loginHandler}) => {
+const SignupPage = ({ loginHandler }) => {
   const [userInput, setUserInput] = useState({ email: "", password: "" });
 
   const handleInputChange = (event) => {
@@ -15,6 +23,18 @@ const SignupPage = ({ loginHandler}) => {
         ...prevUserInput,
         [id]: value,
       }));
+    }
+  };
+
+  const augmentedLoginHandler = async () => {
+    try {
+      console.log("Input");
+      console.log(userInput);
+      const response = await axios.post(`users/signup`, userInput);
+      // store the response data into the data state variable
+      console.log(`Server response: ${JSON.stringify(response.data, null, 0)}`);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -29,7 +49,7 @@ const SignupPage = ({ loginHandler}) => {
           sx={{ mr: 2 }}
         >
           <Link className="link" to="/">
-          <ArrowBackIcon />
+            <ArrowBackIcon />
           </Link>
         </IconButton>
       </Box>
@@ -69,7 +89,7 @@ const SignupPage = ({ loginHandler}) => {
               <Button
                 variant="contained"
                 color="primary"
-                // onClick={loginHandler}
+                onClick={augmentedLoginHandler}
               >
                 Signup
               </Button>

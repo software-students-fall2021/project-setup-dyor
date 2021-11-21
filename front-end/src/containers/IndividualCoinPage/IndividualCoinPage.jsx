@@ -19,8 +19,10 @@ const IndividualCoinPage = () => {
     axios
       .request(userAssetDataURL, {
         params: {
-          userID,
           assetID,
+        },
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
       .then((response) => {

@@ -26,7 +26,8 @@ app.get(
   "/signedinuser",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    res.json({ user: req.user });
+    console.log("Authentication Attempt");
+    res.json({ id: req.user.id });
   },
 );
 
@@ -70,6 +71,5 @@ app.use("/sentimentAnalysis", sentimentRouter);
 const predictionRouter = require("./routes/coinPredict");
 // const teamMember = require("./schemas/teamMemberModel");
 app.use("/coinPredict", predictionRouter);
-
 
 module.exports = app;

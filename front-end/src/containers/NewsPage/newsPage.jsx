@@ -15,8 +15,8 @@ export default function NewsPage() {
     //this will request the data pertaining to a particular user
     axios
       .request(userAssetDataURL, {
-        params: {
-          userID,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
       .then((response) => {
@@ -45,7 +45,7 @@ export default function NewsPage() {
   React.useEffect(() => {
     if (Object.keys(articles).length !== 0) {
       setLoading(false);
-    } 
+    }
   }, [articles]);
 
   return (
