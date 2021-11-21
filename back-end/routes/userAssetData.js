@@ -20,7 +20,7 @@ const { User } = require("../models/users");
 
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
   async (req, res) => {
     const userID = req.user.id;
     if (userID) {
@@ -107,7 +107,7 @@ router.post(
 // A default UserID of John exists and he owns three assets namely "Bitcoin", "Ethereum", "Polkadot"
 router.get(
   "/",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
   async (req, res) => {
     const userID = req.user.id;
     const assetID = req.query.assetID || "";
@@ -137,10 +137,9 @@ router.get(
   },
 );
 
-//Deletion to be implemented by Hanzallah
 router.delete(
   "/",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
   async (req, res) => {
     const userID = req.user.id;
     const assetID = req.query.assetID || "";

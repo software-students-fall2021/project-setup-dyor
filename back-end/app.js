@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 
 app.get(
   "/signedinuser",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
   (req, res) => {
     console.log("Authentication Attempt");
     res.json({ id: req.user.id });
