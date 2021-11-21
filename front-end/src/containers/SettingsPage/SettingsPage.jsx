@@ -18,6 +18,11 @@ export default function SettingsPage({ logoutHandler }) {
   const [isSwitched, setIsSwitched] = React.useState(false);
   const [currency, setCurrency] = React.useState(Currencies[0]);
 
+  const augmentedLogoutHandler = () => {
+    localStorage.removeItem("token");
+    logoutHandler();
+  };
+
   return (
     <Box className="settings">
       <h2 className="settingsTitle">Settings</h2>
@@ -89,7 +94,7 @@ export default function SettingsPage({ logoutHandler }) {
           sx={{ mr: 2 }}
         >
           <Link className="link" to="/">
-            <LogoutIcon onClick={logoutHandler} />
+            <LogoutIcon onClick={augmentedLogoutHandler} />
           </Link>
         </IconButton>
       </Paper>
