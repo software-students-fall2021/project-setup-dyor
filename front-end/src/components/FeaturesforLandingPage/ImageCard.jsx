@@ -1,13 +1,13 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
+// import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
+// import CardMedia from "@mui/material/CardMedia";
+// import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Container } from "@material-ui/core";
+// import { Container } from "@material-ui/core";
 import { makeStyles } from "@mui/styles";
-import { Collapse } from "@material-ui/core";
+// import { Collapse } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
@@ -52,7 +52,13 @@ export default function ImageCard({ feature, checked }) {
       <Card className={classes.root}>
         <CardContent>
           <div className={classes.imagefix}>
-            <img src={feature.src} width="100%" height="100%" margin="auto" />
+            <img
+              src={feature.src}
+              width="100%"
+              height="100%"
+              margin="auto"
+              alt="feature"
+            />
           </div>
           <div className={classes.setter}>
             <Typography
