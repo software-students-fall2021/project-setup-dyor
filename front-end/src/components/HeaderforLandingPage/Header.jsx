@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AppBar, Icon, IconButton, Toolbar } from "@material-ui/core";
+import { AppBar, IconButton, Toolbar } from "@material-ui/core";
 import { makeStyles } from "@mui/styles";
 import { Stack, Button } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -124,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
     height: "50px",
     border: "#fff",
     background: "#088f8f",
-    border: "#fff",
+    // border: "#fff",
     borderRadius: "10px",
     fontWeight: "bold",
   },

@@ -2,20 +2,25 @@
   background-color: rgba(79, 184, 172, 0.582);
   height: 100vh;
 }
-
 .greetings {
   font-size: 2em;
 }
 
 .cardBox {
   background: rgb(230, 248, 246);
-  margin-top: 20%;
+  margin-top: 10%;
   border-radius: 15px;
   padding: 3%;
   margin-right: 8%;
   margin-left: 8%;
 }
-
+.header{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 5%;
+  padding-left: 20px;
+}
 .fontColor {
   color: white;
 }

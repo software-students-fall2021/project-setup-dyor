@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Button,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 import { Paper } from "@mui/material";
 import style from "./SignupPage.module.css";
+import axios from "axios";
 
-import "./SignupPage";
-const SignugPage = ({ loginHandler }) => {
+const SignupPage = ({ loginHandler }) => {
   const [userInput, setUserInput] = useState({ email: "", password: "" });
 
   const handleInputChange = (event) => {
@@ -18,8 +26,33 @@ const SignugPage = ({ loginHandler }) => {
     }
   };
 
+  const augmentedLoginHandler = async () => {
+    try {
+      console.log("Input");
+      console.log(userInput);
+      const response = await axios.post(`users/signup`, userInput);
+      // store the response data into the data state variable
+      console.log(`Server response: ${JSON.stringify(response.data, null, 0)}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className={style.bgColor}>
+      <Box className={style.header}>
+        <IconButton
+          className={style.headerArrow}
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+        >
+          <Link className="link" to="/">
+            <ArrowBackIcon />
+          </Link>
+        </IconButton>
+      </Box>
       <Stack
         direction="column"
         justifyContent="space-evenly"
@@ -30,6 +63,7 @@ const SignugPage = ({ loginHandler }) => {
           <div className={style.centerButton}>
             <Typography className={style.greetings}>Welcome!</Typography>
           </div>
+
           <div>
             <TextField
               fullWidth
@@ -55,7 +89,7 @@ const SignugPage = ({ loginHandler }) => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={loginHandler}
+                onClick={augmentedLoginHandler}
               >
                 Signup
               </Button>
@@ -67,4 +101,4 @@ const SignugPage = ({ loginHandler }) => {
   );
 };
 
-export default SignugPage;
+export default SignupPage;

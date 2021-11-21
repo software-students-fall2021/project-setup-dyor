@@ -35,7 +35,7 @@ import {
 
 // let _tweets = [];
 
-const socialMedia = ["Reddit", "Twitter"];
+const socialMedia = ["reddit", "twitter"];
 
 const userCoin = [
   { label: "BTC" },
@@ -68,11 +68,35 @@ export default function NFA() {
   };
 
   useEffect(() => {
+    async function extract() {
+      await axios
+        .put("/twitter")
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+
+      await axios
+        .put("/reddit")
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
+
+    extract();
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
     const getPosts = async () => {
       const social = socialMedia[media];
       await axios
-        .get(`/social/${social}/${coin}`)
+        .get(`/${social}/${coin}`)
         .then((res) => {
           setPosts(res.data);
         })
@@ -125,8 +149,8 @@ export default function NFA() {
     //this will request the data pertaining to a particular user
     axios
       .request(userAssetDataURL, {
-        params: {
-          userID,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
       .then((response) => {
@@ -179,7 +203,7 @@ export default function NFA() {
           return err;
         });
     }
-  }, [loading]);
+  }, [loading, coin]);
 
   if (pricesWebSocket.current !== null) {
     pricesWebSocket.current.onmessage = (e) => {

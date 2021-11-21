@@ -1,16 +1,31 @@
 import * as React from "react";
 import { Box, Typography, Paper, IconButton, Divider } from "@mui/material";
+import { Link } from "react-router-dom";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import "./HelpCenterPage.css";
 
 export default function HelpCenterPage() {
   return (
     <>
       <Box className="helpCenter">
-        <h2 className="helpCenterTitle">Help Center</h2>
+        <Box className="header">
+          <IconButton
+            className="headerArrow"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <Link className="link" to="/settings">
+            <ArrowBackIcon />
+            </Link>
+          </IconButton>
+          <h2 className="helpCenterTitle">Help Center</h2>
+        </Box>
         <Paper className="helpCenterTile" elevation={0}>
           <Typography className="welcome">
             Our 24/7 customer service staff are always available and willing to

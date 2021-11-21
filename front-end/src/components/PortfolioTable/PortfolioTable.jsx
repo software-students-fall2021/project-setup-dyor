@@ -18,7 +18,6 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const CoinImage = (props) => {
-  const userID = props.userID;
   const coinID = props.coinID;
   const coinSymbol = props.symbolsDict[coinID];
   const lowerCoinSymbol = (coinSymbol && coinSymbol.toLowerCase()) || "generic";
@@ -29,7 +28,7 @@ const CoinImage = (props) => {
 
   return (
     <Link
-      to={`/coinDetails/${userID}/${coinID}/${coinSymbol}`}
+      to={`/coinDetails/${coinID}/${coinSymbol}`}
       className={styles.noDecoration}
     >
       <Grid
@@ -70,41 +69,12 @@ const NumericEntry = ({
   return <Typography className={styleClass}>{outputString}</Typography>;
 };
 
-// function useForceUpdate() {
-//   const [value, setValue] = useState(0); // integer state
-//   console.log(value);
-//   return () => setValue((value) => value + 1); // update the state to force render
-// }
-
 export function PortfolioTable(props) {
   const [dailyPricesAndChanges, setDailyPricesAndChanges] = useState({});
   const [showDelete, setShowDelete] = useState(false);
-  // const forceUpdate = useForceUpdate();
   const refresh = props.onRefresh;
 
   useEffect(() => {
-    //get all previous day prices?
-    // axios
-    //     .request("https://api.coincap.io/v2/assets")
-    //     .then((response) => {
-    //         const dailyPriceChange = response.data.data.map(
-    //             ({ id, changePercent24Hr }) => ({
-    //                 id: id,
-    //                 priceChange: changePercent24Hr,
-    //             })
-    //         );
-    //         const dailyPriceChangeDict = dailyPriceChange.reduce(
-    //             (a, x) => ({ ...a, [x.id]: x.priceChange }),
-    //             {}
-    //         );
-    //         console.log(dailyPriceChangeDict);
-    //         setDailyPercentageChanges(() => dailyPriceChangeDict);
-    //     })
-    //     .catch((err) => {
-    //         console.log("Get Daily Change Data Failed.");
-    //         console.log(err);
-    //     });
-
     axios
       .request(presentPriceAndChangeURL)
       .then((response) => {
@@ -121,18 +91,19 @@ export function PortfolioTable(props) {
     setShowDelete((prevShowDelete) => !prevShowDelete);
   };
 
-  const onDeleteAsset = (name, user) => {
+  const onDeleteAsset = (name) => {
     axios
       .delete(userAssetDataURL, {
         params: {
-          coinID: name,
-          userID: user,
+          assetID: name,
+        },
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
       .then((response) => {
         console.log(response);
         refresh();
-        // forceUpdate();
       })
       .catch((err) => {
         console.log("Deletion Unsuccessful");
@@ -199,11 +170,7 @@ export function PortfolioTable(props) {
                 <TableRow key={userDataElement.id}>
                   {showDelete ? (
                     <TableCell component="th" scope="row">
-                      <Button
-                        onClick={() =>
-                          onDeleteAsset(userDataElement.id, "John")
-                        }
-                      >
+                      <Button onClick={() => onDeleteAsset(userDataElement.id)}>
                         <DeleteIcon></DeleteIcon>
                       </Button>
                     </TableCell>
@@ -212,7 +179,6 @@ export function PortfolioTable(props) {
                   )}
                   <TableCell component="th" scope="row">
                     <CoinImage
-                      userID={props.userID}
                       coinID={userDataElement.id}
                       symbolsDict={props.coinNameToSymbolDict}
                     ></CoinImage>

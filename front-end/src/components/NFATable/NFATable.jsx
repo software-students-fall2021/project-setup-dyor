@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Typography } from "@material-ui/core";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -69,8 +69,8 @@ const NumericEntry = ({
 };
 
 export function NFATable(props) {
-  const [userPrediction, setUserPrediction] = useState();
-  const [getPredict, setGetPredict] = useState({});
+  // const [userPrediction, setUserPrediction] = useState();
+  // const [getPredict, setGetPredict] = useState({});
 
   const pseudoGetPredict = [
     {

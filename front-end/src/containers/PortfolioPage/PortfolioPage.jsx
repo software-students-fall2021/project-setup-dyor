@@ -7,10 +7,7 @@ import styles from "./PortfolioPage.module.css";
 import axios from "axios";
 import { userAssetDataURL, coinLabelDataURL } from "../../back-end_routes";
 
-const defaultUser = "John";
-
 export function PortfolioPage() {
-  const userID = defaultUser;
   const [coinNameToSymbolDict, setCoinNameToSymbolDict] = useState({});
   const [newAssetAdditionPending, setNewAssetAdditionPending] = useState(false);
   const [coinLabels, setCoinLabels] = useState([]);
@@ -34,8 +31,8 @@ export function PortfolioPage() {
     //this will request the data pertaining to a particular user
     axios
       .request(userAssetDataURL, {
-        params: {
-          userID,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
       .then((response) => {
@@ -103,15 +100,39 @@ export function PortfolioPage() {
     purchasePrice,
     datePurchased,
   }) => {
-    setUserData((prevUserData) => [
-      {
-        id: coin,
-        quantityPurchased,
-        unitPrice: purchasePrice,
-        datePurchased,
-      },
-      ...prevUserData,
-    ]);
+    const newAsset = {
+      id: coin,
+      quantityPurchased,
+      unitPrice: purchasePrice,
+      datePurchased,
+    };
+    axios
+      .post(
+        userAssetDataURL,
+        {
+          ...newAsset,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        },
+      )
+      .then((response) => {
+        console.log(response);
+        setUserData((prevUserData) => [
+          {
+            ...newAsset,
+          },
+          ...prevUserData,
+        ]);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(
+          `Asset Addition Failed. Try again. Note that duplicate assets may not be added.`,
+        );
+      });
   };
 
   return (
@@ -135,7 +156,6 @@ export function PortfolioPage() {
       <item>
         <Paper elevation={2} className={styles.stackItem}>
           <PortfolioTable
-            userID={userID}
             pricesData={coinPrices}
             userData={userData}
             coinNameToSymbolDict={coinNameToSymbolDict}

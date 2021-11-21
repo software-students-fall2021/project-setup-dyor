@@ -5,10 +5,8 @@ import { CircularProgress } from "@mui/material";
 import { userAssetDataURL } from "../../back-end_routes";
 import "./newsPage.css";
 
-var articles = {};
-
 export default function NewsPage() {
-  const userID = "John";
+  const [articles, setArticles] = React.useState({});
   const [isLoading, setLoading] = React.useState(true);
   const [userData, setUserData] = React.useState([]);
 
@@ -16,8 +14,8 @@ export default function NewsPage() {
     //this will request the data pertaining to a particular user
     axios
       .request(userAssetDataURL, {
-        params: {
-          userID,
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
       .then((response) => {
@@ -31,20 +29,23 @@ export default function NewsPage() {
 
   React.useEffect(() => {
     const getArticles = async () => {
-      if (Object.keys(articles).length === 0) {
-        await axios
-          .get("/news")
-          .then((res) => {
-            articles = res.data;
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
-      }
-      if (Object.keys(articles).length !== 0) setLoading(false);
+      await axios
+        .get("/news")
+        .then((res) => {
+          setArticles(res.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
     };
     getArticles();
   }, [userData]);
+
+  React.useEffect(() => {
+    if (Object.keys(articles).length !== 0) {
+      setLoading(false);
+    }
+  }, [articles]);
 
   return (
     <>
@@ -63,7 +64,7 @@ export default function NewsPage() {
               key={index}
               coin={data.id}
               number={2}
-              data={articles[data.id]}
+              data={articles[data.id.toLowerCase()]}
             />
           ))}
         </div>

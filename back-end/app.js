@@ -1,15 +1,23 @@
 // import and instantiate express
 const express = require("express"); // CommonJS import style!
 const app = express(); // instantiate an Express object
+const passport = require("passport");
+const schedule = require("node-schedule");
+// const refreshNews = require("./refreshNews");
+const refreshTwitter = require("./refreshTwitter");
+const refreshReddit = require("./refreshReddit");
+const needle = require("needle");
 require("dotenv").config();
 
 const morgan = require("morgan"); // middleware for nice logging of incoming HTTP requests
-const dotenv = require("dotenv"); // access API_KEYS
+const dotenv = require("dotenv"); // access API_KEYS and other details
+const mongoose = require("mongoose"); // interface to better access MONGO_DB
 dotenv.config({ path: "./.env" });
 //MiddleWares
 // use the morgan middleware to log all incoming http requests
 app.use(morgan("dev")); // morgan has a few logging default styles - dev is a nice concise color-coded style
 
+app.use(passport.initialize());
 // use express's builtin body-parser middleware to parse any data included in a request
 app.use(express.json()); // decode JSON-formatted incoming POST data
 app.use(express.urlencoded({ extended: true })); // decode url-encoded incoming POST data
@@ -18,6 +26,15 @@ app.use(express.urlencoded({ extended: true })); // decode url-encoded incoming 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Root: Hello, world!" });
 });
+
+app.get(
+  "/signedinuser",
+  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
+  (req, res) => {
+    console.log("Authentication Attempt");
+    res.json({ id: req.user.id });
+  },
+);
 
 //Importing and Using the userData route
 const userAssetDataRouter = require("./routes/userAssetData");
@@ -38,21 +55,41 @@ const coinPresentPriceAndChangeRouter = require("./routes/coinPresentPriceAndCha
 app.use("/coinPresentPriceAndChange", coinPresentPriceAndChangeRouter);
 
 //General news and social media filters
-const newsRoutes = require("./routes/getNews");
-const newsRouter = newsRoutes.router;
-const socialRouter = require("./routes/getSocials");
+
+//Refresh news and socials at destined times
+schedule.scheduleJob("0 */6 * * *", async () => {
+  console.log("I was called to refresh news");
+  refreshNews();
+});
+schedule.scheduleJob("0 */2 * * *", async () => {
+  console.log("I was called to refresh twitter");
+  refreshTwitter();
+});
+schedule.scheduleJob("0 */2 * * *", async () => {
+  console.log("I was called to refresh reddit");
+  refreshReddit();
+});
+
+const newsRouter = require("./routes/getNews");
+const twitterRouter = require("./routes/getTwitter");
+const redditRouter = require("./routes/getReddit");
 app.use("/news", newsRouter);
-app.use("/social", socialRouter);
+app.use("/twitter", twitterRouter);
+app.use("/reddit", redditRouter);
 
 //Routing for NFA
 const wordCloudRoute = require("./routes/nfa.js");
 // //Routes for wordcloud
 app.use("/nfa", wordCloudRoute);
 
+const users = require("./routes/users.js");
+app.use("/users", users);
+
 const sentimentRouter = require("./routes/sentimentAnalysis");
 app.use("/sentimentAnalysis", sentimentRouter);
 
 const predictionRouter = require("./routes/coinPredict");
+// const teamMember = require("./schemas/teamMemberModel");
 app.use("/coinPredict", predictionRouter);
 
 module.exports = app;
