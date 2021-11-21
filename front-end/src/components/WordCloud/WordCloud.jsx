@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 // import axios from "axios";
 import Paper from "@mui/material/Paper";
 import "./WordCloud.css";

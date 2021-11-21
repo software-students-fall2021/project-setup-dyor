@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import ImageCard from "./ImageCard";
 import features from "./Features";
-import useWindowPosition from "../hookForLandingPage/useWindowPostion";
+// import useWindowPosition from "../hookForLandingPage/useWindowPostion";
 import Zoom from "react-reveal/Zoom";
 import Bounce from "react-reveal/Bounce";
 // import front_image from "/public/front_elem.png"

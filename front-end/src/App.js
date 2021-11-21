@@ -1,5 +1,5 @@
 import NFA from "./containers/NFA/NFA";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import DashboardPage from "./containers/Dashboard/Dashboard";
 import NewsPage from "./containers/NewsPage/newsPage";

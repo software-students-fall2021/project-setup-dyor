@@ -70,22 +70,22 @@ export default function NFA() {
   useEffect(() => {
     async function extract() {
       await axios
-      .put("/twitter")
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+        .put("/twitter")
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
 
       await axios
-      .put("/reddit")
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+        .put("/reddit")
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
     }
 
     extract();

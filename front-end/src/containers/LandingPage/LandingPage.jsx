@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+// import axios from "axios";
 import { makeStyles } from "@mui/styles";
 import Header from "../../components/HeaderforLandingPage/Header";
 import { PortfolioCard } from "../../components/FeaturesforLandingPage/PortfolioCard";
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LandingPage = () => {
   const classes = useStyles();
-  
+
   return (
     <div className={classes.root}>
       <CssBaseline />
