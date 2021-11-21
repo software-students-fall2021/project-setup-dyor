@@ -26,6 +26,9 @@ const IndividualCoinPage = () => {
         },
       })
       .then((response) => {
+        console.log("Received Response");
+        console.log(response);
+
         const tempAssetDetails = response.data;
         setAssetDetails(() => tempAssetDetails);
 

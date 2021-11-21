@@ -18,7 +18,6 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const CoinImage = (props) => {
-  const userID = props.userID;
   const coinID = props.coinID;
   const coinSymbol = props.symbolsDict[coinID];
   const lowerCoinSymbol = (coinSymbol && coinSymbol.toLowerCase()) || "generic";
@@ -29,7 +28,7 @@ const CoinImage = (props) => {
 
   return (
     <Link
-      to={`/coinDetails/${userID}/${coinID}/${coinSymbol}`}
+      to={`/coinDetails/${coinID}/${coinSymbol}`}
       className={styles.noDecoration}
     >
       <Grid
@@ -92,7 +91,7 @@ export function PortfolioTable(props) {
     setShowDelete((prevShowDelete) => !prevShowDelete);
   };
 
-  const onDeleteAsset = (name, user) => {
+  const onDeleteAsset = (name) => {
     axios
       .delete(userAssetDataURL, {
         params: {
@@ -171,11 +170,7 @@ export function PortfolioTable(props) {
                 <TableRow key={userDataElement.id}>
                   {showDelete ? (
                     <TableCell component="th" scope="row">
-                      <Button
-                        onClick={() =>
-                          onDeleteAsset(userDataElement.id, "John")
-                        }
-                      >
+                      <Button onClick={() => onDeleteAsset(userDataElement.id)}>
                         <DeleteIcon></DeleteIcon>
                       </Button>
                     </TableCell>
@@ -184,7 +179,6 @@ export function PortfolioTable(props) {
                   )}
                   <TableCell component="th" scope="row">
                     <CoinImage
-                      userID={props.userID}
                       coinID={userDataElement.id}
                       symbolsDict={props.coinNameToSymbolDict}
                     ></CoinImage>

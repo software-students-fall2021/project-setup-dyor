@@ -6,7 +6,6 @@ import axios from "axios";
 import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
 import NewsTile from "../../components/NewsTile/newsTile";
 
-
 export default function DashboardPage() {
   const [isLoading, setLoading] = React.useState(true);
   const [articles, setArticles] = React.useState([]);
@@ -21,9 +20,9 @@ export default function DashboardPage() {
         .catch((err) => {
           console.log(err.response);
         });
-    }
+    };
     getArticles();
-  },[])
+  }, []);
 
   React.useEffect(() => {
     if (articles.length !== 0 && isLoading) setLoading(false);
@@ -75,21 +74,12 @@ export default function DashboardPage() {
             </ol>
           </Paper>
         </item>
-        <item>
-          <Paper elevation={2} className={styles.cardBox}>
-            <DailyGraph></DailyGraph>
-          </Paper>
-        </item>
         <item className={styles.circularProgress}>
           {isLoading ? (
             <CircularProgress />
           ) : (
             <Paper elevation={2} className={styles.cardBox}>
-              <NewsTile
-                coin="Crypto News"
-                number={4}
-                data={articles}
-              />
+              <NewsTile coin="Crypto News" number={4} data={articles} />
             </Paper>
           )}
         </item>

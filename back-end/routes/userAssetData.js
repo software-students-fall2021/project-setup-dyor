@@ -112,10 +112,10 @@ router.get(
     const userID = req.user.id;
     const assetID = req.query.assetID || "";
     const userDBObj = await User.findById(userID);
-    const assetDBObj = userDBObj.data.assets.filter(
-      (asset) => asset.name !== assetID,
+    const assetDBObj = userDBObj.data.assets.filter((asset) =>
+      assetID ? asset.name === assetID : true,
     );
-
+    console.log(assetDBObj);
     if (!userDBObj) {
       res.status(400).json({
         userMessage:
@@ -124,13 +124,14 @@ router.get(
     }
 
     //rest syntax does not work for some reason
-    const revisedData = assetDBObj.map((asset) => ({
+    let revisedData = assetDBObj.map((asset) => ({
       id: asset.name,
       quantityPurchased: asset.quantityPurchased,
       unitPrice: asset.unitPrice,
       datePurchased: asset.datePurchased,
     }));
-
+    revisedData =
+      assetID && revisedData.length >= 1 ? revisedData[0] : revisedData;
     console.log(revisedData);
     res.status(200).json(revisedData);
   },

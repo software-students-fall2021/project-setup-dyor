@@ -104,10 +104,15 @@ function App() {
                 </>
               )}
             </Route>
-            <Route
-              path="/coinDetails/:userID/:assetID/:coinSymbol"
-              component={IndividualCoinPage}
-            ></Route>
+            <Route path="/coinDetails/:assetID/:coinSymbol">
+              {isLoggedIn && (
+                <>
+                  <TopBar></TopBar>
+                  <IndividualCoinPage />
+                  <BottomBar></BottomBar>
+                </>
+              )}
+            </Route>
             <Route path="/loginPage">
               <LoginPage loginHandler={loginHandler}></LoginPage>
             </Route>

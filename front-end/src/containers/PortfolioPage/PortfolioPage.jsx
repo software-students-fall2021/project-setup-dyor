@@ -7,10 +7,7 @@ import styles from "./PortfolioPage.module.css";
 import axios from "axios";
 import { userAssetDataURL, coinLabelDataURL } from "../../back-end_routes";
 
-const defaultUser = "John";
-
 export function PortfolioPage() {
-  const userID = defaultUser;
   const [coinNameToSymbolDict, setCoinNameToSymbolDict] = useState({});
   const [newAssetAdditionPending, setNewAssetAdditionPending] = useState(false);
   const [coinLabels, setCoinLabels] = useState([]);
@@ -159,7 +156,6 @@ export function PortfolioPage() {
       <item>
         <Paper elevation={2} className={styles.stackItem}>
           <PortfolioTable
-            userID={userID}
             pricesData={coinPrices}
             userData={userData}
             coinNameToSymbolDict={coinNameToSymbolDict}
