@@ -8,7 +8,17 @@ import axios from "axios";
 const LoginPage = ({ loginHandler }) => {
   const [response, setResponse] = useState({}); // the API will return an object with a JWT token, if the user logs in successfully
   const [errorMessage, setErrorMessage] = useState("");
-  // const [userInput, setUserInput] = useState({ email: "", password: "" });
+  const [userInput, setUserInput] = useState({ email: "", password: "" });
+
+  const handleInputChange = (event) => {
+    if (event) {
+      const { id, value } = event.target;
+      setUserInput((prevUserInput) => ({
+        ...prevUserInput,
+        [id]: value,
+      }));
+    }
+  };
 
   useEffect(() => {
     // if the user is logged-in, save the token to local storage
@@ -19,25 +29,40 @@ const LoginPage = ({ loginHandler }) => {
     }
   }, [response]);
 
-  const handleSubmit = async (e) => {
-    // prevent the HTML form from actually submitting... we use React's javascript code instead
-    e.preventDefault();
-
+  const augmentedLoginHandler = async () => {
     try {
-      const requestData = {
-        email: e.target.email.value, // gets the value of the field in the submitted form with name='email'
-        password: e.target.password.value, // gets the value of the field in the submitted form with name='password',
-      };
-
-      const response = await axios.post(`users/signin`, requestData);
+      console.log("Input");
+      console.log(userInput);
+      const response = await axios.post(`users/signin`, userInput);
       // store the response data into the data state variable
       console.log(`Server response: ${JSON.stringify(response.data, null, 0)}`);
       setResponse(response.data);
     } catch (err) {
+      console.log(err);
       // request failed... user entered invalid credentials
       setErrorMessage("You entered invalid credentials.");
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   // prevent the HTML form from actually submitting... we use React's javascript code instead
+  //   e.preventDefault();
+
+  //   try {
+  //     const requestData = {
+  //       email: e.target.email.value, // gets the value of the field in the submitted form with name='email'
+  //       password: e.target.password.value, // gets the value of the field in the submitted form with name='password',
+  //     };
+
+  //     const response = await axios.post(`users/signin`, requestData);
+  //     // store the response data into the data state variable
+  //     console.log(`Server response: ${JSON.stringify(response.data, null, 0)}`);
+  //     setResponse(response.data);
+  //   } catch (err) {
+  //     // request failed... user entered invalid credentials
+  //     setErrorMessage("You entered invalid credentials.");
+  //   }
+  // };
 
   if (response.success) {
     loginHandler();
@@ -53,9 +78,11 @@ const LoginPage = ({ loginHandler }) => {
         >
           <Paper elevation={2} className={style.cardBox}>
             <div className={style.centerButton}>
-              <Typography className={style.greetings}>Welcome back!</Typography>
+              <Typography className={style.greetings}>
+                {errorMessage || "Welcome back!"}
+              </Typography>
             </div>
-            {/* <item>
+            <item>
               <TextField
                 fullWidth
                 variant="outlined"
@@ -79,13 +106,13 @@ const LoginPage = ({ loginHandler }) => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={loginHandler}
+                onClick={augmentedLoginHandler}
               >
                 Login
               </Button>
-            </div> */}
-            {errorMessage}
-            <form onSubmit={handleSubmit}>
+            </div>
+            {/* {errorMessage} */}
+            {/* <form onSubmit={handleSubmit}>
               {
                 //handle error condition
               }
@@ -99,7 +126,7 @@ const LoginPage = ({ loginHandler }) => {
               <br />
               <br />
               <input type="submit" value="Log In" />
-            </form>
+            </form> */}
           </Paper>
         </Stack>
       </div>

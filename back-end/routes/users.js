@@ -8,6 +8,7 @@ const { validateBody, schemas } = require("../helpers/routeHelpers");
 const UserController = require("../controllers/users");
 
 const passportSignIn = passport.authenticate("local", { session: false });
+
 router
   .route("/signup")
   .post(validateBody(schemas.authSchema), UserController.signUp);

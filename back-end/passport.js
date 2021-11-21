@@ -49,15 +49,23 @@ passport.use(
       try {
         // find the user given the email
         const user = await User.findOne({ email });
+        console.log(user);
         // if not handle it
         if (!user) {
           return done(null, false);
         }
 
-        const isMatch = await user.isValidPassword(password);
-        if (!isMatch) {
-          return done(null, false);
-        }
+        user.isValidPassword(password, (error, match) => {
+          if (!match) {
+            return done(null, false);
+          }
+        });
+
+        // const isMatch = await user.isValidPassword(password);
+        // console.log(isMatch);
+        // if (!isMatch) {
+        //   return done(null, false);
+        // }
 
         done(null, user);
       } catch (error) {
