@@ -31,7 +31,7 @@ router.post(
         unitPrice,
         datePurchased,
       };
-      console.log(newUserAsset);
+      // console.log("The new user asset is", newUserAsset);
       if (!id || !quantityPurchased || !unitPrice || !datePurchased) {
         res.status(400).send({
           Input: { ...newUserAsset },
@@ -88,7 +88,7 @@ router.post(
           }
         } catch (err) {
           console.log("UNSUCCESSFUL POST /userAssetData REQUEST");
-          console.log(err);
+          // console.log(err);
           res.status(400).json({
             userMessage: "UNSUCCESSFUL POST /userAssetData REQUEST ",
           });
@@ -131,6 +131,7 @@ router.get(
       datePurchased: asset.datePurchased,
     }));
 
+    console.log(revisedData);
     res.status(200).json(revisedData);
   },
 );
@@ -181,7 +182,7 @@ router.delete(
         }
       } catch (err) {
         console.log("UNSUCCESSFUL DELETE /userAssetData REQUEST");
-        console.log(err);
+        // console.log(err);
         res.status(400).json({
           userMessage: "UNSUCCESSFUL DELETE /userAssetData REQUEST ",
         });

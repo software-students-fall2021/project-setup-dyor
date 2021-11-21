@@ -47,7 +47,7 @@ router.get("/wordcloud/:id", (req, res) => {
         endpoint = `https://quickchart.io/wordcloud?text=${tickers}&format=png&width=310&height=150`;
         res.status(200).json({ data: endpoint });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
         console.log("PARSE FAILED FOR EXISTING DATA.");
       }
     }

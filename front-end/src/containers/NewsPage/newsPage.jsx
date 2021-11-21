@@ -6,7 +6,6 @@ import { userAssetDataURL } from "../../back-end_routes";
 import "./newsPage.css";
 
 export default function NewsPage() {
-  const userID = "John";
   const [articles, setArticles] = React.useState({});
   const [isLoading, setLoading] = React.useState(true);
   const [userData, setUserData] = React.useState([]);

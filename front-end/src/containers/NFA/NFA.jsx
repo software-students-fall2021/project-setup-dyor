@@ -68,6 +68,30 @@ export default function NFA() {
   };
 
   useEffect(() => {
+    async function extract() {
+      await axios
+      .put("/twitter")
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+
+      await axios
+      .put("/reddit")
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+    }
+
+    extract();
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
     const getPosts = async () => {
       const social = socialMedia[media];

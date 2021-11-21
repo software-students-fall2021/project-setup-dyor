@@ -16,29 +16,6 @@ const useStyles = makeStyles((theme) => ({
 
 const LandingPage = () => {
   const classes = useStyles();
-
-  React.useEffect(() => {
-    const getArticles = async () => {
-    await axios
-      .put("/news")
-      .then((res) => {
-        console.log("Asset news called successfully");
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-    
-    await axios
-      .put("/reddit")
-      .then((res) => {
-        console.log("Asset reddit called successfully");
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-    }
-    getArticles();
-  }, [])
   
   return (
     <div className={classes.root}>

@@ -1,8 +1,6 @@
 const express = require("express");
-const axios = require("axios");
 const router = express.Router();
 const newsDatabase = require("../schemas/newsModel");
-const needle = require("needle");
 
 const coins = [
   "bitcoin",
@@ -14,8 +12,6 @@ const coins = [
   "polkadot",
   "cryptocurrency",
 ];
-
-const assetNews = {};
 
 router.get("/", async (req, res) => {
   const allNews = await newsDatabase.find({});
@@ -30,39 +26,6 @@ router.get("/", async (req, res) => {
       resNews[coin] = news;
     }
     res.status(200).json(resNews);
-  }
-});
-
-router.put("/", async (req, res) => {
-  const allNews = await newsDatabase.find({});
-  const totalCoins = Object.keys(allNews).length;
-
-  if (totalCoins === 0) {
-    const success = await getAllArticles();
-    if (success) {
-      res
-        .status(200)
-        .json({ message: "Everything in Database working finally" });
-    }
-  } else {
-    const lastRefreshed = allNews[0]["dateRefreshed"];
-    const parsedDate = Date.parse(lastRefreshed);
-    const currentTime = Date.now();
-    const timeDiff = (currentTime - parsedDate) / 1000;
-    const timeInHours = timeDiff / 3600;
-
-    if (timeInHours < 12) {
-      res
-        .status(200)
-        .json({ message: "Everything in Database working finally" });
-    } else {
-      const success = await getAllArticles();
-      if (success) {
-        res
-          .status(200)
-          .json({ message: "Everything in Database working finally" });
-      }
-    }
   }
 });
 
@@ -89,52 +52,5 @@ router.get("/:coin", async (req, res) => {
     }
   }
 });
-
-const getAllArticles = async () => {
-  let i = 0;
-  for (let coin in coins) {
-    const articles = async () => {
-      const coinNews = await getArticle(coins[coin]);
-      const success = await putInDatabase(coins[coin], coinNews);
-      // console.log(success ? "PutDatabase Success" : "PutDatabase Failed");
-      assetNews[coins[coin].toLowerCase()] = coinNews;
-    };
-    articles();
-
-    i = i + 1;
-  }
-
-  if (i >= 8) return true;
-  else return false;
-};
-
-const getArticle = async (coin) => {
-  const today = new Date().toISOString().slice(0, 10);
-  let received = [];
-
-  const url = `https://newsapi.org/v2/everything?q=+${coin}&from=${today}&language=en&sortBy=relevancy&apiKey=${process.env.NEWS_API_KEY}`;
-  await needle("get", url)
-    .then((res) => {
-      received = res.body.articles;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-  return received;
-};
-
-const putInDatabase = async (coin, coinNews) => {
-  const query = { coin: coin.toLowerCase() };
-  const update = {
-    coin: coin.toLowerCase(),
-    news: coinNews,
-    dateRefreshed: Date.now(),
-  };
-  const opts = { new: true, upsert: true };
-
-  const response = await newsDatabase.findOneAndUpdate(query, update, opts);
-  if (response.coin.toLowerCase() === coin.toLowerCase()) return true;
-  else return false;
-};
 
 module.exports = router;
