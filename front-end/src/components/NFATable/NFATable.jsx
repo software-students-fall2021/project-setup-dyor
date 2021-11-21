@@ -9,6 +9,8 @@ import { Box } from "@mui/system";
 import { Grid } from "@material-ui/core";
 import styles from "./NFATable.module.css";
 import Icon from "react-crypto-icons";
+import axios from "axios";
+import { coinPredict } from "../../back-end_routes";
 // import axios from "axios";
 // import { coinPredict } from "../../back-end_routes";
 import { Link } from "react-router-dom";
