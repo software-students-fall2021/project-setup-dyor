@@ -21,14 +21,6 @@ export default function DashboardPage() {
         .catch((err) => {
           console.log(err.response);
         });
-      await axios
-      .put("/twitter")
-      .then((res) => {
-        console.log("Asset twitter called successfully");
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
     }
     getArticles();
   },[])

@@ -21,14 +21,14 @@ passport.use(
     async (payload, done) => {
       try {
         //finding the user specified in the token
-        console.log(payload);
+        // console.log(payload);
         const user = await User.findById(payload.sub);
-        console.log(user);
+        // console.log(user);
         // if the user doesn't exist
         if (!user) {
           return done(null, false);
         }
-        console.log(user.id);
+        // console.log(user.id);
 
         // otherwise return the user
         // done(null, user);
@@ -49,7 +49,7 @@ passport.use(
       try {
         // find the user given the email
         const user = await User.findOne({ email });
-        console.log(user);
+        // console.log(user);
         // if not handle it
         if (!user) {
           return done(null, false);

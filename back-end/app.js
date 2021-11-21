@@ -2,6 +2,11 @@
 const express = require("express"); // CommonJS import style!
 const app = express(); // instantiate an Express object
 const passport = require("passport");
+const schedule = require("node-schedule");
+// const refreshNews = require("./refreshNews");
+const refreshTwitter = require("./refreshTwitter");
+const refreshReddit = require("./refreshReddit");
+const needle = require("needle");
 require("dotenv").config();
 
 const morgan = require("morgan"); // middleware for nice logging of incoming HTTP requests
@@ -50,6 +55,21 @@ const coinPresentPriceAndChangeRouter = require("./routes/coinPresentPriceAndCha
 app.use("/coinPresentPriceAndChange", coinPresentPriceAndChangeRouter);
 
 //General news and social media filters
+
+//Refresh news and socials at destined times
+schedule.scheduleJob("0 */6 * * *", async () => {
+  console.log("I was called to refresh news");
+  refreshNews();
+});
+schedule.scheduleJob("0 */2 * * *", async () => {
+  console.log("I was called to refresh twitter");
+  refreshTwitter();
+});
+schedule.scheduleJob("0 */2 * * *", async () => {
+  console.log("I was called to refresh reddit");
+  refreshReddit();
+});
+
 const newsRouter = require("./routes/getNews");
 const twitterRouter = require("./routes/getTwitter");
 const redditRouter = require("./routes/getReddit");

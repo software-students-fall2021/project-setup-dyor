@@ -1,13 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const needle = require("needle");
-const axios = require("axios");
 const redditDatabase = require("../schemas/redditModel");
-const fs = require("fs");
-const keyword_extractor = require("keyword-extractor");
-
-let redditPosts = {};
-// let extractPosts = {};
 
 const coins = {
   BTC: "bitcoin",
@@ -22,36 +15,18 @@ const coins = {
 };
 
 router.put("/", async (req, res) => {
-  const allReddit = await redditDatabase.find({});
-  const totalCoins = Object.keys(allReddit).length;
-
-  if (totalCoins === 0) {
-    const success = await getAllPosts();
-    if (success) {
-      res
-        .status(200)
-        .json({ message: "Everything in Database working allReddit" });
-    }
+  const docs = await redditDatabase.find({}, { _id: 0, coin: 1, posts: 1 });
+  let j = 0;
+  for (let i = 0; i < docs.length; ++i) {
+    const { coin, posts } = docs[i];
+    const shortForm = Object.keys(coins).find((key) => coins[key] === coin);
+    extractWords(posts, shortForm);
+    j = j + 1;
+  }
+  if (j >= docs.length) {
+    res.status(201).json({ message: "Written successfully" });
   } else {
-    const lastRefreshed = allReddit[0]["dateRefreshed"];
-    const parsedDate = Date.parse(lastRefreshed);
-    const currentTime = Date.now();
-    const timeDiff = (currentTime - parsedDate) / 1000;
-    const timeInHours = timeDiff / 3600;
-
-    if (timeInHours < 1) {
-      res
-        .status(200)
-        .json({ message: "Everything in Database working allReddit" });
-    } else {
-      console.log("Past 12 hours");
-      const success = await getAllPosts();
-      if (success) {
-        res
-          .status(200)
-          .json({ message: "Everything in Database working allReddit" });
-      }
-    }
+    res.status(500).json({ message: "Writing failed" });
   }
 });
 
@@ -85,85 +60,30 @@ router.get("/:coin", async (req, res) => {
   }
 });
 
-const getAllPosts = async () => {
-  let i = 0;
-  for (let coin in coins) {
-    const articles = async () => {
-      const posts = await getPost(coin);
-      const success = await putInDatabase(coins[coin], posts);
-      // console.log(success ? "PutDatabase Success" : "PutDatabase Failed");
-      redditPosts[coin.toLowerCase()] = posts;
-    };
-    articles();
-    i = i + 1;
+const extractWords = (posts, shortForm) => {
+  try {
+    //  Extract the keywords
+    const stringData = JSON.stringify(
+      posts.map((data) => data.data.selftext + " "),
+    ).replace(/[^a-zA-Z ]/g, "");
+    const extraction_result = keyword_extractor.extract(stringData, {
+      language: "english",
+      remove_digits: true,
+      remove_duplicates: false,
+    });
+    fs.writeFile(
+      `./public/socials/${shortForm}.json`,
+      '["' + extraction_result.join(" ").substring(0, 1500) + '"]',
+      (err) => {
+        if (err) console.log(err);
+        else {
+          // console.log("Succesful Writing.");
+        }
+      },
+    );
+  } catch (err) {
+    console.log("STRINGIFY FAILED FOR NEW DATA.");
   }
-
-  if (i >= 8) return true;
-  else return false;
 };
-
-//Get Reddit
-const getPost = async (shortForm) => {
-  let posts = [];
-  const channels = {
-    BTC: "bitcoin",
-    ETH: "ethereum",
-    SHIB: "Shibacoin",
-    DOGE: "dogecoin",
-    LTC: "litecoin",
-    DOT: "dot",
-    ADA: "cardano",
-    SOL: "solana",
-    crypto: "CryptoCurrency",
-  };
-
-  const url = `https://www.reddit.com/r/${channels[shortForm]}/hot.json?limit=100`;
-  const res = await needle("get", url);
-  if (res.body) {
-    posts = res.body.data.children.filter((post) => post.data.selftext !== "");
-  } else {
-    console.log("Unsuccesful request");
-  }
-  return posts;
-};
-
-const putInDatabase = async (coin, posts) => {
-  const query = { coin: coin.toLowerCase() };
-  const update = {
-    coin: coin.toLowerCase(),
-    posts: posts,
-    dateRefreshed: Date.now(),
-  };
-  const opts = { new: true, upsert: true };
-
-  const response = await redditDatabase.findOneAndUpdate(query, update, opts);
-  if (response.coin.toLowerCase() === coin.toLowerCase()) return true;
-  else return false;
-};
-
-// const extractWords = (posts, shortForm) => {
-//   try {
-//     const stringData = JSON.stringify(
-//       posts.map((data1) => data1.data.selftext + " "),
-//     );
-//     const extraction_result = keyword_extractor.extract(stringData, {
-//       language: "english",
-//       remove_digits: true,
-//       remove_duplicates: false,
-//     });
-//     fs.writeFile(
-//       `./public/socials/${shortForm}.json`,
-//       '["' + extraction_result.join(" ").substring(0, 1000) + '"]',
-//       (err) => {
-//         if (err) console.log(err);
-//         else {
-//           console.log("Succesful Writing.");
-//         }
-//       },
-//     );
-//   } catch (err) {
-//     console.log("STRINGIFY FAILED FOR NEW DATA.");
-//   }
-// };
 
 module.exports = router;

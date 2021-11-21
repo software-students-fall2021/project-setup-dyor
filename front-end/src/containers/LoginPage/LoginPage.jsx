@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Box, IconButton, Button, Stack, TextField, Typography } from "@mui/material";
 import { Link, Redirect } from "react-router-dom";
 import { Paper } from "@mui/material";
 import style from "./LoginPage.module.css";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
 
 const LoginPage = ({ loginHandler }) => {
@@ -70,6 +71,19 @@ const LoginPage = ({ loginHandler }) => {
   } else
     return (
       <div className={style.bgColor}>
+        <Box className={style.header}>
+        <IconButton
+          className={style.headerArrow}
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+        >
+          <Link className="link" to="/">
+            <ArrowBackIcon />
+          </Link>
+        </IconButton>
+      </Box>
         <Stack
           direction="column"
           justifyContent="space-evenly"
