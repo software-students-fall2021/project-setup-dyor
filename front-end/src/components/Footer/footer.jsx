@@ -18,21 +18,23 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="socials">
-        <SocialIcon
-          className="icons"
-          style={{ height: 25, width: 25 }}
-          url="https://github.com"
-        />
-        <SocialIcon
-          className="icons"
-          style={{ height: 25, width: 25 }}
-          url="https://twitter.com"
-        />
-        <SocialIcon
-          className="icons"
-          style={{ height: 25, width: 25 }}
-          url="https://facebook.com"
-        />
+        <div>
+          <SocialIcon
+            className="icons"
+            style={{ height: 25, width: 25 }}
+            url="https://github.com/software-students-fall2021/project-setup-dyor"
+          />
+          <SocialIcon
+            className="icons"
+            style={{ height: 25, width: 25 }}
+            url="https://twitter.com"
+          />
+          <SocialIcon
+            className="icons"
+            style={{ height: 25, width: 25 }}
+            url="https://facebook.com"
+          />
+        </div>
       </div>
       <div className="copyright">
         <Copyright />

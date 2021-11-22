@@ -3,10 +3,9 @@ const express = require("express"); // CommonJS import style!
 const app = express(); // instantiate an Express object
 const passport = require("passport");
 const schedule = require("node-schedule");
-// const refreshNews = require("./refreshNews");
+const refreshNews = require("./refreshNews");
 const refreshTwitter = require("./refreshTwitter");
 const refreshReddit = require("./refreshReddit");
-const needle = require("needle");
 require("dotenv").config();
 
 const morgan = require("morgan"); // middleware for nice logging of incoming HTTP requests

@@ -74,7 +74,6 @@ function App() {
                 <>
                   <TopBar></TopBar>
                   <DashboardPage />
-                  <Footer />
                   <BottomBar></BottomBar>
                 </>
               )}
@@ -84,7 +83,6 @@ function App() {
                 <>
                   <TopBar></TopBar>
                   <PortfolioPage />
-                  <Footer />
                   <BottomBar></BottomBar>
                 </>
               )}
@@ -94,7 +92,6 @@ function App() {
                 <>
                   <TopBar></TopBar>
                   <NewsPage />
-                  <Footer />
                   <BottomBar></BottomBar>
                 </>
               )}
@@ -104,7 +101,6 @@ function App() {
                 <>
                   <TopBar></TopBar>
                   <NFA />
-                  <Footer />
                   <BottomBar></BottomBar>
                 </>
               )}
@@ -120,23 +116,21 @@ function App() {
             </Route>
             <Route path="/loginPage">
               <LoginPage loginHandler={loginHandler}></LoginPage>
-              <Footer />
             </Route>
             <Route path="/signupPage">
               <SignupPage loginHandler={loginHandler}></SignupPage>
-              <Footer />
             </Route>
             <Route path="/settings">
+              <TopBar></TopBar>
               <SettingsPage logoutHandler={logoutHandler} />
-              <Footer />
+              <BottomBar></BottomBar>
             </Route>
             <Route path="/resetPassword">
               <ResetPassword />
-              <Footer />
             </Route>
             <Route path="/helpCenter">
+              <TopBar></TopBar>
               <HelpCenterPage />
-              <Footer />
             </Route>
             <Route path="/">
               <LandingPage />
