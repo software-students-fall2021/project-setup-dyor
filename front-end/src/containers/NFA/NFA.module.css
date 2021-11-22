@@ -22,5 +22,9 @@
 
 .progressBar {
   align-self: center;
-  margin: 50px auto; 
+  margin: 50px auto;
+}
+
+.pricePredic {
+  padding: 2%;
 }
