@@ -10,6 +10,7 @@ import WordCloud from "../../components/WordCloud/WordCloud";
 import ComboBox from "../../components/Search/Search";
 import NFASocialMedia from "../../components/NFASocialMedia/NFASocialMedia";
 import { NFATable } from "../../components/NFATable/NFATable";
+import { Paper } from "@mui/material";
 import styles from "./NFA.module.css";
 import {
   userAssetDataURL,
@@ -232,98 +233,118 @@ export default function NFA() {
           direction="column"
           justifyContent="center"
           alignItems="stretch"
-          spacing={1}
+          spacing={2}
         >
-          <Typography weight="bold" color="primary" variant="h4">
-            NFA
-          </Typography>
-          <div>
-            {loading ? (
-              <div className={styles.circularProgress}>
-                <CircularProgress
-                  className={styles.progressBar}
-                  size={50}
-                  thickness={2.0}
-                />
-              </div>
-            ) : (
-              { WC } && <WordCloud wcData={WC} />
-            )}
-          </div>
-
-          <div>
-            {/* The darker colored section. Contains: social media filter, search bar and the social media tiles */}
-            <div className={styles.bgColor}>
-              <div className={styles.displayInline}>
-                <div>
-                  <Typography weight="bold" color="primary" display="inline">
-                    Social Media Filter
-                  </Typography>
-                </div>
-                <div>
-                  <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                    <Select
-                      labelId="demo-simple-select-standard-label"
-                      id="demo-simple-select-standard"
-                      value={media}
-                      onChange={handleChange}
-                      label="Media"
-                    >
-                      <MenuItem value={0}>Reddit</MenuItem>
-                      <MenuItem value={1}>Twitter</MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-              </div>
-
-              <div className={styles.displayInline}>
-                {/* This is the search bar  */}
-                <ComboBox
-                  coins={userCoin}
-                  currentCoin={coin}
-                  changeCoin={setCoin}
-                />
-              </div>
-              {loading ? (
-                <div className={styles.circularProgress}>
-                  <CircularProgress
-                    className={styles.progressBar}
-                    size={50}
-                    thickness={2.0}
-                  />
-                </div>
-              ) : (
-                <NFASocialMedia media={media} posts={posts} />
-              )}
-              <div className={styles.displayInline}>
-                <Button variant="contained" size="small">
-                  Market Sentiment:
-                  <Typography style={{ marginRight: "5px" }}>
-                    {sentimentScore < 0 ? (
-                      <Typography color="red"> Bearish</Typography>
-                    ) : (
-                      <Typography color="yellow">Bullish</Typography>
-                    )}
-                  </Typography>
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <Typography weight="bold" color="primary" display="inline">
-              Sentiment on your Portfolio
+          <item>
+            <Typography weight="bold" color="primary" variant="h4">
+              NFA
             </Typography>
-          </div>
-          <div>
-            <NFATable
-              userID={userID}
-              pricesData={coinPrices}
-              userData={userData}
-              // coinLabels={tickers}
-              coinNameToSymbolDict={coinNameToSymbolDict}
-            ></NFATable>
-          </div>
+          </item>
+          <item>
+            <Paper elevation={2}>
+              <div>
+                {loading ? (
+                  <div className={styles.circularProgress}>
+                    <CircularProgress
+                      className={styles.progressBar}
+                      size={50}
+                      thickness={2.0}
+                    />
+                  </div>
+                ) : (
+                  { WC } && <WordCloud wcData={WC} />
+                )}
+              </div>
+            </Paper>
+          </item>
+
+          <item>
+            <Paper elevation={2}>
+              <div>
+                {/* The darker colored section. Contains: social media filter, search bar and the social media tiles */}
+                <div className={styles.bgColor}>
+                  <div className={styles.displayInline}>
+                    <div>
+                      <Typography
+                        weight="bold"
+                        color="primary"
+                        display="inline"
+                      >
+                        Social Media Filter
+                      </Typography>
+                    </div>
+                    <div>
+                      <FormControl
+                        variant="standard"
+                        sx={{ m: 1, minWidth: 120 }}
+                      >
+                        <Select
+                          labelId="demo-simple-select-standard-label"
+                          id="demo-simple-select-standard"
+                          value={media}
+                          onChange={handleChange}
+                          label="Media"
+                        >
+                          <MenuItem value={0}>Reddit</MenuItem>
+                          <MenuItem value={1}>Twitter</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+                  </div>
+
+                  <div className={styles.displayInline}>
+                    {/* This is the search bar  */}
+                    <ComboBox
+                      coins={userCoin}
+                      currentCoin={coin}
+                      changeCoin={setCoin}
+                    />
+                  </div>
+                  {loading ? (
+                    <div className={styles.circularProgress}>
+                      <CircularProgress
+                        className={styles.progressBar}
+                        size={50}
+                        thickness={2.0}
+                      />
+                    </div>
+                  ) : (
+                    <NFASocialMedia media={media} posts={posts} />
+                  )}
+                  <div className={styles.displayInline}>
+                    <Button variant="contained" size="small">
+                      Market Sentiment:
+                      <Typography style={{ marginRight: "5px" }}>
+                        {sentimentScore < 0 ? (
+                          <Typography color="red"> Bearish</Typography>
+                        ) : (
+                          <Typography color="yellow">Bullish</Typography>
+                        )}
+                      </Typography>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Paper>
+          </item>
+          <item>
+            <Paper elevation={2}>
+              <div className={styles.pricePredic}>
+                <Typography weight="bold" color="primary" display="inline">
+                  NFA Price Prediction
+                </Typography>
+              </div>
+              <div>
+                <NFATable
+                  userID={userID}
+                  pricesData={coinPrices}
+                  userData={userData}
+                  // coinLabels={tickers}
+                  coinNameToSymbolDict={coinNameToSymbolDict}
+                ></NFATable>
+              </div>
+            </Paper>
+          </item>
         </Stack>
       </Box>
     </>
