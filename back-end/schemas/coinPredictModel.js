@@ -1,16 +1,11 @@
 const mongoose = require("mongoose");
 
 const coinPredictSchema = new mongoose.Schema({
-    id: {
-      type: String,
-      required: true,
-    },
-    prediction: {
-      type: Number,
-      required: true,
-    },
+    name: String,
+    prediction: Number,
+    currentdate: String, 
   });
   
-  const newsModel = mongoose.model("coinPredict", coinPredictSchema);
-  
-  module.exports = newsModel;
+mongoose.model("coin_predict", coinPredictSchema);
+
+// module.exports = coinPredictMod;
