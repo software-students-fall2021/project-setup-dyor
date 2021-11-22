@@ -18,6 +18,7 @@ import SettingsPage from "./containers/SettingsPage/SettingsPage";
 import SignupPage from "./containers/SignupPage/SignupPage";
 import HelpCenterPage from "./containers/HelpCenterPage/HelpCenterPage";
 import ResetPassword from "./containers/ResetPasswordPage/ResetPassword";
+import Footer from "./components/Footer/footer";
 
 const theme = createTheme({
   palette: {
@@ -73,6 +74,7 @@ function App() {
                 <>
                   <TopBar></TopBar>
                   <DashboardPage />
+                  <Footer />
                   <BottomBar></BottomBar>
                 </>
               )}
@@ -82,6 +84,7 @@ function App() {
                 <>
                   <TopBar></TopBar>
                   <PortfolioPage />
+                  <Footer />
                   <BottomBar></BottomBar>
                 </>
               )}
@@ -91,6 +94,7 @@ function App() {
                 <>
                   <TopBar></TopBar>
                   <NewsPage />
+                  <Footer />
                   <BottomBar></BottomBar>
                 </>
               )}
@@ -100,6 +104,7 @@ function App() {
                 <>
                   <TopBar></TopBar>
                   <NFA />
+                  <Footer />
                   <BottomBar></BottomBar>
                 </>
               )}
@@ -115,21 +120,27 @@ function App() {
             </Route>
             <Route path="/loginPage">
               <LoginPage loginHandler={loginHandler}></LoginPage>
+              <Footer />
             </Route>
             <Route path="/signupPage">
               <SignupPage loginHandler={loginHandler}></SignupPage>
+              <Footer />
             </Route>
             <Route path="/settings">
               <SettingsPage logoutHandler={logoutHandler} />
+              <Footer />
             </Route>
             <Route path="/resetPassword">
               <ResetPassword />
+              <Footer />
             </Route>
             <Route path="/helpCenter">
               <HelpCenterPage />
+              <Footer />
             </Route>
             <Route path="/">
               <LandingPage />
+              <Footer />
             </Route>
           </Switch>
         </BrowserRouter>

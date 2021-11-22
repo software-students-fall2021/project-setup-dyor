@@ -17,7 +17,6 @@ function Copyright() {
 export default function Footer() {
   return (
     <footer className="footer">
-      <div className="footer-logo">Logo</div>
       <div className="socials">
         <SocialIcon
           className="icons"
