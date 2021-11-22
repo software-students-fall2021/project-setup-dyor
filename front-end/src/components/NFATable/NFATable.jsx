@@ -14,6 +14,9 @@ import { coinPredict } from "../../back-end_routes";
 // import axios from "axios";
 // import { coinPredict } from "../../back-end_routes";
 import { Link } from "react-router-dom";
+import {useState, useEffect} from "react";
+
+
 
 const CoinImage = (props) => {
   const userID = props.userID;
@@ -70,7 +73,9 @@ const NumericEntry = ({
 
 export function NFATable(props) {
   // const [userPrediction, setUserPrediction] = useState();
-  // const [getPredict, setGetPredict] = useState({});
+  const [getPredict, setGetPredict] = useState({});
+  const [getTemp, setGetTemp] = useState({});
+
 
   const pseudoGetPredict = [
     {
@@ -175,16 +180,45 @@ export function NFATable(props) {
     },
   ];
 
-  // axios
-  //   .get(coinPredict)
-  //   .then((response) => {
-  //     console.log(response.data);
-  //     setGetPredict(response.data);
-  //   })
-  //   .catch((err) => {
-  //     console.log("Coin Predict Failed");
-  //     console.log(err);
+  axios
+    .get(coinPredict)
+    .then((response) => {
+      console.log(response.data);
+      // setGetPredict(response.data);
+      // setGetTemp("0");
+    })
+    .catch((err) => {
+      console.log("Coin Predict Failed");
+      console.log(err);
+    });
+
+  
+  // GetPredict ? GetPredict.map((obj) =>
+        // obj.id === userDataElement.id ? 
+        // obj.prediction : "",
+    //   )
+    // : 0}
+
+//////..........................
+
+
+  // for (let i = 0; i<getPredict.length;i++){
+  //   const new_prediction = new coinPredictMod({
+  //     name: getPredict[i].id,
+  //     prediction: getPredict[i].prediction,
   //   });
+
+  //   new_prediction.save(function(err,doc){
+  //     if (err) return console.error(err);
+  //     console.log("Document inserted successfully")
+  //   });
+  // }
+
+  // const new_prediction = new coinPredictMod({
+  //   name: GetPredict.id,
+  //   prediction: GetPredict.prediction,
+  // });
+
 
   return (
     <>
@@ -263,6 +297,9 @@ export function NFATable(props) {
                           obj.id === userDataElement.id ? obj.prediction : "",
                         )
                       : 0}
+                      {/* getPredict
+                      {console.log(getTemp)} */}
+                      
                   </TableCell>
                 </TableRow>
               );
