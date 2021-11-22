@@ -185,12 +185,12 @@ export function NFATable(props) {
     .then((response) => {
       // console.log(response.data);
       setGetPredict(response.data);
-      console.log("GET PREDICT")
-      console.log(getPredict)
+      // console.log("GET PREDICT")
+      // console.log(getPredict)
       // setGetTemp("0");
     })
     .catch((err) => {
-      console.log("Coin Predict Failed");
+      // console.log("Coin Predict Failed");
       console.log(err);
     });
 
@@ -294,13 +294,15 @@ export function NFATable(props) {
                       : 0} */}
 
                     {/* if getPredict is array of objects --- For Working Api*/}
-                    {getPredict
-                      ? getPredict.map((obj) =>
+
+                    {getPredict && !(typeof getPredict === 'object' && !Array.isArray(getPredict) && getPredict !== null)
+                      ? 
+                      getPredict.map((obj) =>
                           obj.name === userDataElement.id ? obj.prediction : "",
+                          
                         )
-                      : 0}
-                      {/* getPredict
-                      {console.log(getTemp)} */}
+                      // console.log(getPredict)
+                      : 'loading...'}
                       
                   </TableCell>
                 </TableRow>

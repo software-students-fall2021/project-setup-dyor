@@ -24,15 +24,13 @@ date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(
 router.get("/", (req, res) => {
   coinPredictMod.find({currentdate:date}, (err,docs)=>{
     if( docs.length == 0){
-      console.log("Ye Le")
-      console.log("ljklj",docs)
       axios
         .get(
           "https://my.api.mockaroo.com/coins_mockeroo.json?key=0cc02cb0&__method=GET",
         )
         .then((response) => {
           res.status(200).json(response.data);
-          console.log(response.data);
+          // console.log(response.data);
     
           for (let i = 0; i<response.data.length;i++){
             if (docs.name != response.data[i].id){
@@ -56,10 +54,8 @@ router.get("/", (req, res) => {
     else if(err){
       console.log(err);
       res.status(404);
-      console.log("KHarr bachiya")  
     }
     else{
-      console.log("COnsole LOG already found")
       res.status(200).json(docs);
       // console.log(docs)
     }
