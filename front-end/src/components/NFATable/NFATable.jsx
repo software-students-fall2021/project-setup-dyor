@@ -183,12 +183,14 @@ export function NFATable(props) {
   axios
     .get(coinPredict)
     .then((response) => {
-      console.log(response.data);
-      // setGetPredict(response.data);
+      // console.log(response.data);
+      setGetPredict(response.data);
+      // console.log("GET PREDICT")
+      // console.log(getPredict)
       // setGetTemp("0");
     })
     .catch((err) => {
-      console.log("Coin Predict Failed");
+      // console.log("Coin Predict Failed");
       console.log(err);
     });
 
@@ -292,13 +294,15 @@ export function NFATable(props) {
                       : 0} */}
 
                     {/* if getPredict is array of objects --- For Working Api*/}
-                    {pseudoGetPredict
-                      ? pseudoGetPredict.map((obj) =>
-                          obj.id === userDataElement.id ? obj.prediction : "",
+
+                    {getPredict && !(typeof getPredict === 'object' && !Array.isArray(getPredict) && getPredict !== null)
+                      ? 
+                      getPredict.map((obj) =>
+                          obj.name === userDataElement.id ? obj.prediction : "",
+                          
                         )
-                      : 0}
-                      {/* getPredict
-                      {console.log(getTemp)} */}
+                      // console.log(getPredict)
+                      : 'loading...'}
                       
                   </TableCell>
                 </TableRow>
