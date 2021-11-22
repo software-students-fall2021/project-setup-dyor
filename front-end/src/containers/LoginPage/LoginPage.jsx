@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Box, IconButton, Button, Stack, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Button,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Link, Redirect } from "react-router-dom";
 import { Paper } from "@mui/material";
 import style from "./LoginPage.module.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
+// import Footer from "../../components/Footer/footer";
 
 const LoginPage = ({ loginHandler }) => {
   const [response, setResponse] = useState({}); // the API will return an object with a JWT token, if the user logs in successfully
@@ -72,18 +80,18 @@ const LoginPage = ({ loginHandler }) => {
     return (
       <div className={style.bgColor}>
         <Box className={style.header}>
-        <IconButton
-          className={style.headerArrow}
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-        >
-          <Link className="link" to="/">
-            <ArrowBackIcon />
-          </Link>
-        </IconButton>
-      </Box>
+          <IconButton
+            className={style.headerArrow}
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <Link className="link" to="/">
+              <ArrowBackIcon />
+            </Link>
+          </IconButton>
+        </Box>
         <Stack
           direction="column"
           justifyContent="space-evenly"
