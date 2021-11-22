@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 // const database = require("../data");
 const passport = require("passport");
-const { async } = require("regenerator-runtime");
 // const { Users } = database;
 const { User } = require("../models/users");
 

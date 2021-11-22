@@ -1,17 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const newsDatabase = require("../schemas/newsModel");
+const { cryptoSymbols } = require("../data");
 
-const coins = [
-  "bitcoin",
-  "dogecoin",
-  "ethereum",
-  "cardano",
-  "litecoin",
-  "shiba inu",
-  "polkadot",
-  "cryptocurrency",
-];
+const coins = ["cryptocurrency"];
+for (let i = 0; i < cryptoSymbols.length; ++i) {
+  const { name } = cryptoSymbols[i];
+  coins.push(name);
+}
 
 router.get("/", async (req, res) => {
   const allNews = await newsDatabase.find({});
