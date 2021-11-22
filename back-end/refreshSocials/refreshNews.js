@@ -12,16 +12,18 @@ for (let i = 0; i < cryptoSymbols.length; ++i) {
 
 const refreshNews = async () => {
   let coins = await newsDatabase.find({}, { _id: 0, coin: 1 });
+  console.log(coins);
   let i = 0;
 
   if (coins.length < allCoins.length) {
+    console.log("came here");
     for (let j = 0; j < allCoins.length; ++j) {
       const coin = allCoins[j];
       const coinNews = await getArticle(coin);
       const success = await putInDatabase(coin, coinNews);
       i = i + 1;
     }
-    if (i >= 8) console.log("Success");
+    if (i >= allCoins.length) console.log("Success");
     else console.log("Failed");
   } else {
     for (let j = 0; j < coins.length; ++j) {
@@ -31,7 +33,7 @@ const refreshNews = async () => {
       i = i + 1;
     }
 
-    if (i >= 8) console.log("Success");
+    if (i >= coins.length) console.log("Success");
     else console.log("Failed");
   }
 };
@@ -39,7 +41,7 @@ const refreshNews = async () => {
 const getArticle = async (coin) => {
   const today = new Date().toISOString().slice(0, 10);
   let received = [];
-
+  console.log("Came to get article");
   const url = `https://newsapi.org/v2/everything?q=+${coin}&from=${today}&language=en&sortBy=relevancy&apiKey=${process.env.NEWS_API_KEY}`;
   await needle("get", url)
     .then((res) => {
@@ -65,8 +67,10 @@ const putInDatabase = async (coin, coinNews) => {
   const opts = { new: true, upsert: true };
 
   const response = await newsDatabase.findOneAndUpdate(query, update, opts);
-  if (response.coin.toLowerCase() === coin.toLowerCase()) return true;
-  else return false;
+  if (response.coin.toLowerCase() === coin.toLowerCase()) {
+    console.log("the response was", response.coin);
+    return true;
+  } else return false;
 };
 
 module.exports = refreshNews;
