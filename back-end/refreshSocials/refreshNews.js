@@ -12,11 +12,9 @@ for (let i = 0; i < cryptoSymbols.length; ++i) {
 
 const refreshNews = async () => {
   let coins = await newsDatabase.find({}, { _id: 0, coin: 1 });
-  console.log(coins);
   let i = 0;
 
   if (coins.length < allCoins.length) {
-    console.log("came here");
     for (let j = 0; j < allCoins.length; ++j) {
       const coin = allCoins[j];
       const coinNews = await getArticle(coin);
@@ -41,7 +39,6 @@ const refreshNews = async () => {
 const getArticle = async (coin) => {
   const today = new Date().toISOString().slice(0, 10);
   let received = [];
-  console.log("Came to get article");
   const url = `https://newsapi.org/v2/everything?q=+${coin}&from=${today}&language=en&sortBy=relevancy&apiKey=${process.env.NEWS_API_KEY}`;
   await needle("get", url)
     .then((res) => {
@@ -68,7 +65,6 @@ const putInDatabase = async (coin, coinNews) => {
 
   const response = await newsDatabase.findOneAndUpdate(query, update, opts);
   if (response.coin.toLowerCase() === coin.toLowerCase()) {
-    console.log("the response was", response.coin);
     return true;
   } else return false;
 };
