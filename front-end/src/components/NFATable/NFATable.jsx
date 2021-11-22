@@ -183,8 +183,10 @@ export function NFATable(props) {
   axios
     .get(coinPredict)
     .then((response) => {
-      console.log(response.data);
-      // setGetPredict(response.data);
+      // console.log(response.data);
+      setGetPredict(response.data);
+      console.log("GET PREDICT")
+      console.log(getPredict)
       // setGetTemp("0");
     })
     .catch((err) => {
@@ -292,9 +294,9 @@ export function NFATable(props) {
                       : 0} */}
 
                     {/* if getPredict is array of objects --- For Working Api*/}
-                    {pseudoGetPredict
-                      ? pseudoGetPredict.map((obj) =>
-                          obj.id === userDataElement.id ? obj.prediction : "",
+                    {getPredict
+                      ? getPredict.map((obj) =>
+                          obj.name === userDataElement.id ? obj.prediction : "",
                         )
                       : 0}
                       {/* getPredict
