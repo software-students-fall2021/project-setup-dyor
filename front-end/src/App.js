@@ -120,11 +120,11 @@ function App() {
             </Route>
             <Route path="/loginPage">
               <LoginPage loginHandler={loginHandler}></LoginPage>
-              <Footer />
+              {/* <Footer /> */}
             </Route>
             <Route path="/signupPage">
               <SignupPage loginHandler={loginHandler}></SignupPage>
-              <Footer />
+              {/* <Footer /> */}
             </Route>
             <Route path="/settings">
               <SettingsPage logoutHandler={logoutHandler} />

@@ -1,9 +1,11 @@
 .bgColor {
   background-color: rgba(79, 184, 172, 0.582);
+  /* background-image:  url('/Back_1.png'); */
   height: 100vh;
 }
 .greetings {
   font-size: 2em;
+  padding: 5px;
 }
 
 .cardBox {
@@ -34,4 +36,9 @@
 
 .centerButton Button {
   text-decoration: none;
+  margin: 10px;
+}
+
+.textfield__label {
+  color: rgb(151, 151, 151) !important;
 }
