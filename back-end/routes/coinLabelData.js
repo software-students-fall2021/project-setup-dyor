@@ -1,12 +1,33 @@
+require("../schemas/coinLabelModel");
+const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
-const database = require("../data");
+const coinLabel = mongoose.model("coinLabel");
+const { cryptoSymbols } = require('../data')
 
-const { cryptoSymbols } = database;
+router.post("/", (req, res) => {
+  const { name, symbol } = req.body;
 
-//Will return all the cryptocurrencies which are supported by our platform, these have been taken to be the 200 most popular cypto-currencies\
+  const newCoin = new coinLabel({
+    name: name,
+    symbol: symbol,
+  });
+
+  newCoin.save((err, newCoin) => {
+    if (err) {
+      return err;
+    }
+    res.status(201).json(newCoin);
+  });
+});
+
 router.get("/", (req, res) => {
-  res.status(200).json(cryptoSymbols);
+  coinLabel.find((err, coins) => {
+    if (err) {
+      return err
+    }
+    res.json(coins)
+  })
 });
 
 module.exports = router;
