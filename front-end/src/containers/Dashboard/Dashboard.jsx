@@ -15,6 +15,7 @@ export default function DashboardPage() {
       await axios
         .get("/news/cryptocurrency")
         .then((res) => {
+          console.log(res.data);
           setArticles(res.data);
         })
         .catch((err) => {

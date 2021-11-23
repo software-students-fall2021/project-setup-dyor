@@ -18,8 +18,6 @@ signToken = (user) => {
 
 module.exports = {
   signUp: async (req, res, next) => {
-    console.log("User Controller signup called");
-
     const { email, password } = req.value.body;
 
     // checking if the user is alredy created with the given email
@@ -41,8 +39,6 @@ module.exports = {
   },
 
   signIn: async (req, res, next) => {
-    console.log("User Controller Login called");
-    console.log(req);
     const token = signToken(req.user);
     res
       .status(200)
@@ -51,6 +47,5 @@ module.exports = {
 
   secret: async (req, res, next) => {
     res.status(200).json({ success: true });
-    console.log("I managed to get here");
   },
 };

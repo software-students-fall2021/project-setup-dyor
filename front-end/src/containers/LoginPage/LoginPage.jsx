@@ -18,6 +18,7 @@ const LoginPage = ({ loginHandler }) => {
   const [response, setResponse] = useState({}); // the API will return an object with a JWT token, if the user logs in successfully
   const [errorMessage, setErrorMessage] = useState("");
   const [userInput, setUserInput] = useState({ email: "", password: "" });
+  const [wrongPassword, setWrongPassword] = useState(false); 
 
   const handleInputChange = (event) => {
     if (event) {
@@ -31,11 +32,10 @@ const LoginPage = ({ loginHandler }) => {
 
   useEffect(() => {
     // if the user is logged-in, save the token to local storage
-    console.log(response);
     if (response.success && response.token) {
       console.log(`User successfully logged in: ${response.email}`);
       localStorage.setItem("token", response.token);
-    }
+    } 
   }, [response]);
 
   const augmentedLoginHandler = async () => {
@@ -43,11 +43,12 @@ const LoginPage = ({ loginHandler }) => {
       console.log(userInput);
       const response = await axios.post(`users/signin`, userInput);
       // store the response data into the data state variable
-      console.log(`Server response: ${JSON.stringify(response.data, null, 0)}`);
+      setErrorMessage("Login successful");
       setResponse(response.data);
     } catch (err) {
       console.log(err);
       // request failed... user entered invalid credentials
+      setWrongPassword(true);
       setErrorMessage("You entered invalid credentials.");
     }
   };
@@ -91,6 +92,9 @@ const LoginPage = ({ loginHandler }) => {
             </Link>
           </IconButton>
         </Box>
+        <div className={style.errorText} style={{color: response.success ? "green" : "red" }}>
+          <Typography>{errorMessage}</Typography>
+        </div>
         <Stack
           direction="column"
           justifyContent="space-evenly"
@@ -100,29 +104,33 @@ const LoginPage = ({ loginHandler }) => {
           <Paper elevation={2} className={style.cardBox}>
             <div className={style.centerButton}>
               <Typography className={style.greetings}>
-                {errorMessage || "Welcome back!"}
+                Welcome back!
               </Typography>
             </div>
-            <item>
               <TextField
+                className={style.textfield}
                 fullWidth
+                required={true}
+                error = {wrongPassword}
+                type="email"
                 variant="outlined"
                 id="email"
                 label="Email Address"
                 value={userInput.email}
                 onChange={handleInputChange}
               ></TextField>
-            </item>
-            <item>
               <TextField
                 fullWidth
+                className={style.textfield}
+                required={true}
+                error = {wrongPassword}
+                type="password"
                 variant="outlined"
                 id="password"
                 label="password"
                 value={userInput.password}
                 onChange={handleInputChange}
               ></TextField>
-            </item>
             <div className={style.centerButton}>
               <Button
                 variant="contained"

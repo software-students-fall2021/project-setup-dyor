@@ -31,6 +31,7 @@ app.get(
   passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
   (req, res) => {
     console.log("Authentication Attempt");
+    console.log(req.user);
     res.json({ id: req.user.id });
   },
 );

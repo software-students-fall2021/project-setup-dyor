@@ -36,4 +36,12 @@
 .centerButton Button {
   text-decoration: none;
 }
-
+.textfield {
+    font-size: smaller;
+    margin-bottom: 10px;
+}
+.errorText {
+    font-size: small;
+    font-weight: lighter;
+    text-align: center;
+}
