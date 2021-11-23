@@ -38,7 +38,15 @@
   text-decoration: none;
   margin: 10px;
 }
-
+.textfield {
+    font-size: smaller;
+    margin-bottom: 10px;
+}
+.errorText {
+    font-size: small;
+    font-weight: lighter;
+    text-align: center;
+}
 .textfield__label {
   color: rgb(151, 151, 151) !important;
 }

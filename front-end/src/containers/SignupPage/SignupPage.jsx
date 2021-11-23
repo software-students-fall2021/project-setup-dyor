@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { Paper } from "@mui/material";
 import style from "./SignupPage.module.css";
 import axios from "axios";
@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignupPage = ({ loginHandler }) => {
+  const classes = useStyles();
+  const [response, setResponse] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [userInput, setUserInput] = useState({ email: "", password: "" });
 
   const handleInputChange = (event) => {
@@ -39,17 +42,21 @@ const SignupPage = ({ loginHandler }) => {
 
   const augmentedLoginHandler = async () => {
     try {
-      console.log("Input");
-      console.log(userInput);
-      const response = await axios.post(`users/signup`, userInput);
-      // store the response data into the data state variable
-      console.log(`Server response: ${JSON.stringify(response.data, null, 0)}`);
+      const res = await axios.post(`users/signup`, userInput);
+      setResponse(res.data.success);
     } catch (err) {
-      console.log(err);
+      setErrorMessage("Invalid email address");
     }
   };
 
-  const classes = useStyles();
+  React.useEffect(() => {
+    if (response)
+      setErrorMessage("Sign up successful")
+  }, [response])
+
+  if (response) {
+    return <Redirect to="/loginPage" />;
+  }
 
   return (
     <div className={classes.root}>
@@ -66,6 +73,9 @@ const SignupPage = ({ loginHandler }) => {
           </Link>
         </IconButton>
       </Box>
+      <div className={style.errorText} style={{color: response ? "green" : "red" }}>
+        <Typography>{errorMessage}</Typography>
+      </div>
       <Stack
         direction="column"
         justifyContent="space-evenly"
@@ -80,20 +90,23 @@ const SignupPage = ({ loginHandler }) => {
 
           <div>
             <TextField
+              className={style.textfield}
               margin="normal"
               fullWidth
+              type="email"
               variant="outlined"
               id="email"
               label="Email Address"
               value={userInput.email}
               onChange={handleInputChange}
               className="textfield" InputLabelProps = {{className : style.textfield__label}}
-
             ></TextField>
           </div>
           <div>
             <TextField
               fullWidth
+              className={style.textfield}
+              type="password"
               variant="outlined"
               id="password"
               label="Password"
@@ -104,7 +117,6 @@ const SignupPage = ({ loginHandler }) => {
             ></TextField>
           </div>
           <div className={style.centerButton}>
-            <Link to="/dashboard">
               <Button
                 variant="contained"
                 color="primary"
@@ -112,7 +124,6 @@ const SignupPage = ({ loginHandler }) => {
               >
                 Signup
               </Button>
-            </Link>
           </div>
         </Paper>
       </Stack>

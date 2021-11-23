@@ -61,7 +61,7 @@ export default function NewsPage() {
       ) : (
         <div className="newspage">
             <div className="nocoins">
-                News on your assets appear here.
+                News on your assets will appear here.
             </div>
         </div>
       )}

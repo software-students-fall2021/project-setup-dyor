@@ -33,16 +33,19 @@ router.get("/:coin", async (req, res) => {
     });
   } else {
     if (coins.includes(coin.toLowerCase())) {
-      await newsDatabase.findOne({ coin: coin.toLowerCase() }, (err, response) => {
-        if (err) {
-          console.error(err);
-          res.status(500).json({ message: "Could not get news from API" });
-        } else if (response) {
-          res.status(200).json(response["news"]);
-        } else {
-          res.status(404).json({ message: "Page not found" });
-        }
-      });
+      await newsDatabase.findOne(
+        { coin: coin.toLowerCase() },
+        (err, response) => {
+          if (err) {
+            console.error(err);
+            res.status(500).json({ message: "Could not get news from API" });
+          } else if (response) {
+            res.status(200).json(response["news"]);
+          } else {
+            res.status(404).json({ message: "Page not found" });
+          }
+        },
+      );
     } else {
       res.status(404).json({ message: "Page not found" });
     }
