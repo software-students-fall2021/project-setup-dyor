@@ -23,7 +23,8 @@ date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(
 
 router.get("/", (req, res) => {
   coinPredictMod.find({currentdate:date}, (err,docs)=>{
-    if( docs.length == 0){
+    if(docs.length == 0){
+      console.log("Docs length = 0: ",docs.length)
       axios
         .get(
           "https://my.api.mockaroo.com/coins_mockeroo.json?key=0cc02cb0&__method=GET",
@@ -53,10 +54,12 @@ router.get("/", (req, res) => {
     }
     else if(err){
       console.log(err);
+      console.log("Error - Backend")
       res.status(404);
     }
     else{
       res.status(200).json(docs);
+      console.log("Else statement: ",docs.length)
       // console.log(docs)
     }
   })
