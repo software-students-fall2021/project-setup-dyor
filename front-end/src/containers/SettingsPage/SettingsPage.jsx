@@ -10,11 +10,13 @@ import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DropDownMenu from "../../components/DropDownMenu/drop_down_menu";
+import axios from "axios";
 import "./SettingsPage.css";
 
 const Currencies = ["$", "€", "£", "AED", "CAD", "¥"];
 
 export default function SettingsPage({ logoutHandler }) {
+  const [user, setUser] = React.useState("");
   const [isSwitched, setIsSwitched] = React.useState(false);
   const [currency, setCurrency] = React.useState(Currencies[0]);
 
@@ -23,11 +25,29 @@ export default function SettingsPage({ logoutHandler }) {
     logoutHandler();
   };
 
+  React.useEffect(() => {
+    async function getUser() {
+      const response = await axios.request("/signedinuser", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+
+      if (response.data) {
+        setUser(response.data.email);
+      } else {
+        console.log("Get User Data Failed.");
+      }
+    }
+
+    getUser();
+  }, [])
+
   return (
     <Box className="settings">
       <h2 className="settingsTitle">Settings</h2>
       <Paper className="settingsTile user" elevation={0}>
-        <h4 className="userEmail">johndoe@dyor.com</h4>
+        <h4 className="userEmail">{user || "johndoe@dyor.com"}</h4>
         <Link className="link" to="/resetPassword">
           <IconButton
             className="settingsArrow"
