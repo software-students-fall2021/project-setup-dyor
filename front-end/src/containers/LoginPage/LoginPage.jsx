@@ -50,7 +50,6 @@ const LoginPage = ({ loginHandler }) => {
 
   const augmentedLoginHandler = async () => {
     try {
-      console.log(userInput);
       const response = await axios.post(`users/signin`, userInput);
       // store the response data into the data state variable
       setErrorMessage("Login successful");

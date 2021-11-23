@@ -32,7 +32,7 @@ passport.use(
 
         // otherwise return the user
         // done(null, user);
-        done(null, { id: user.id });
+        done(null, { id: user.id, email: user.email });
       } catch (error) {
         done(error, false);
       }

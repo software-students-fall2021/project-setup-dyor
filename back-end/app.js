@@ -32,7 +32,7 @@ app.get(
   (req, res) => {
     console.log("Authentication Attempt");
     console.log(req.user);
-    res.json({ id: req.user.id });
+    res.json({ id: req.user.id, email: req.user.email });
   },
 );
 
