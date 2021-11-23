@@ -57,7 +57,7 @@ router.get("/", (req, res) => {
     }
     else{
       res.status(200).json(docs);
-      // console.log(docs)
+      console.log(docs.length);
     }
   })
   
