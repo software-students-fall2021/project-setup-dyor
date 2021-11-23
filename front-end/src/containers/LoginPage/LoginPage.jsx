@@ -12,7 +12,17 @@ import { Paper } from "@mui/material";
 import style from "./LoginPage.module.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
+import { makeStyles } from "@mui/styles";
+
 // import Footer from "../../components/Footer/footer";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minHeight: "100vh",
+    backgroundImage: `url(${process.env.PUBLIC_URL + "/Back_1.png"})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
+}));
 
 const LoginPage = ({ loginHandler }) => {
   const [response, setResponse] = useState({}); // the API will return an object with a JWT token, if the user logs in successfully
@@ -72,12 +82,15 @@ const LoginPage = ({ loginHandler }) => {
   //   }
   // };
 
+  const classes = useStyles();
+
+
   if (response.success) {
     loginHandler();
     return <Redirect to="/dashboard" />;
   } else
     return (
-      <div className={style.bgColor}>
+      <div className={classes.root}>
         <Box className={style.header}>
           <IconButton
             className={style.headerArrow}
@@ -96,6 +109,7 @@ const LoginPage = ({ loginHandler }) => {
           justifyContent="space-evenly"
           alignItems="center"
           spacing={2}
+          marginTop = "30%"
         >
           <Paper elevation={2} className={style.cardBox}>
             <div className={style.centerButton}>
@@ -105,22 +119,28 @@ const LoginPage = ({ loginHandler }) => {
             </div>
             <item>
               <TextField
+                margin="normal"
                 fullWidth
                 variant="outlined"
                 id="email"
                 label="Email Address"
                 value={userInput.email}
                 onChange={handleInputChange}
+                className="textfield" InputLabelProps = {{className : style.textfield__label}}
+
               ></TextField>
             </item>
             <item>
               <TextField
                 fullWidth
+                type="password"
+                autoComplete="current-password"
                 variant="outlined"
                 id="password"
-                label="password"
+                label="Password"
                 value={userInput.password}
                 onChange={handleInputChange}
+                className="textfield" InputLabelProps = {{className : style.textfield__label}}
               ></TextField>
             </item>
             <div className={style.centerButton}>

@@ -16,7 +16,7 @@ import { coinPredict } from "../../back-end_routes";
 import { Link } from "react-router-dom";
 import {useState, useEffect} from "react";
 
-
+let count = 0;
 
 const CoinImage = (props) => {
   const userID = props.userID;
@@ -180,19 +180,31 @@ export function NFATable(props) {
     },
   ];
 
-  axios
-    .get(coinPredict)
-    .then((response) => {
-      // console.log(response.data);
-      setGetPredict(response.data);
-      // console.log("GET PREDICT")
-      // console.log(getPredict)
-      // setGetTemp("0");
-    })
-    .catch((err) => {
-      // console.log("Coin Predict Failed");
-      console.log(err);
-    });
+  // var intervalId = setInterval(function(){
+    if (count % 30 == 0){
+      axios
+      .get(coinPredict)
+      .then((response) => {
+        console.log(response.data);
+        console.log("Front-end")
+
+        setGetPredict(response.data);
+        // console.log("GET PREDICT")
+        // console.log(getPredict)
+        // setGetTemp("0");
+      })
+      .catch((err) => {
+        // console.log("Coin Predict Failed");
+        console.log(err);
+        console.log("Error")
+      });
+    }
+
+    count = count + 1;
+    // console.log(count)
+  // }, 50000);
+
+    // clearInterval(intervalId)
 
   
   // GetPredict ? GetPredict.map((obj) =>

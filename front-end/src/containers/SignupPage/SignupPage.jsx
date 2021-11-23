@@ -12,6 +12,17 @@ import { Link } from "react-router-dom";
 import { Paper } from "@mui/material";
 import style from "./SignupPage.module.css";
 import axios from "axios";
+import { makeStyles } from "@mui/styles";
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minHeight: "100vh",
+    backgroundImage: `url(${process.env.PUBLIC_URL + "/Back_1.png"})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
+}));
 
 const SignupPage = ({ loginHandler }) => {
   const [userInput, setUserInput] = useState({ email: "", password: "" });
@@ -38,8 +49,10 @@ const SignupPage = ({ loginHandler }) => {
     }
   };
 
+  const classes = useStyles();
+
   return (
-    <div className={style.bgColor}>
+    <div className={classes.root}>
       <Box className={style.header}>
         <IconButton
           className={style.headerArrow}
@@ -58,6 +71,7 @@ const SignupPage = ({ loginHandler }) => {
         justifyContent="space-evenly"
         alignItems="center"
         spacing={2}
+        marginTop = "30%"
       >
         <Paper elevation={2} className={style.cardBox}>
           <div className={style.centerButton}>
@@ -66,12 +80,15 @@ const SignupPage = ({ loginHandler }) => {
 
           <div>
             <TextField
+              margin="normal"
               fullWidth
               variant="outlined"
               id="email"
               label="Email Address"
               value={userInput.email}
               onChange={handleInputChange}
+              className="textfield" InputLabelProps = {{className : style.textfield__label}}
+
             ></TextField>
           </div>
           <div>
@@ -82,6 +99,8 @@ const SignupPage = ({ loginHandler }) => {
               label="Password"
               value={userInput.password}
               onChange={handleInputChange}
+              className="textfield" InputLabelProps = {{className : style.textfield__label}}
+
             ></TextField>
           </div>
           <div className={style.centerButton}>
