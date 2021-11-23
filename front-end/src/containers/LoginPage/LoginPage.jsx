@@ -45,6 +45,8 @@ const LoginPage = ({ loginHandler }) => {
     if (response.success && response.token) {
       console.log(`User successfully logged in: ${response.email}`);
       localStorage.setItem("token", response.token);
+      localStorage.setItem('isLoggedIn', "true");
+      localStorage.setItem('email', response.email);
     } 
   }, [response]);
 
