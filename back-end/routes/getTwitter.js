@@ -46,7 +46,7 @@ router.get("/:coin", async (req, res) => {
         } else if (response) {
           res.status(200).json(response["posts"]);
         } else {
-          res.status(500).json({ message: "Could not get tweets from API" });
+          res.status(404).json({ message: "Page not found" });
         }
       });
     } else {

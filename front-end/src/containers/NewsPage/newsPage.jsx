@@ -47,9 +47,10 @@ export default function NewsPage() {
     }
   }, [articles]);
 
-  return (
-    <>
-      {isLoading ? (
+  if (userData.length === 0) {
+    return (
+      <>
+        {isLoading ? (
         <div className="circularProgress">
           <CircularProgress
             className="progressBar"
@@ -59,16 +60,41 @@ export default function NewsPage() {
         </div>
       ) : (
         <div className="newspage">
-          {userData.map((data, index) => (
+            <div className="nocoins">
+                News on your assets appear here.
+            </div>
+        </div>
+      )}
+      </>
+    );
+  }
+  else {
+    return (
+      <>
+        {isLoading ? (
+        <div className="circularProgress">
+          <CircularProgress
+            className="progressBar"
+            size={100}
+            thickness={2.0}
+          />
+        </div>
+      ) : (
+        <div className="newspage">
+            {
+            userData.map((data, index) => (
             <NewsTile
               key={index}
               coin={data.id}
               number={2}
               data={articles[data.id.toLowerCase()]}
             />
-          ))}
+              ))
+            }
         </div>
       )}
-    </>
-  );
+      </>
+    );
+  }
 }
+

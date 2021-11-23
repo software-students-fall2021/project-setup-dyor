@@ -1,8 +1,7 @@
-const twitterDatabase = require("./schemas/tweetsModel");
+const twitterDatabase = require("../schemas/tweetsModel");
+const { socials } = require("./validate");
 const needle = require("needle");
 require("dotenv").config();
-const fs = require("fs");
-const keyword_extractor = require("keyword-extractor");
 
 const coins = {
   BTC: "bitcoin",
@@ -102,6 +101,9 @@ const putInDatabase = async (coin, tweets) => {
     dateRefreshed: Date.now(),
   };
   const opts = { new: true, upsert: true };
+
+  const { error } = socials(update);
+  if (error) return false;
 
   const response = await twitterDatabase.findOneAndUpdate(query, update, opts);
   if (response.coin.toLowerCase() === coin.toLowerCase()) return true;

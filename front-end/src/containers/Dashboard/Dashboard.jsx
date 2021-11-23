@@ -3,7 +3,7 @@ import { CircularProgress, Stack, Typography } from "@mui/material";
 import { Paper } from "@mui/material";
 import styles from "./Dashboard.module.css";
 import axios from "axios";
-import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
+// import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
 import NewsTile from "../../components/NewsTile/newsTile";
 
 export default function DashboardPage() {

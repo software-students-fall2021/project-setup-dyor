@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { IconButton, Box, Button, Stack, TextField, Typography } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 import { Paper } from "@mui/material";
 import style from "../LoginPage/LoginPage.module.css";
@@ -7,6 +8,19 @@ import style from "../LoginPage/LoginPage.module.css";
 const ResetPassword = () => {
   return (
     <div className={style.bgColor}>
+      <Box className={style.header}>
+        <IconButton
+          className={style.headerArrow}
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+        >
+          <Link className="link" to="/settings">
+            <ArrowBackIcon />
+          </Link>
+        </IconButton>
+      </Box>
       <Stack
         direction="column"
         justifyContent="space-evenly"

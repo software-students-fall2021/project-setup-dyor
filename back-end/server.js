@@ -12,24 +12,6 @@ const options = {
   useFindAndModify: false,
 };
 
-// if (process.env.NODE_ENV === "test") {
-//   const Mockgoose = require("mockgoose").Mockgoose;
-//   const mockgoose = new Mockgoose(mongoose);
-
-//   mockgoose.prepareStorage().then(() => {
-//     mongoose
-//       .connect(dbURI, options)
-//       .then((res) => {
-//         console.log("Connected to database");
-//         server.listen(port, function () {
-//           console.log(`Server running on port: ${port}`);
-//         });
-//       })
-//       .catch((error) => {
-//         console.error(error);
-//       });
-//   });
-// } else {
 mongoose
   .connect(dbURI, options)
   .then((res) => {
@@ -41,12 +23,4 @@ mongoose
   .catch((error) => {
     console.error(error);
   });
-// }
 
-// a function to stop listening to the port
-// const close = () => {
-//   listener.close();
-// };
-// module.exports = {
-//   close: close,
-// };

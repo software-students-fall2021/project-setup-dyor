@@ -1,17 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const newsDatabase = require("../schemas/newsModel");
+const { cryptoSymbols } = require("../data");
 
-const coins = [
-  "bitcoin",
-  "dogecoin",
-  "ethereum",
-  "cardano",
-  "litecoin",
-  "shiba inu",
-  "polkadot",
-  "cryptocurrency",
-];
+const coins = ["cryptocurrency"];
+for (let i = 0; i < cryptoSymbols.length; ++i) {
+  const { name } = cryptoSymbols[i];
+  coins.push(name.toLowerCase());
+}
 
 router.get("/", async (req, res) => {
   const allNews = await newsDatabase.find({});
@@ -37,14 +33,14 @@ router.get("/:coin", async (req, res) => {
     });
   } else {
     if (coins.includes(coin.toLowerCase())) {
-      await newsDatabase.findOne({ coin: coin }, (err, response) => {
+      await newsDatabase.findOne({ coin: coin.toLowerCase() }, (err, response) => {
         if (err) {
           console.error(err);
           res.status(500).json({ message: "Could not get news from API" });
         } else if (response) {
           res.status(200).json(response["news"]);
         } else {
-          res.status(500).json({ message: "Could not get news from API" });
+          res.status(404).json({ message: "Page not found" });
         }
       });
     } else {

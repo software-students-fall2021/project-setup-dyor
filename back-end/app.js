@@ -3,10 +3,9 @@ const express = require("express"); // CommonJS import style!
 const app = express(); // instantiate an Express object
 const passport = require("passport");
 const schedule = require("node-schedule");
-// const refreshNews = require("./refreshNews");
-const refreshTwitter = require("./refreshTwitter");
-const refreshReddit = require("./refreshReddit");
-const needle = require("needle");
+const refreshNews = require("./refreshSocials/refreshNews");
+const refreshTwitter = require("./refreshSocials/refreshTwitter");
+const refreshReddit = require("./refreshSocials/refreshReddit");
 require("dotenv").config();
 
 const morgan = require("morgan"); // middleware for nice logging of incoming HTTP requests
@@ -58,15 +57,15 @@ app.use("/coinPresentPriceAndChange", coinPresentPriceAndChangeRouter);
 
 //Refresh news and socials at destined times
 schedule.scheduleJob("0 */6 * * *", async () => {
-  console.log("I was called to refresh news");
+  console.log("Refresh news");
   refreshNews();
 });
 schedule.scheduleJob("0 */2 * * *", async () => {
-  console.log("I was called to refresh twitter");
+  console.log("Refresh twitter");
   refreshTwitter();
 });
 schedule.scheduleJob("0 */2 * * *", async () => {
-  console.log("I was called to refresh reddit");
+  console.log("Refresh reddit");
   refreshReddit();
 });
 
@@ -89,7 +88,6 @@ const sentimentRouter = require("./routes/sentimentAnalysis");
 app.use("/sentimentAnalysis", sentimentRouter);
 
 const predictionRouter = require("./routes/coinPredict");
-// const teamMember = require("./schemas/teamMemberModel");
 app.use("/coinPredict", predictionRouter);
 
 module.exports = app;

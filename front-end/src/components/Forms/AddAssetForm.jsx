@@ -5,9 +5,9 @@ import MobileDatePicker from "@material-ui/lab/MobileDatePicker";
 
 const AddAssetForm = ({ coinLabels, onAddNewAssetHandler, onSubmit }) => {
   const [isSubmissionAllowed, setIsSubmissionAllowed] = useState(false);
-  const [coinValue, setCoinValue] = useState("Bitcoin");
+  const [coinValue, setCoinValue] = useState("");
   const [tempAssetValues, setTempAssetValues] = useState({
-    coin: "Bitcoin",
+    coin: "",
     quantityPurchased: 0,
     purchasePrice: 0,
     datePurchased: new Date(),

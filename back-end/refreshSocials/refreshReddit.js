@@ -1,4 +1,5 @@
-const redditDatabase = require("./schemas/redditModel");
+const redditDatabase = require("../schemas/redditModel");
+const { socials } = require("./validate");
 const needle = require("needle");
 require("dotenv").config();
 
@@ -57,6 +58,10 @@ const putInDatabase = async (coin, posts) => {
     posts: posts,
     dateRefreshed: Date.now(),
   };
+
+  const { error } = socials(update);
+  if (error) return false;
+
   const opts = { new: true, upsert: true };
 
   const response = await redditDatabase.findOneAndUpdate(query, update, opts);
