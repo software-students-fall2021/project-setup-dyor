@@ -5,6 +5,7 @@
 
 .greetings {
   font-size: 2em;
+  padding: 5px;
 }
 
 .cardBox {
@@ -35,6 +36,7 @@
 }
 .centerButton Button {
   text-decoration: none;
+  margin: 10px;
 }
 .textfield {
     font-size: smaller;
@@ -44,4 +46,7 @@
     font-size: small;
     font-weight: lighter;
     text-align: center;
+}
+.textfield__label {
+  color: rgb(151, 151, 151) !important;
 }

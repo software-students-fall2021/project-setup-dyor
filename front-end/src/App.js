@@ -116,6 +116,7 @@ function App() {
             </Route>
             <Route path="/loginPage">
               <LoginPage loginHandler={loginHandler}></LoginPage>
+
             </Route>
             <Route path="/signupPage">
               <SignupPage loginHandler={loginHandler}></SignupPage>
