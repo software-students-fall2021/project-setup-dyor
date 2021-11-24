@@ -58,6 +58,9 @@ const NumericEntry = ({
   numDecimalPlaces = 0,
   additionalSuffix = "",
 }) => {
+  let currency = localStorage.getItem("currency");
+  if (currency === null) currency = "$";
+
   const multiplier = 10 ** numDecimalPlaces;
   const formatedVal = Math.round(val * multiplier) / multiplier;
   const styleClass = isColor
@@ -73,6 +76,9 @@ export function PortfolioTable(props) {
   const [dailyPricesAndChanges, setDailyPricesAndChanges] = useState({});
   const [showDelete, setShowDelete] = useState(false);
   const refresh = props.onRefresh;
+
+  let currency = localStorage.getItem("currency");
+  if (currency === null) currency = "$";
 
   useEffect(() => {
     axios
@@ -139,7 +145,7 @@ export function PortfolioTable(props) {
               </TableCell>
               <TableCell align="right">
                 <Typography className={styles.tableHeading} variant="h7">
-                  Price
+                  Price ({currency})
                 </Typography>
               </TableCell>
               <TableCell align="right">
@@ -149,7 +155,7 @@ export function PortfolioTable(props) {
               </TableCell>
               <TableCell align="right">
                 <Typography className={styles.tableHeading} variant="h7">
-                  Profit/Loss
+                  P/Loss ({currency})
                 </Typography>
               </TableCell>
             </TableRow>
@@ -185,7 +191,7 @@ export function PortfolioTable(props) {
                   </TableCell>
                   <TableCell align="right">
                     <NumericEntry
-                      val={coinPrice}
+                      val={`${coinPrice}`}
                       numDecimalPlaces={2}
                     ></NumericEntry>
                   </TableCell>

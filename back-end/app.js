@@ -10,7 +10,6 @@ require("dotenv").config();
 
 const morgan = require("morgan"); // middleware for nice logging of incoming HTTP requests
 const dotenv = require("dotenv"); // access API_KEYS and other details
-const mongoose = require("mongoose"); // interface to better access MONGO_DB
 dotenv.config({ path: "./.env" });
 //MiddleWares
 // use the morgan middleware to log all incoming http requests

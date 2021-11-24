@@ -26,8 +26,9 @@ const refreshNews = async () => {
       i = i + 1;
     }
 
-    if (i >= coins.length) console.log("Success");
-    else console.log("Failed");
+    if (i >= allCoins.length) {
+      console.log("Success");
+    } else console.log("Failed");
   }
 };
 
@@ -70,7 +71,7 @@ const allCoins = [
     name: "Bitcoin",
     symbol: "BTC",
   },
-    {
+  {
     name: "cryptocurrency",
     symbol: "crypto",
   },

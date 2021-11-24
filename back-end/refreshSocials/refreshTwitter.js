@@ -23,8 +23,9 @@ const refreshTwitter = async () => {
     i = i + 1;
   }
 
-  if (i >= 8) console.log("Success");
-  else console.log("Failed");
+  if (i >= 8) {
+    console.log("Success");
+  } else console.log("Failed");
 };
 
 const getTweets = async (shortForm, coin) => {
