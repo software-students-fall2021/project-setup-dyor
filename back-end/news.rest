@@ -1,1 +1,1 @@
-GET http://localhost:3001/news
+PUT http://localhost:3001/twitter

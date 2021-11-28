@@ -90,4 +90,22 @@ app.use("/sentimentAnalysis", sentimentRouter);
 const predictionRouter = require("./routes/coinPredict");
 app.use("/coinPredict", predictionRouter);
 
+app.put("/refresh/:media", async (req, res) => {
+  const media = req.params.media;
+  if (media === undefined) {
+    res.status(404).json({ mesage: "No such media" });
+  } else if (media.toLowerCase() === "twitter") {
+    await refreshTwitter();
+    res.status(201).json({ mesage: "ok" });
+  } else if (media.toLowerCase() === "reddit") {
+    await refreshReddit();
+    res.status(201).json({ mesage: "ok" });
+  } else if (media === "news") {
+    await refreshNews();
+    res.status(201).json({ mesage: "ok" });
+  } else {
+    res.status(404).json({ mesage: "No such media" });
+  }
+});
+
 module.exports = app;

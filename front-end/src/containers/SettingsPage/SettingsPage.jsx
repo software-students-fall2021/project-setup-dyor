@@ -22,7 +22,6 @@ export default function SettingsPage({ logoutHandler }) {
   const [currency, setCurrency] = React.useState(localcurrency);
 
   React.useEffect(() => {
-    console.log(`Switch is ${isSwitched}`);
     if (isSwitched) {
       alert("Notifications on");
       localStorage.setItem("notification", "on");

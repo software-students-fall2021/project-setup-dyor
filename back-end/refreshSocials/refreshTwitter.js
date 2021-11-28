@@ -16,6 +16,7 @@ const coins = {
 };
 
 const refreshTwitter = async () => {
+  console.log("twitter");
   let i = 0;
   for (let coin in coins) {
     const tweets = await getTweets(coin, coins[coin]);
