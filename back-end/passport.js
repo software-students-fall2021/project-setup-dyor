@@ -21,19 +21,18 @@ passport.use(
     async (payload, done) => {
       try {
         //finding the user specified in the token
-        // console.log(payload);
         const user = await User.findById(payload.sub);
-        // console.log(user);
         // if the user doesn't exist
         if (!user) {
+          console.log("Valid Token but user is absent.");
           return done(null, false);
         }
         // console.log(user.id);
-
         // otherwise return the user
         // done(null, user);
         done(null, { id: user.id, email: user.email });
       } catch (error) {
+        console.log("PASSPORT: ERROR HELLO");
         done(error, false);
       }
     },

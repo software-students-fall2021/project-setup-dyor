@@ -4,7 +4,7 @@
   "description": "This is the back-end for the DYOR SWE Project, and represents its 2nd Sprint",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/.bin/nyc --reporter=html --reporter=text ./node_modules/.bin/mocha",
+    "test": "./node_modules/.bin/nyc --reporter=text ./node_modules/.bin/mocha --trace-warnings --timeout 20000 --exit",
     "devStart": "nodemon server.js",
     "format": "prettier --write '**/*.{js,jsx,json}'"
   },
@@ -26,6 +26,7 @@
     "chai-http": "^4.3.0",
     "dotenv": "^10.0.0",
     "mocha": "^9.1.3",
+    "mongodb-memory-server": "^8.0.3",
     "nodemon": "^2.0.14",
     "ny": "^1.7.0",
     "nyc": "^15.1.0",

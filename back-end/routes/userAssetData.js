@@ -19,7 +19,10 @@ const { User } = require("../models/users");
 
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
+  passport.authenticate("jwt", {
+    session: false,
+    failureRedirect: "/landingPage",
+  }),
   async (req, res) => {
     const userID = req.user.id;
     if (userID) {
@@ -106,39 +109,85 @@ router.post(
 // A default UserID of John exists and he owns three assets namely "Bitcoin", "Ethereum", "Polkadot"
 router.get(
   "/",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
+  passport.authenticate("jwt", {
+    session: false,
+    failureRedirect: "/landingPage",
+  }),
   async (req, res) => {
     const userID = req.user.id;
     const assetID = req.query.assetID || "";
+    console.log(`userID: <${userID}> | assetID: <${assetID}>`);
     const userDBObj = await User.findById(userID);
-    const assetDBObj = userDBObj.data.assets.filter((asset) =>
-      assetID ? asset.name === assetID : true,
-    );
-    console.log(assetDBObj);
+    //checking if user is found
     if (!userDBObj) {
       res.status(400).json({
         userMessage:
           "User though authenticated, cannot be found in DB for GET /userAssetData",
       });
+      return;
     }
+    // console.log("User present in DB");
 
-    //rest syntax does not work for some reason
-    let revisedData = assetDBObj.map((asset) => ({
-      id: asset.name,
-      quantityPurchased: asset.quantityPurchased,
-      unitPrice: asset.unitPrice,
-      datePurchased: asset.datePurchased,
-    }));
-    revisedData =
-      assetID && revisedData.length >= 1 ? revisedData[0] : revisedData;
-    console.log(revisedData);
-    res.status(200).json(revisedData);
+    let assetDBObj = [];
+    try {
+      assetDBObj = userDBObj.data.assets.filter((asset) =>
+        assetID ? asset.name === assetID : true,
+      );
+    } catch (err) {
+      console.log("Filter Failed");
+      console.log(err);
+      res.status(400).json({
+        userMessage: `User though authenticated and found in DB, filter for asset information failed for GET /userAssetData?assetID=${assetID}`,
+      });
+      return;
+    }
+    // console.log("Filter Succeeded");
+    // console.log(assetDBObj);
+
+    if (userDBObj && assetID && !assetDBObj.length) {
+      //checking if any asset information has been found given that we are searching for a particular asset, if not an error is in order, it is no problem if the user has no assets at all but when a specific asset is being search for and it is absent, this must be flagged
+      console.log("RELEVANT ASSET NOT FOUND");
+      res.status(400).json({
+        userMessage: `User though authenticated and found in DB, asset information cannot be found in DB for GET /userAssetData?assetID=${assetID}, it is simply absent`,
+      });
+      return;
+    } else {
+      let revisedData;
+      try {
+        //rest syntax does not work for some reason
+        // console.log("ASSET(S) PRESENT");
+        revisedData = assetDBObj.map((asset) => {
+          return {
+            id: asset.name,
+            quantityPurchased: asset.quantityPurchased,
+            unitPrice: asset.unitPrice,
+            datePurchased: asset.datePurchased,
+          };
+        });
+      } catch (err) {
+        console.log("Mapping Failed");
+        console.log(err);
+        res.status(400).json({
+          userMessage: `User though authenticated and found in DB, mapping for filtered asset information failed`,
+        });
+        return;
+      }
+      // console.log("Mapping Succeded");
+      // console.log(revisedData);
+      revisedData =
+        assetID && revisedData.length >= 1 ? revisedData[0] : revisedData;
+      // console.log(revisedData);
+      res.status(200).json(revisedData);
+    }
   },
 );
 
 router.delete(
   "/",
-  passport.authenticate("jwt", { session: false, failureRedirect: "/" }),
+  passport.authenticate("jwt", {
+    session: false,
+    failureRedirect: "/landingPage",
+  }),
   async (req, res) => {
     const userID = req.user.id;
     const assetID = req.query.assetID || "";

@@ -41,10 +41,7 @@ const userSchema = new Schema({
 
 userSchema.pre("save", function (next) {
   try {
-    // generate a salt
-    // const salt = await bcrypt.genSalt(10);
-    // // generate a password hash (salt + hash )
-    // const passwordHashed = await bcrypt.hash(this.password, salt);
+    //if the password has not been changed, one need not do anything if the user is to be resaved in so far as modifying the password is concerned
     if (!this.isModified("password")) {
       return next();
     }
@@ -59,11 +56,6 @@ userSchema.pre("save", function (next) {
 
 userSchema.methods.isValidPassword = async function (newPassword, callback) {
   return callback(null, bcrypt.compareSync(newPassword, this.password));
-  // try {
-  //   return await bcrypt.compareSync(newPassword, this.password);
-  // } catch (error) {
-  //   throw new Error(error);
-  // }
 };
 
 const User = mongoose.model("User", userSchema);
