@@ -42,7 +42,7 @@ describe("NEWS", () => {
     });
 
     it("Should return status=200 and appropiate data array of news for the coin asked", async () => {
-      const param = "bitcoin";
+      const param = "ethereum";
       const res = await request(app).get("/news/" + param);
       expect(res.status).to.equal(200);
       expect(res.body).to.be.an("array");
