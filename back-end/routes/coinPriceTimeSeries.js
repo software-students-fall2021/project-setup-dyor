@@ -25,6 +25,10 @@ router.get("/", (req, res) => {
 
   try {
     console.log("fs.readFile BEGIN");
+    console.log(
+      `Accessing <./public/timeSeriesData/${coin_symbol}_${formatted_time_start}_${formatted_time_end}.json>`,
+    );
+
     fs.readFile(
       `./public/timeSeriesData/${coin_symbol}_${formatted_time_start}_${formatted_time_end}.json`,
       "utf-8",

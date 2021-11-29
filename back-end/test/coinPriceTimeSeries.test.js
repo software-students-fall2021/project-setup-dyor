@@ -120,47 +120,44 @@ describe("coinPriceTimeSeries", () => {
     });
 
     it("Should return status=200 and the the time series for a year provided that the coin_symbol and other query parameters are valid, and has the data stored for time_start and time_end ", async () => {
-      fs.readFile(
-        "./public/timeSeriesData/BTC_11-03-2021_11-07-2021.json",
-        "utf-8",
-        (err, str) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log(str);
-          }
-        },
-      );
+      //   fs.readFile(
+      //     "./public/timeSeriesData/BTC_11-03-2021_11-07-2021.json",
+      //     "utf-8",
+      //     (err, str) => {
+      //       if (err) {
+      //         console.log(err);
+      //       } else {
+      //         console.log(str);
+      //       }
+      //     },
+      //   );
 
-      //   const coin_symbol = "BTC";
-      //   const period_id = "1DAY";
-      //   const time_start = "2021-11-04T00:00:00.0000000Z";
-      //   const time_end = "2021-11-08T00:00:00.0000000Z";
-      //   const limit = 4;
-      //   const res = await request(app)
-      //     .get(baseURL)
-      //     .query({ coin_symbol, period_id, time_start, time_end, limit });
-
-      //   expect(res.status).to.equal(200);
-      //   expect(res.body).to.be.an("array");
-      //   expect(res.body.length).to.be.equal(limit);
-
-      //   const requiredProperties = [
-      //     "time_period_start",
-      //     "time_period_end",
-      //     "time_open",
-      //     "time_close",
-      //     "rate_open",
-      //     "rate_high",
-      //     "rate_low",
-      //     "rate_close",
-      //   ];
-
-      //   res.body.forEach((element) => {
-      //     for (let i = 0; i < requiredProperties.length; i++) {
-      //       expect(element).have.property(requiredProperties[i]);
-      //     }
-      //   });
+      const coin_symbol = "BTC";
+      const period_id = "1DAY";
+      const time_start = "2021-11-04T00:00:00.0000000Z";
+      const time_end = "2021-11-08T00:00:00.0000000Z";
+      const limit = 4;
+      const res = await request(app)
+        .get(baseURL)
+        .query({ coin_symbol, period_id, time_start, time_end, limit });
+      expect(res.status).to.equal(200);
+      expect(res.body).to.be.an("array");
+      expect(res.body.length).to.be.equal(limit);
+      const requiredProperties = [
+        "time_period_start",
+        "time_period_end",
+        "time_open",
+        "time_close",
+        "rate_open",
+        "rate_high",
+        "rate_low",
+        "rate_close",
+      ];
+      res.body.forEach((element) => {
+        for (let i = 0; i < requiredProperties.length; i++) {
+          expect(element).have.property(requiredProperties[i]);
+        }
+      });
     });
 
     it("Should return status=200 and the the time series for a year provided that the coin_symbol and other query parameters are valid, even if the data was not stored for time_start and time_end ", async () => {
