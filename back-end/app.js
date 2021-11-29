@@ -25,6 +25,10 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "Root: Hello, world!" });
 });
 
+app.get("/landingPage", (req, res) => {
+  res.status(302).json({ message: "Redirecting to Landing Page" });
+});
+
 app.get(
   "/signedinuser",
   passport.authenticate("jwt", { session: false, failureRedirect: "/" }),

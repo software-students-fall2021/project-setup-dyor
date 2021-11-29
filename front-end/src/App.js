@@ -116,7 +116,6 @@ function App() {
             </Route>
             <Route path="/loginPage">
               <LoginPage loginHandler={loginHandler}></LoginPage>
-
             </Route>
             <Route path="/signupPage">
               <SignupPage loginHandler={loginHandler}></SignupPage>
@@ -132,6 +131,10 @@ function App() {
             <Route path="/helpCenter">
               <TopBar></TopBar>
               <HelpCenterPage />
+            </Route>
+            <Route path="/landingPage">
+              <LandingPage />
+              <Footer />
             </Route>
             <Route path="/">
               <LandingPage />
