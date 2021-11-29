@@ -1,5 +1,5 @@
 import React from "react";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 // import axios from "axios";
 import { makeStyles } from "@mui/styles";
 import Header from "../../components/HeaderforLandingPage/Header";
@@ -23,8 +23,7 @@ const LandingPage = () => {
 
   React.useEffect(() => {
     console.log("Is user loggedIn", localStorage.getItem("isLoggedIn"));
-    console.log("Is localStorage same three", localStorage.getItem("isLoggedIn")=== "true");
-    if (localStorage.getItem("isLoggedIn") === "true"){
+    if (localStorage.getItem("isLoggedIn") === "true") {
       console.log("logged In");
       setLoggedIn(true);
     } else {
@@ -32,12 +31,12 @@ const LandingPage = () => {
       setLoggedIn(false);
     }
   }, []);
-  
+
   React.useEffect(() => {
     console.log("loading off now");
     setLoading(false);
   }, [isLoggedIn]);
-  
+
   return (
     <>
       {isLoading ? (
@@ -50,22 +49,19 @@ const LandingPage = () => {
         </div>
       ) : (
         <>
-        {isLoggedIn ? (
-          <Redirect to = "/dashboard" />
-          ): (
+          {isLoggedIn ? (
+            <Redirect to="/dashboard" />
+          ) : (
             <div className={classes.root}>
-            <CssBaseline />
-            <Header />
-            <PortfolioCard />
-          </div>
-          )
-        }
+              <CssBaseline />
+              <Header />
+              <PortfolioCard />
+            </div>
+          )}
         </>
-      )
-    }
+      )}
     </>
   );
 };
 
 export default LandingPage;
-

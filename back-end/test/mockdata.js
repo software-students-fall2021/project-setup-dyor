@@ -82,6 +82,175 @@ const InValidJWT = JWT.sign(
   process.env.JWT_INVALID_SECRET,
 );
 
+const MockNewsOne = {
+  coin: "bitcoin",
+  dateRefreshed: Date.now(),
+  news: [
+    {
+      source: {},
+      author: "cshumba@insider.com (Camomile Shumba)",
+      title:
+        "Cryptocurrencies recover from last week's sell-off as traders mull the...",
+      description:
+        "Bitcoin recovered from Friday's steep sell-off, rising around 5% and l...",
+      url: "https://markets.businessinsider.com/news/currencies/bitcoin-ether-shib...",
+      urlToImage:
+        "https://images2.markets.businessinsider.com/61a4c8b71ca5280018119b1b?f...",
+      publishedAt: "2021-11-29T12:54:16Z",
+      content:
+        "MicroStrategy CEO Michael SaylorJoe Raedle/Getty Images MicroStrategy...",
+    },
+    {
+      source: {},
+      author: "cshumba@insider.com (Camomile Shumba)",
+      title:
+        "Michael Saylor's MicroStrategy buys another 7,002 bitcoins for $414 mi...",
+      description:
+        "Tech firm MicroStrategy bought the bitcoin in the past two months, whe...",
+      url: "https://markets.businessinsider.com/news/currencies/michael-saylor-mic...",
+      urlToImage:
+        "https://images2.markets.businessinsider.com/61a4e5061ca5280018119f68?f...",
+      publishedAt: "2021-11-29T16:53:22Z",
+      content:
+        "MicroStrategy CEO Michael SaylorJoe Raedle/Getty Images MicroStrategy...",
+    },
+  ],
+};
+const MockNewsTwo = {
+  coin: "ethereum",
+  dateRefreshed: Date.now(),
+  news: [
+    {
+      source: {},
+      author: "cshumba@insider.com (Camomile Shumba)",
+      title:
+        "Cryptocurrencies recover from last week's sell-off as traders mull the...",
+      description:
+        "Ethereum recovered from Friday's steep sell-off, rising around 5% and l...",
+      url: "https://markets.businessinsider.com/news/currencies/bitcoin-ether-shib...",
+      urlToImage:
+        "https://images2.markets.businessinsider.com/61a4c8b71ca5280018119b1b?f...",
+      publishedAt: "2021-11-29T12:54:16Z",
+      content:
+        "MicroStrategy CEO Michael SaylorJoe Raedle/Getty Images MicroStrategy...",
+    },
+    {
+      source: {},
+      author: "cshumba@insider.com (Camomile Shumba)",
+      title:
+        "Michael Saylor's MicroStrategy buys another 7,002 bitcoins for $414 mi...",
+      description:
+        "Tech firm MicroStrategy bought the ethereum in the past two months, whe...",
+      url: "https://markets.businessinsider.com/news/currencies/michael-saylor-mic...",
+      urlToImage:
+        "https://images2.markets.businessinsider.com/61a4e5061ca5280018119f68?f...",
+      publishedAt: "2021-11-29T16:53:22Z",
+      content:
+        "MicroStrategy CEO Michael SaylorJoe Raedle/Getty Images MicroStrategy...",
+    },
+  ],
+};
+
+const RedditOne = {
+  coin: "bitcoin",
+  dateRefreshed: Date.now(),
+  posts: [
+    {
+      kind: "t3",
+      data: {
+        selftext:
+          "^(Disclaimer: This guide describes a Windows-10 setup, uses the Testne...",
+        title:
+          "[HowTo] Create and use a Taproot wallet on Testnet in Bitcoin Core v22...",
+        url: "https://www.reddit.com/r/Bitcoin/comments/r37ky5/howto_create_and_use_...",
+        author: "brianddk",
+      },
+    },
+    {
+      kind: "t3",
+      data: {
+        selftext:
+          "^(Disclaimer: This guide describes a Windows-10 setup, uses the Testne...",
+        title:
+          "[HowTo] Create and use a Taproot wallet on Testnet in Bitcoin Core v22...",
+        url: "https://www.reddit.com/r/Bitcoin/comments/r37ky5/howto_create_and_use_...",
+        author: "desmond",
+      },
+    },
+  ],
+};
+
+const RedditTwo = {
+  coin: "ethereum",
+  dateRefreshed: Date.now(),
+  posts: [
+    {
+      kind: "t3",
+      data: {
+        selftext:
+          "^(Disclaimer: This guide describes a Windows-10 setup, uses the Testne...",
+        title:
+          "[HowTo] Create and use a Taproot wallet on Testnet in Ethereum Core v22...",
+        url: "https://www.reddit.com/r/Bitcoin/comments/r37ky5/howto_create_and_use_...",
+        author: "brianddk",
+      },
+    },
+    {
+      kind: "t3",
+      data: {
+        selftext:
+          "^(Disclaimer: This guide describes a Windows-10 setup, uses the Testne...",
+        title:
+          "[HowTo] Create and use a Taproot wallet on Testnet in Ethereum Core v22...",
+        url: "https://www.reddit.com/r/Bitcoin/comments/r37ky5/howto_create_and_use_...",
+        author: "desmond",
+      },
+    },
+  ],
+};
+
+const TwitterOne = {
+  coin: "bitcoin",
+  dateRefreshed: Date.now(),
+  posts: [
+    {
+      name: "Mark Jeffrey",
+      username: "markjeffrey",
+      tweet:
+        "Looks like #Bitcoin is getting @jack's fulltime attention from now on....",
+      url: "https://t.co/q8HYOKrawd",
+    },
+    {
+      name: "Mark Desmonf",
+      username: "markdes",
+      tweet:
+        "Looks like #Bitcoin is getting @jack's fulltime attention from now on....",
+      url: "https://t.co/q8HYOKrawd",
+    },
+  ],
+};
+
+const TwitterTwo = {
+  coin: "ethereum",
+  dateRefreshed: Date.now(),
+  posts: [
+    {
+      name: "Mark Jeffrey",
+      username: "markjeffrey",
+      tweet:
+        "Looks like #Ethereum is getting @jack's fulltime attention from now on....",
+      url: "https://t.co/q8HYOKrawd",
+    },
+    {
+      name: "Mark Desmonf",
+      username: "markdes",
+      tweet:
+        "Looks like #Ethereum is getting @jack's fulltime attention from now on....",
+      url: "https://t.co/q8HYOKrawd",
+    },
+  ],
+};
+
 module.exports = {
   MockAssets,
   MockUserOneRepeatedAsset,
@@ -92,4 +261,10 @@ module.exports = {
   MockUserTwoJWT,
   ValidDeletedUserJWT,
   InValidJWT,
+  MockNewsOne,
+  MockNewsTwo,
+  RedditOne,
+  RedditTwo,
+  TwitterOne,
+  TwitterTwo,
 };

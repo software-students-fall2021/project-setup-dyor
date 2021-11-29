@@ -18,7 +18,7 @@ signToken = (user) => {
 module.exports = {
   signUp: async (req, res, next) => {
     const { email, password } = req.value.body;
-
+    console.log(email, password);
     // checking if the user is alredy created with the given email
     const foundUser = await User.findOne({ email });
     if (foundUser) {

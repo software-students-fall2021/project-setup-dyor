@@ -184,7 +184,7 @@ export function NFATable(props) {
       axios
       .get(coinPredict)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         console.log("Front-end")
 
         setGetPredict(response.data);
