@@ -10,7 +10,6 @@ signToken = (user) => {
       iss: "DYOR",
       sub: user.id,
       iat: new Date().getTime(),
-      //   exp: new Date().setDate(new Date().getTime() + 1),
     },
     process.env.JWT_SECRET,
   );

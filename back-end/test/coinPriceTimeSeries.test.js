@@ -191,67 +191,10 @@ describe("coinPriceTimeSeries", () => {
         }
       });
     });
+
+    it("Should return status=404 given an unknown route 'NA'", async () => {
+      const res = await request(app).get("/NA");
+      expect(res.status).to.equal(404);
+    });
   });
 });
-
-//   it("Should return status=404 given an unknown route 'NA'", async () => {
-//     const res = await request(app).get("/NA");
-//     expect(res.status).to.equal(404);
-//   });
-
-//   it("Should return staus=500 when some error is encountered", async () => {
-//     stub.throws(Error("API IS DOWN"));
-//     const res = await request(app).get(baseURL);
-//     expect(res.status).to.equal(500);
-//   });
-// });
-
-// describe("GET /coinPresentPriceAndChange/:coinID", () => {
-//   let stub;
-
-//   const mockedResponseObj = {
-//     data: {
-//       data: {
-//         id: "bitcoin",
-//         rank: "1",
-//         symbol: "BTC",
-//         name: "Bitcoin",
-//         supply: "18867062.0000000000000000",
-//         maxSupply: "21000000.0000000000000000",
-//         marketCapUsd: "1240829075760.1864284551009062",
-//         volumeUsd24Hr: "20480134253.1819023535450713",
-//         priceUsd: "65766.9474855272341001",
-//         changePercent24Hr: "5.8813405636175149",
-//         vwap24Hr: "62917.0792613193444212",
-//         explorer: "https://blockchain.info/",
-//       },
-//     },
-//   };
-
-//   beforeEach(() => {
-//     stub = sinon.stub(axios, "request").resolves(mockedResponseObj);
-//   });
-
-//   afterEach(() => {
-//     stub.restore();
-//   });
-
-//   it("Should return status=500 given an unsupported coin-id (say 'SCAMCOIN') whose data is not present ", async () => {
-//     const res = await request(app).get(`${baseURL}/SCAMCOIN`);
-//     expect(res.status).to.equal(500);
-//   });
-
-//   it("Should return status=200 and the details of the coin given a supported coin-id (say 'bitcoin') whose data is not present but API call has succeeded", async () => {
-//     const res = await request(app).get(`${baseURL}/bitcoin`);
-//     expect(res.status).to.equal(200);
-//     expect(res.body).to.have.property("price");
-//     expect(res.body).to.have.property("priceChange");
-//   });
-
-//   it("Should return status=500 when API call has failed", async () => {
-//     stub.throws(Error("API IS DOWN"));
-//     const res = await request(app).get(`${baseURL}/bitcoin`);
-//     expect(res.status).to.equal(500);
-//   });
-// });
-// });
