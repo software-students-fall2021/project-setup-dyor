@@ -4,15 +4,14 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const port = 3001;
-const urli= "mongodb://localhost:27017/DYOR";
-// const dbURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_TEST_DB}?retryWrites=true&w=majority&ssl=true`;
+const dbURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_TEST_DB}?retryWrites=true&w=majority&ssl=true`;
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
 
 const connectToMongo = async () => {
-  await mongoose.connect(urli, options);
+  await mongoose.connect(dbURI, options);
   return mongoose;
 };
 
