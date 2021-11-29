@@ -17,6 +17,12 @@ jobs:
           cd back-end
           pwd # for debugging: show current working directory
           ls # for debugging: show sub-directories in here
+          cd public
+          pwd
+          ls
+          cd timeSeriesData
+          pwd
+          ls
       - run: |
           cd back-end
           npm install # install all dependencies listed in package.json
