@@ -4,8 +4,8 @@ const request = require("supertest");
 const mongoose = require("mongoose");
 const app = require("../app");
 
-const dbURI = "mongodb://localhost:27017/DYOR";
-// const dbURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_TEST_DB}?retryWrites=true&w=majority&ssl=true`;
+// const dbURI = "mongodb://localhost:27017/DYOR";
+const dbURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_TEST_DB}?retryWrites=true&w=majority&ssl=true`;
 describe("GET /:media/:asset", () => {
   before(function (done) {
     mongoose
@@ -14,7 +14,6 @@ describe("GET /:media/:asset", () => {
         useUnifiedTopology: true,
       })
       .then(() => {
-        console.log("connected to db");
         done();
       })
       .catch((error) => console.log(error.message));
@@ -80,12 +79,12 @@ describe("GET /:media/:asset", () => {
     });
   });
 
-  it("Should return status=200 and appropiate message putting reddit", async () => {
-    const res = await request(app).put("/reddit");
-    expect(res.status).to.equal(201);
-    expect(res.body).to.be.an("object");
-    expect(res.body).to.be.deep.equal({
-      message: "Written successfully",
-    });
-  });
+  // it("Should return status=200 and appropiate message putting reddit", async () => {
+  //   const res = await request(app).put("/reddit");
+  //   expect(res.status).to.equal(201);
+  //   expect(res.body).to.be.an("object");
+  //   expect(res.body).to.be.deep.equal({
+  //     message: "Written successfully",
+  //   });
+  // });
 });

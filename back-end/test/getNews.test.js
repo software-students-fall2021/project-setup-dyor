@@ -9,9 +9,9 @@ const mongoose = require("mongoose");
 // Configure chai
 chai.use(chaiHttp);
 chai.should();
-// const dbURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_TEST_DB}?retryWrites=true&w=majority&ssl=true`;
+const dbURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_TEST_DB}?retryWrites=true&w=majority&ssl=true`;
 
-const dbURI = "mongodb://localhost:27017/DYOR";
+// const dbURI = "mongodb://localhost:27017/DYOR";
 describe("NEWS", () => {
   // Setting up databse connection
   before(function (done) {
@@ -21,7 +21,6 @@ describe("NEWS", () => {
         useUnifiedTopology: true,
       })
       .then(() => {
-        console.log("connected to db");
         done();
       })
       .catch((error) => console.log(error.message));
