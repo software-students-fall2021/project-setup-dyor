@@ -21,6 +21,8 @@ router.get("/", (req, res) => {
     "MM-DD-YYYY",
   );
 
+  console.log("IN GET OF coinPriceTimeSeries ROUTE");
+
   fs.readFile(
     `./public/timeSeriesData/${coin_symbol}_${formatted_time_start}_${formatted_time_end}.json`,
     "utf-8",
