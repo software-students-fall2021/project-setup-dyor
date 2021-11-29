@@ -24,10 +24,13 @@ router.get("/", (req, res) => {
   console.log("IN GET OF coinPriceTimeSeries ROUTE");
 
   try {
+    console.log("fs.readFile BEGIN");
     fs.readFile(
       `./public/timeSeriesData/${coin_symbol}_${formatted_time_start}_${formatted_time_end}.json`,
       "utf-8",
       (err, jsonString) => {
+        console.log("fs.readFile END");
+
         //if the data has not been previously written to file it will now be fetched
         if (err) {
           console.log("FILE NOT PRESENT");
@@ -35,6 +38,7 @@ router.get("/", (req, res) => {
           console.log(
             `DATA ${coin_symbol}_${formatted_time_start}_${formatted_time_end} NOT PRESENT`,
           );
+
           axios
             .request(
               `https://${baseURL}/v1/exchangerate/${coin_symbol}/USD/history`,
