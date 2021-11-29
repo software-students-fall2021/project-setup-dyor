@@ -73,7 +73,6 @@ export default function NFA() {
       await axios
         .put("/twitter")
         .then((res) => {
-          console.log(res.data);
         })
         .catch((err) => {
           console.log(err.response);
@@ -82,7 +81,6 @@ export default function NFA() {
       await axios
         .put("/reddit")
         .then((res) => {
-          console.log(res.data);
         })
         .catch((err) => {
           console.log(err.response);

@@ -21,9 +21,6 @@ router.get("/", (req, res) => {
     "MM-DD-YYYY",
   );
 
-  console.log(formatted_time_start);
-  console.log(formatted_time_end);
-
   fs.readFile(
     `./public/timeSeriesData/${coin_symbol}_${formatted_time_start}_${formatted_time_end}.json`,
     "utf-8",
@@ -65,7 +62,6 @@ router.get("/", (req, res) => {
             }
           })
           .catch((err) => {
-            console.log(err);
             res.status(500).json({
               message: "FAILURE TO GET TIME SERIES DATA.",
             });

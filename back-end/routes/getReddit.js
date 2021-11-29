@@ -16,11 +16,12 @@ const coins = {
 
 router.put("/", async (req, res) => {
   const docs = await redditDatabase.find({}, { _id: 0, coin: 1, posts: 1 });
+  console.log("Total docs", docs.length);
   let j = 0;
   for (let i = 0; i < docs.length; ++i) {
     const { coin, posts } = docs[i];
     const shortForm = Object.keys(coins).find((key) => coins[key] === coin);
-    extractWords(posts, shortForm);
+    // extractWords(posts, shortForm);
     j = j + 1;
   }
   if (j >= docs.length) {

@@ -30,21 +30,9 @@ const ResetPassword = () => {
       setErrorMessage("Passwords don't match");
       setWrongPassword(true);
     } else {
-      const response = await axios.request("/signedinuser", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-
-      if (response.data) {
-        console.log(response.data);
-        const user = { id: response.data.id, password: userInput.password, currentPassword: userInput.currentPassword };
-        const res = await axios.post('users/resetPassword', user);
-        setResponse(res.data.success);
-      } else {
-        console.log("Get User Data Failed.");
-        setErrorMessage("Could not reset password");
-      }
+      const user = { email: localStorage.getItem('email'), password: userInput.password, currentPassword: userInput.currentPassword };
+      const res = await axios.post('users/resetPassword', user);
+      setResponse(res.data.success);
     }
   };
 

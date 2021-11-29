@@ -10,7 +10,6 @@ require("dotenv").config();
 
 const morgan = require("morgan"); // middleware for nice logging of incoming HTTP requests
 const dotenv = require("dotenv"); // access API_KEYS and other details
-const mongoose = require("mongoose"); // interface to better access MONGO_DB
 dotenv.config({ path: "./.env" });
 //MiddleWares
 // use the morgan middleware to log all incoming http requests
@@ -90,5 +89,23 @@ app.use("/sentimentAnalysis", sentimentRouter);
 
 const predictionRouter = require("./routes/coinPredict");
 app.use("/coinPredict", predictionRouter);
+
+app.put("/refresh/:media", async (req, res) => {
+  const media = req.params.media;
+  if (media === undefined) {
+    res.status(404).json({ mesage: "No such media" });
+  } else if (media.toLowerCase() === "twitter") {
+    await refreshTwitter();
+    res.status(201).json({ mesage: "ok" });
+  } else if (media.toLowerCase() === "reddit") {
+    await refreshReddit();
+    res.status(201).json({ mesage: "ok" });
+  } else if (media === "news") {
+    await refreshNews();
+    res.status(201).json({ mesage: "ok" });
+  } else {
+    res.status(404).json({ mesage: "No such media" });
+  }
+});
 
 module.exports = app;
