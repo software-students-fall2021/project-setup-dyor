@@ -20,6 +20,9 @@ jobs:
           cd public
           pwd
           ls
+          cd timeSeriesData
+          pwd
+          ls
       - run: |
           cd back-end
           npm install # install all dependencies listed in package.json
