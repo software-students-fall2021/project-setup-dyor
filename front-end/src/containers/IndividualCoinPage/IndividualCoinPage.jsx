@@ -61,7 +61,7 @@ const IndividualCoinPage = () => {
       .catch((err) =>
         console.log("INDIVIDUAL COIN PAGE: OBTAINING USERDATA FAILED"),
       );
-  }, []);
+  }, [assetID, coinSymbol, userID]);
 
   return (
     <Box>

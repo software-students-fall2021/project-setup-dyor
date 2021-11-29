@@ -53,11 +53,11 @@ export default function NFA() {
   const [media, setMedia] = useState(1);
   const [coin, setCoin] = useState(userCoin[0].label);
   const [posts, setPosts] = useState([]);
-  const [tickers, setTickers] = useState({});
+  // const [tickers, setTickers] = useState({});
   const [coinPrices, setCoinPrices] = useState([]);
   const [sentimentData, setSentimentData] = useState({});
   const [WC, setWC] = useState(null);
-  const [coinLabels, setCoinLabels] = useState([]);
+  // const [coinLabels, setCoinLabels] = useState([]);
   const [coinNameToSymbolDict, setCoinNameToSymbolDict] = useState({});
 
   const [loading, setLoading] = useState(true);
@@ -107,7 +107,7 @@ export default function NFA() {
   }, [coin, media]);
 
   useEffect(() => {
-    if (posts.length !== 0 && loading) {
+    if (posts.length !== 0) {
       setLoading(false);
     }
   }, [posts]);
@@ -130,15 +130,15 @@ export default function NFA() {
     axios
       .request("https://api.coincap.io/v2/assets")
       .then((response) => {
-        const dataArr = response.data.data.map(({ id, symbol }) => ({
-          id: id,
-          label: symbol,
-        }));
-        const tickersDict = dataArr.reduce(
-          (a, x) => ({ ...a, [x.id]: x.label }),
-          {},
-        );
-        setTickers(() => tickersDict);
+        // const dataArr = response.data.data.map(({ id, symbol }) => ({
+        //   id: id,
+        //   label: symbol,
+        // }));
+        // const tickersDict = dataArr.reduce(
+        //   (a, x) => ({ ...a, [x.id]: x.label }),
+        //   {},
+        // );
+        // setTickers(() => tickersDict);
       })
       .catch((err) => {
         console.log("Get Ticker Data Failed.");
@@ -165,7 +165,7 @@ export default function NFA() {
       .then((response) => {
         const dataArr = response.data;
 
-        setCoinLabels(() => dataArr);
+        // setCoinLabels(() => dataArr);
         const tempTickersDict = dataArr.reduce(
           (prev, present) => ({
             ...prev,
