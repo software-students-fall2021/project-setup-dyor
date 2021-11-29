@@ -14,7 +14,6 @@ import style from "./SignupPage.module.css";
 import axios from "axios";
 import { makeStyles } from "@mui/styles";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
@@ -50,9 +49,8 @@ const SignupPage = ({ loginHandler }) => {
   };
 
   React.useEffect(() => {
-    if (response)
-      setErrorMessage("Sign up successful")
-  }, [response])
+    if (response) setErrorMessage("Sign up successful");
+  }, [response]);
 
   if (response) {
     return <Redirect to="/loginPage" />;
@@ -73,7 +71,10 @@ const SignupPage = ({ loginHandler }) => {
           </Link>
         </IconButton>
       </Box>
-      <div className={style.errorText} style={{color: response ? "green" : "red" }}>
+      <div
+        className={style.errorText}
+        style={{ color: response ? "green" : "red" }}
+      >
         <Typography>{errorMessage}</Typography>
       </div>
       <Stack
@@ -81,7 +82,7 @@ const SignupPage = ({ loginHandler }) => {
         justifyContent="space-evenly"
         alignItems="center"
         spacing={2}
-        marginTop = "30%"
+        marginTop="30%"
       >
         <Paper elevation={2} className={style.cardBox}>
           <div className={style.centerButton}>
@@ -99,7 +100,7 @@ const SignupPage = ({ loginHandler }) => {
               label="Email Address"
               value={userInput.email}
               onChange={handleInputChange}
-              className="textfield" InputLabelProps = {{className : style.textfield__label}}
+              InputLabelProps={{ className: style.textfield__label }}
             ></TextField>
           </div>
           <div>
@@ -112,18 +113,17 @@ const SignupPage = ({ loginHandler }) => {
               label="Password"
               value={userInput.password}
               onChange={handleInputChange}
-              className="textfield" InputLabelProps = {{className : style.textfield__label}}
-
+              InputLabelProps={{ className: style.textfield__label }}
             ></TextField>
           </div>
           <div className={style.centerButton}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={augmentedLoginHandler}
-              >
-                Signup
-              </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={augmentedLoginHandler}
+            >
+              Signup
+            </Button>
           </div>
         </Paper>
       </Stack>
