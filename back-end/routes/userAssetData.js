@@ -15,7 +15,6 @@ const { User } = require("../models/users");
 // Will add the new data into the above array and return the newly added JSON object
 
 // The addition will have to be done for a particular userID, a default userID of John exists in the Data
-// This will assist Talal in his task greatly, he must now only create appropiate modify the existing submission forms
 
 router.post(
   "/",
@@ -27,6 +26,12 @@ router.post(
     const userID = req.user.id;
     if (userID) {
       const { id, quantityPurchased, unitPrice, datePurchased } = req.body;
+      const parsedInput = {
+        id,
+        quantityPurchased,
+        unitPrice,
+        datePurchased,
+      };
       const newUserAsset = {
         name: id,
         quantityPurchased,
@@ -36,20 +41,11 @@ router.post(
       // console.log("The new user asset is", newUserAsset);
       if (!id || !quantityPurchased || !unitPrice || !datePurchased) {
         res.status(400).send({
-          Input: { ...newUserAsset },
-          userMessage: "Invalid Input.",
+          parsedInput: { ...parsedInput },
+          userMessage: "INVALID INPUT",
         });
       } else {
         const userDBObj = await User.findById(userID);
-        if (!userDBObj) {
-          console.log(
-            "User though authenticated, cannot be found in DB for POST /userAssetData",
-          );
-          res.status(400).json({
-            userMessage:
-              "User though authenticated, cannot be found in DB for POST /userAssetData",
-          });
-        }
 
         //this determines whether we are to push or assign
         if (userDBObj.data.assets) {
@@ -62,8 +58,7 @@ router.post(
               "Unsuccesful POST /userAssetData, an asset pertaining to a given coin may be added only once",
             );
             res.status(400).json({
-              userMessage:
-                "Unsuccesful POST /userAssetData, an asset pertaining to a given coin may be added only once",
+              userMessage: `Unsuccesful POST /userAssetData, an asset pertaining to a given coin may be added only once. ${newUserAsset.name} asset already present.`,
             });
             return;
           }
@@ -76,12 +71,10 @@ router.post(
           const updatedCollection = await userDBObj.save();
           if (updatedCollection) {
             res.status(200).json({
-              userMessage: "SUCCESSFUL POST /userAssetData REQUEST ",
+              userMessage: "SUCCESSFUL POST /userAssetData REQUEST",
+              postedData: newUserAsset,
             });
           } else {
-            console.log(
-              "SOMETHING TERRIBLE HAS HAPPENED WITH THE DB POST /userAssetData REQUEST, SAVE FAILED ",
-            );
             res.status(400).json({
               userMessage:
                 "SOMETHING TERRIBLE HAS HAPPENED WITH THE DB POST /userAssetData REQUEST, SAVE FAILED ",
@@ -89,8 +82,6 @@ router.post(
             });
           }
         } catch (err) {
-          console.log("UNSUCCESSFUL POST /userAssetData REQUEST");
-          // console.log(err);
           res.status(400).json({
             userMessage: "UNSUCCESSFUL POST /userAssetData REQUEST ",
           });
@@ -118,17 +109,9 @@ router.get(
     const assetID = req.query.assetID || "";
     console.log(`userID: <${userID}> | assetID: <${assetID}>`);
     const userDBObj = await User.findById(userID);
-    //checking if user is found
-    if (!userDBObj) {
-      res.status(400).json({
-        userMessage:
-          "User though authenticated, cannot be found in DB for GET /userAssetData",
-      });
-      return;
-    }
-    // console.log("User present in DB");
 
     let assetDBObj = [];
+
     try {
       assetDBObj = userDBObj.data.assets.filter((asset) =>
         assetID ? asset.name === assetID : true,
@@ -190,7 +173,9 @@ router.delete(
   }),
   async (req, res) => {
     const userID = req.user.id;
+    // console.log(`Received query = ${JSON.stringify(req.query)}`);
     const assetID = req.query.assetID || "";
+    // console.log(`Received assetID = ${assetID}`);
     if (!assetID) {
       res.status(400).json({
         userMessage: "No asset specified for DELETE /userAssetData",
@@ -199,15 +184,8 @@ router.delete(
     }
 
     const userDBObj = await User.findById(userID);
-    if (!userDBObj) {
-      res.status(400).json({
-        userMessage:
-          "User though authenticated, cannot be found in DB for DELETE /userAssetData",
-      });
-      return;
-    }
 
-    if (userDBObj.data.assets) {
+    if (userDBObj.data.assets.length) {
       userDBObj.data.assets = userDBObj.data.assets.filter(
         (asset) => asset.name !== assetID,
       );
@@ -216,12 +194,9 @@ router.delete(
         const updatedCollection = await userDBObj.save();
         if (updatedCollection) {
           res.status(200).json({
-            userMessage: "SUCCESSFUL DELETE /userAssetData REQUEST ",
+            userMessage: `SUCCESSFUL DELETE /userAssetData REQUEST.  ASSET ${assetID} HAS BEEN DELETED`,
           });
         } else {
-          console.log(
-            "SOMETHING TERRIBLE HAS HAPPENED WITH THE DB DELETE /userAssetData REQUEST, SAVE FAILED ",
-          );
           res.status(400).json({
             userMessage:
               "SOMETHING TERRIBLE HAS HAPPENED WITH THE DB DELTE /userAssetData REQUEST, SAVE FAILED ",
@@ -229,16 +204,13 @@ router.delete(
           });
         }
       } catch (err) {
-        console.log("UNSUCCESSFUL DELETE /userAssetData REQUEST");
-        // console.log(err);
         res.status(400).json({
           userMessage: "UNSUCCESSFUL DELETE /userAssetData REQUEST ",
         });
-        return;
       }
     } else {
       res.status(400).json({
-        userMessage: "User does not have any assets to delete",
+        userMessage: `ASSET ${assetID} ABSENT FOR USER | DELETE FAILED`,
       });
       return;
     }
