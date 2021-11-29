@@ -16,6 +16,7 @@ const coins = {
 };
 
 const refreshTwitter = async () => {
+  console.log("twitter");
   let i = 0;
   for (let coin in coins) {
     const tweets = await getTweets(coin, coins[coin]);
@@ -23,8 +24,9 @@ const refreshTwitter = async () => {
     i = i + 1;
   }
 
-  if (i >= 8) console.log("Success");
-  else console.log("Failed");
+  if (i >= 8) {
+    console.log("Success");
+  } else console.log("Failed");
 };
 
 const getTweets = async (shortForm, coin) => {

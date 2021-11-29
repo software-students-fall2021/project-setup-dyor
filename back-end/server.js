@@ -4,17 +4,20 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const port = 3001;
-
-const dbURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_TEST_DB}?retryWrites=true&w=majority`;
+const urli= "mongodb://localhost:27017/DYOR";
+// const dbURI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_TEST_DB}?retryWrites=true&w=majority&ssl=true`;
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: false,
 };
 
-mongoose
-  .connect(dbURI, options)
-  .then((res) => {
+const connectToMongo = async () => {
+  await mongoose.connect(urli, options);
+  return mongoose;
+};
+
+connectToMongo()
+  .then(() => {
     console.log("Connected to database");
     server.listen(port, function () {
       console.log(`Server running on port: ${port}`);
@@ -23,4 +26,3 @@ mongoose
   .catch((error) => {
     console.error(error);
   });
-

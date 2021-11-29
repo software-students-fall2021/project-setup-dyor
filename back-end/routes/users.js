@@ -25,11 +25,11 @@ router.post("/resetPassword", async (req, res) => {
       .status(404)
       .json({ success: false, message: "Could not reset password" });
   } else {
-    const { id, currentPassword, password } = req.body;
+    const { email, currentPassword, password } = req.body;
     const currentPasswordHashed = bcrypt.hashSync(currentPassword, 10);
     const passwordHashed = bcrypt.hashSync(password, 10);
 
-    const query = { _id: id };
+    const query = { email: email };
     const update = {
       password: passwordHashed,
     };
@@ -37,7 +37,9 @@ router.post("/resetPassword", async (req, res) => {
 
     const response = await User.findOneAndUpdate(query, update, opts);
 
-    if (response.id === id) {
+    if (response && response.email === email) {
+      console.log(response);
+      console.log("The password are the same", response.password === passwordHashed);
       res
         .status(201)
         .json({ success: true, message: "Password changed successfully" });

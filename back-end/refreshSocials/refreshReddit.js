@@ -16,6 +16,7 @@ const coins = {
 };
 
 const refreshReddit = async () => {
+  console.log("reddit");
   let i = 0;
   for (let coin in coins) {
     const posts = await getPost(coin);
@@ -48,10 +49,12 @@ const getPost = async (shortForm) => {
   } else {
     console.log("Unsuccesful request");
   }
+  console.log("Posts reddit is: ", posts.length);
   return posts;
 };
 
 const putInDatabase = async (coin, posts) => {
+  console.log("In db");
   const query = { coin: coin.toLowerCase() };
   const update = {
     coin: coin.toLowerCase(),
