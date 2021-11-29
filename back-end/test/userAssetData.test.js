@@ -27,7 +27,7 @@ describe("userAssetData", () => {
     //will be run once in the entire test
     mongoServer = await MongoMemoryServer.create();
     const mongoUri = mongoServer.getUri();
-    await mongoose.connect(mongoUri);
+    await mongoose.createConnection(mongoUri);
 
     // const presentUsers = await User.find({});
     // console.log("Users before Suite");

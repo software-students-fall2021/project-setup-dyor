@@ -4,7 +4,7 @@
   "description": "This is the back-end for the DYOR SWE Project, and represents its 2nd Sprint",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/.bin/nyc --reporter=text ./node_modules/.bin/mocha --trace-warnings --timeout 20000 --exit",
+    "test": "./node_modules/.bin/nyc --reporter=text ./node_modules/.bin/mocha --trace-warnings --timeout 50000 --exit",
     "devStart": "nodemon server.js",
     "format": "prettier --write '**/*.{js,jsx,json}'"
   },
