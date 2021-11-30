@@ -1,24 +1,18 @@
 const chai = require("chai");
-const { before } = require("mocha");
 const expect = chai.expect;
 const request = require("supertest");
 const app = require("../app");
-const mongoose = require("mongoose");
+const News = require("../schemas/newsModel");
+const { MockNewsOne, MockNewsTwo } = require("./mockdata");
 
-const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_TEST_DB}?retryWrites=true&w=majority&ssl=true`;
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
+const getNewsTest = () => {
+  describe("GET /news", () => {
+    beforeEach(async () => {
+      await News.collection.dropIndexes();
+      await News.collection.drop();
 
-
-describe("GET /news", () => {
-    before(function (done) {
-        mongoose.connect(uri, options).then(response => {
-            done();
-        }).catch(err => {
-            console.log(err);
-        });
+      await News.create(MockNewsOne);
+      await News.create(MockNewsTwo);
     });
 
     it("Should return status=200 and appropiate data object of news on all coins", async () => {
@@ -41,4 +35,18 @@ describe("GET /news", () => {
       expect(res.status).to.equal(200);
       expect(res.body).to.be.an("array");
     });
+
+    it("Should refresh the news in the database", async () => {
+      const res = await request(app).put("/refresh/news");
+      expect(res.status).to.equal(201);
+    });
+
+    it("Should refresh the news in the database", async () => {
+      const res = await request(app).put("/refresh/google");
+      expect(res.status).to.equal(404);
+    });
+
   });
+};
+
+module.exports = getNewsTest;

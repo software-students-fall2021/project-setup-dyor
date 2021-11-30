@@ -28,7 +28,7 @@ const LoginPage = ({ loginHandler }) => {
   const [response, setResponse] = useState({}); // the API will return an object with a JWT token, if the user logs in successfully
   const [errorMessage, setErrorMessage] = useState("");
   const [userInput, setUserInput] = useState({ email: "", password: "" });
-  const [wrongPassword, setWrongPassword] = useState(false); 
+  const [wrongPassword, setWrongPassword] = useState(false);
 
   const handleInputChange = (event) => {
     if (event) {
@@ -45,9 +45,9 @@ const LoginPage = ({ loginHandler }) => {
     if (response.success && response.token) {
       console.log(`User successfully logged in: ${response.email}`);
       localStorage.setItem("token", response.token);
-      localStorage.setItem('isLoggedIn', "true");
-      localStorage.setItem('email', response.email);
-    } 
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("email", response.email);
+    }
   }, [response]);
 
   const augmentedLoginHandler = async () => {
@@ -86,7 +86,6 @@ const LoginPage = ({ loginHandler }) => {
 
   const classes = useStyles();
 
-
   if (response.success) {
     loginHandler();
     return <Redirect to="/dashboard" />;
@@ -106,7 +105,10 @@ const LoginPage = ({ loginHandler }) => {
             </Link>
           </IconButton>
         </Box>
-        <div className={style.errorText} style={{color: response.success ? "green" : "red" }}>
+        <div
+          className={style.errorText}
+          style={{ color: response.success ? "green" : "red" }}
+        >
           <Typography>{errorMessage}</Typography>
         </div>
         <Stack
@@ -114,43 +116,40 @@ const LoginPage = ({ loginHandler }) => {
           justifyContent="space-evenly"
           alignItems="center"
           spacing={2}
-          marginTop = "30%"
+          marginTop="30%"
         >
           <Paper elevation={2} className={style.cardBox}>
             <div className={style.centerButton}>
-              <Typography className={style.greetings}>
-                Welcome back!
-              </Typography>
+              <Typography className={style.greetings}>Welcome back!</Typography>
             </div>
-              <TextField
-                className={style.textfield}
-                margin="normal"
-                fullWidth
-                required={true}
-                error = {wrongPassword}
-                type="email"
-                variant="outlined"
-                id="email"
-                label="Email Address"
-                value={userInput.email}
-                onChange={handleInputChange}
-                InputLabelProps = {{className : style.textfield__label}}
-
-              ></TextField>
-              <TextField
-                fullWidth
-                className={style.textfield}
-                required={true}
-                error = {wrongPassword}
-                type="password"
-                autoComplete="current-password"
-                variant="outlined"
-                id="password"
-                label="Password"
-                value={userInput.password}
-                onChange={handleInputChange}
-                InputLabelProps = {{className : style.textfield__label}}
-              ></TextField>
+            <TextField
+              className={style.textfield}
+              margin="normal"
+              fullWidth
+              required={true}
+              error={wrongPassword}
+              type="email"
+              variant="outlined"
+              id="email"
+              label="Email Address"
+              value={userInput.email}
+              onChange={handleInputChange}
+              InputLabelProps={{ className: style.textfield__label }}
+            ></TextField>
+            <TextField
+              fullWidth
+              className={style.textfield}
+              required={true}
+              error={wrongPassword}
+              type="password"
+              autoComplete="current-password"
+              variant="outlined"
+              id="password"
+              label="Password"
+              value={userInput.password}
+              onChange={handleInputChange}
+              InputLabelProps={{ className: style.textfield__label }}
+            ></TextField>
             <div className={style.centerButton}>
               <Button
                 variant="contained"

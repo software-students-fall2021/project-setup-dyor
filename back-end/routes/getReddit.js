@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const redditDatabase = require("../schemas/redditModel");
+const fs = require("fs");
 
 const coins = {
   BTC: "bitcoin",
@@ -21,7 +22,7 @@ router.put("/", async (req, res) => {
   for (let i = 0; i < docs.length; ++i) {
     const { coin, posts } = docs[i];
     const shortForm = Object.keys(coins).find((key) => coins[key] === coin);
-    // extractWords(posts, shortForm);
+    extractWords(posts, shortForm);
     j = j + 1;
   }
   if (j >= docs.length) {

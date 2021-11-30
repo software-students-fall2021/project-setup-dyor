@@ -1,6 +1,7 @@
 const express = require("express");
 const twitterDatabase = require("../schemas/tweetsModel");
 const router = express.Router();
+const fs = require("fs");
 
 const coins = {
   BTC: "bitcoin",

@@ -72,16 +72,14 @@ export default function NFA() {
     async function extract() {
       await axios
         .put("/twitter")
-        .then((res) => {
-        })
+        .then((res) => {})
         .catch((err) => {
           console.log(err.response);
         });
 
       await axios
         .put("/reddit")
-        .then((res) => {
-        })
+        .then((res) => {})
         .catch((err) => {
           console.log(err.response);
         });
