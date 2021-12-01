@@ -8,7 +8,7 @@ const fs = require("fs");
 
 const baseURL = "/coinPriceTimeSeries";
 
-const coinTimePriceTest = () => {
+const coinPriceTimerSeriesTest = () => {
   describe("coinPriceTimeSeries", () => {
     describe("GET /coinPriceTimeSeries", () => {
       let stubAPI;
@@ -124,8 +124,8 @@ const coinTimePriceTest = () => {
       it("Should return status=200 and the the time series for a year provided that the coin_symbol and other query parameters are valid, and has the data stored for time_start and time_end ", async () => {
         const coin_symbol = "BTC";
         const period_id = "1DAY";
-        const time_start = "2021-11-04T00:00:00.0000000Z";
-        const time_end = "2021-11-07T23:59:00.0000000Z";
+        const time_start = new Date("2021-11-04T12:00:00.0000000Z");
+        const time_end = new Date("2021-11-07T12:59:00.0000000Z");
         const limit = 4;
         const res = await request(app)
           .get(baseURL)
@@ -162,8 +162,8 @@ const coinTimePriceTest = () => {
 
         const coin_symbol = "BTC";
         const period_id = "1DAY";
-        const time_start = "2021-11-04T00:00:00.0000000Z";
-        const time_end = "2021-11-06T23:59:00.0000000Z";
+        const time_start = "2021-11-04T12:01:00.0000000Z";
+        const time_end = "2021-11-06T12:59:00.0000000Z";
 
         const limit = 3;
 
@@ -199,6 +199,6 @@ const coinTimePriceTest = () => {
       });
     });
   });
-}
+};
 
-module.exports = coinTimePriceTest;
+module.exports = coinPriceTimerSeriesTest;
