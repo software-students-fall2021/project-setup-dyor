@@ -6,7 +6,7 @@ const userAssetSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
   },
   quantityPurchased: {
     type: Number,
@@ -36,6 +36,10 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
+  },
+  currency: {
+    type: String,
+    default: "$",
   },
 });
 

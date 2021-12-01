@@ -6,7 +6,6 @@ require("dotenv").config();
 const refreshNews = async () => {
   console.log("allCoins size", allCoins.length);
   let coins = await newsDatabase.find({}, { _id: 0, coin: 1 });
-  console.log("dbCoins size", coins.length);
   let i = 0;
 
   if (coins.length < allCoins.length) {
@@ -38,7 +37,6 @@ const getArticle = async (coin) => {
   const url = `https://newsapi.org/v2/everything?q=+${coin}&from=${today}&language=en&sortBy=relevancy&apiKey=${process.env.NEWS_API_KEY}`;
   await needle("get", url)
     .then((res) => {
-      console.log(`Articles for ${coin}`, res.body.articles.length);
       received = res.body.articles;
     })
     .catch((err) => {

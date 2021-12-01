@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
-const axios = require("axios");
 const { User } = require("../models/users");
 
 const passportConf = require("../passport");
@@ -25,8 +24,7 @@ router.post("/resetPassword", async (req, res) => {
       .status(404)
       .json({ success: false, message: "Could not reset password" });
   } else {
-    const { email, currentPassword, password } = req.body;
-    const currentPasswordHashed = bcrypt.hashSync(currentPassword, 10);
+    const { email, password } = req.body;
     const passwordHashed = bcrypt.hashSync(password, 10);
 
     const query = { email: email };
@@ -39,7 +37,10 @@ router.post("/resetPassword", async (req, res) => {
 
     if (response && response.email === email) {
       console.log(response);
-      console.log("The password are the same", response.password === passwordHashed);
+      console.log(
+        "The password are the same",
+        response.password === passwordHashed,
+      );
       res
         .status(201)
         .json({ success: true, message: "Password changed successfully" });
@@ -49,6 +50,20 @@ router.post("/resetPassword", async (req, res) => {
         .json({ success: false, message: "Could not reset password" });
     }
   }
+});
+
+router.put("/currency", async (req, res) => {
+  const query = { email: req.body.email };
+  const update = {
+    currency: req.body.currency,
+  };
+
+  const opts = { new: true, upsert: true };
+
+  const response = await User.findOneAndUpdate(query, update, opts);
+  if (response["email"] === req.body.email)
+    res.status(200).json({ currency: response["currency"] });
+  else res.status(500).json({ message: "Internal Server Error" });
 });
 
 router

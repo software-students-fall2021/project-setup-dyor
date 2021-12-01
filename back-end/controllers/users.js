@@ -21,6 +21,7 @@ module.exports = {
     console.log(email, password);
     // checking if the user is alredy created with the given email
     const foundUser = await User.findOne({ email });
+    console.log("Found", foundUser);
     if (foundUser) {
       return res
         .status(403)
@@ -41,7 +42,12 @@ module.exports = {
     const token = signToken(req.user);
     res
       .status(200)
-      .json({ success: true, email: req.user.email, token: token });
+      .json({
+        success: true,
+        email: req.user.email,
+        token: token,
+        currency: req.user.currency,
+      });
   },
 
   secret: async (req, res, next) => {
