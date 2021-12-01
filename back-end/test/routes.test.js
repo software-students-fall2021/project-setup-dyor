@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const coinLabelTest = require("./coinLabelTest");
 const coinPredictTest = require("./coinPredictTest");
 const coinPresentPriceTest = require("./coinPresentPriceTest");
-const coinTimePriceTest = require("./coinTimePriceTest");
+const coinPriceTimerSeriesTest = require("./coinPriceTimeSeriesTest");
 const getNewsTest = require("./getNewsTest");
 const getSocialsTest = require("./getSocialsTest");
 const sentimentTest = require("./sentimentTest");
@@ -20,7 +20,7 @@ const wordcloudTest = require("./wordcloudTest");
 //   useUnifiedTopology: true,
 // };
 
-describe("GET ALL ROUTES", () => {
+describe("TESTING ALL ROUTES INVOLVING DB", () => {
   let mongoServer;
 
   before(async () => {
@@ -38,14 +38,17 @@ describe("GET ALL ROUTES", () => {
     const res = await request(app).get("/");
     expect(res.status).to.equal(200);
   });
-    
+
   coinLabelTest();
   coinPredictTest();
   coinPresentPriceTest();
-  coinTimePriceTest();
   getNewsTest();
   getSocialsTest();
   sentimentTest();
   userAssetTest();
   wordcloudTest();
+});
+
+describe("TESTING ALL ROUTES NOT INVOLVING DB", () => {
+  coinPriceTimerSeriesTest();
 });
