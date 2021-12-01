@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const fs = require("fs");
-const moment = require("moment");
-const { parse } = require("path");
+const { format } = require("date-fns");
 
 router.get("/", (req, res) => {
   const baseURL = "rest.coinapi.io";
@@ -14,14 +13,26 @@ router.get("/", (req, res) => {
   const limit = req.query.limit;
   const apikey = process.env.COIN_API_KEY;
 
-  const formatted_time_start = moment(new Date(req.query.time_start)).format(
-    "MM-DD-YYYY",
-  );
-  const formatted_time_end = moment(new Date(req.query.time_end)).format(
-    "MM-DD-YYYY",
-  );
+  // const formatted_time_start = moment(new Date(time_start)).format(
+  //   "MM-DD-YYYY",
+  // );
+  // const formatted_time_end = moment(new Date(time_end)).format("MM-DD-YYYY");
 
   console.log("IN GET OF coinPriceTimeSeries ROUTE");
+
+  const unformatted_time_start = new Date(time_start);
+  const formatted_time_start = format(unformatted_time_start, "MM-dd-yyyy");
+  const unformatted_time_end = new Date(time_end);
+  const formatted_time_end = format(unformatted_time_end, "MM-dd-yyyy");
+
+  // console.log("Time Start");
+  // console.log(`${time_start}`);
+  // console.log(`${unformatted_time_start}`);
+  // console.log(`${formatted_time_start}`);
+  // console.log("Time End");
+  // console.log(`${time_end}`);
+  // console.log(`${unformatted_time_end}`);
+  // console.log(`${formatted_time_end}`);
 
   try {
     console.log("fs.readFile BEGIN");
