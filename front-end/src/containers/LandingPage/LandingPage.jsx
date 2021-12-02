@@ -1,6 +1,5 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-// import axios from "axios";
 import { makeStyles } from "@mui/styles";
 import Header from "../../components/HeaderforLandingPage/Header";
 import { CircularProgress } from "@mui/material";
@@ -22,18 +21,14 @@ const LandingPage = () => {
   const [isLoggedIn, setLoggedIn] = React.useState(undefined);
 
   React.useEffect(() => {
-    console.log("Is user loggedIn", localStorage.getItem("isLoggedIn"));
     if (localStorage.getItem("isLoggedIn") === "true") {
-      console.log("logged In");
       setLoggedIn(true);
     } else {
-      console.log("Not logged in");
       setLoggedIn(false);
     }
   }, []);
 
   React.useEffect(() => {
-    console.log("loading off now");
     setLoading(false);
   }, [isLoggedIn]);
 

@@ -829,6 +829,7 @@ const cryptoSymbolsData = [
   },
 ];
 
+
 var database = (module.exports = {
   cryptoSymbols: cryptoSymbolsData,
   Users: Users,

@@ -36,6 +36,10 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  currency: {
+    type: String,
+    default: "$",
+  },
 });
 
 userSchema.pre("save", function (next) {

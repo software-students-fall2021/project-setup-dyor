@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Typography } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -58,11 +59,8 @@ const NumericEntry = ({
   numDecimalPlaces = 0,
   additionalSuffix = "",
 }) => {
-  let currency = localStorage.getItem("currency");
-  if (currency === null) currency = "$";
-
   const multiplier = 10 ** numDecimalPlaces;
-  const formatedVal = Math.round(val * multiplier) / multiplier;
+  let formatedVal = Math.round(val * multiplier) / multiplier;
   const styleClass = isColor
     ? formatedVal > 0
       ? styles.profit
@@ -75,22 +73,35 @@ const NumericEntry = ({
 export function PortfolioTable(props) {
   const [dailyPricesAndChanges, setDailyPricesAndChanges] = useState({});
   const [showDelete, setShowDelete] = useState(false);
+  const [rate, setRate] = useState(1);
   const refresh = props.onRefresh;
 
-  let currency = localStorage.getItem("currency");
-  if (currency === null) currency = "$";
+  const currency = localStorage.getItem("currency");
 
   useEffect(() => {
-    axios
-      .request(presentPriceAndChangeURL)
-      .then((response) => {
-        setDailyPricesAndChanges(() => response.data);
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log("PORTFOLIO TABLE: GET DAILY PRICE AND CHANGE FAILED");
-        console.log(err);
-      });
+    const presentPrice = async () => {
+      await axios
+        .request(presentPriceAndChangeURL)
+        .then((response) => {
+          setDailyPricesAndChanges(() => response.data);
+          console.log(response.data);
+        })
+        .catch((err) => {
+          console.log("PORTFOLIO TABLE: GET DAILY PRICE AND CHANGE FAILED");
+          console.log(err);
+        });
+    };
+    const currencyAPI = async () => {
+      await axios
+        .get(`/users/currency/${currency}`)
+        .then((res) => {
+          console.log(res.data);
+          setRate(res.data.rate);
+        })
+        .catch((err) => {});
+    };
+    currencyAPI();
+    presentPrice();
   }, []);
 
   const deleteButtonHandler = () => {
@@ -163,7 +174,8 @@ export function PortfolioTable(props) {
           <TableBody>
             {props.userData.map((userDataElement) => {
               const lowerCaseID = userDataElement.id.toLowerCase();
-              const coinPrice = props.pricesData[lowerCaseID];
+              let coinPrice = props.pricesData[lowerCaseID];
+              coinPrice = coinPrice * rate;
               const coinDailyChange =
                 (dailyPricesAndChanges[lowerCaseID] &&
                   dailyPricesAndChanges[lowerCaseID].priceChange) ||
