@@ -9,23 +9,23 @@ import {
   userAssetDataURL,
 } from "../../back-end_routes";
 import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
-import { makeStyles } from "@mui/styles";
+// import { makeStyles } from "@mui/styles";
 
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: "100vh",
-    backgroundImage: `url(${process.env.PUBLIC_URL + "/portfoliobackground2.png"})`,
-    backgroundRepeat: "repeat",
-    backgroundSize: "contain",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     minHeight: "100vh",
+//     backgroundImage: `url(${process.env.PUBLIC_URL + "/portfoliobackground2.png"})`,
+//     backgroundRepeat: "repeat",
+//     backgroundSize: "contain",
+//   },
+// }));
 
 const IndividualCoinPage = () => {
   const { userID, assetID, coinSymbol } = useParams();
   const [assetDetails, setAssetDetails] = useState({});
   const [historicalPriceData, setHistoricalPriceData] = useState([]);
-  const classes = useStyles();
+  // const classes = useStyles();
 
   useEffect(() => {
     axios

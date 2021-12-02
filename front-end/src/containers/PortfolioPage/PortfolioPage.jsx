@@ -6,6 +6,7 @@ import { PortfolioTable } from "../../components/PortfolioTable/PortfolioTable";
 import styles from "./PortfolioPage.module.css";
 import axios from "axios";
 import { userAssetDataURL, coinLabelDataURL } from "../../back-end_routes";
+
 import { makeStyles } from "@mui/styles";
 
 
