@@ -6,6 +6,17 @@ import { PortfolioTable } from "../../components/PortfolioTable/PortfolioTable";
 import styles from "./PortfolioPage.module.css";
 import axios from "axios";
 import { userAssetDataURL, coinLabelDataURL } from "../../back-end_routes";
+import { makeStyles } from "@mui/styles";
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minHeight: "100vh",
+    backgroundImage: `url(${process.env.PUBLIC_URL + "/portfoliobackground3.png"})`,
+    backgroundRepeat: "repeat",
+    backgroundSize: "cover",
+  },
+}));
 
 export function PortfolioPage() {
   const [coinNameToSymbolDict, setCoinNameToSymbolDict] = useState({});
@@ -15,6 +26,8 @@ export function PortfolioPage() {
   const [coinPrices, setCoinPrices] = useState([]);
   const [userData, setUserData] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const classes = useStyles();
+
 
   //This will obtain the initial set of coins
   useEffect(() => {
@@ -142,12 +155,14 @@ export function PortfolioPage() {
       alignItems="stretch"
       spacing={2}
       bgcolor="rgb(230, 248, 246)"
-    >
+    ><div className = {classes.root}>
       <item>
         <Typography
           weight="bolder"
-          color="primary"
+          color="#fff"
           variant="h4"
+          align="center"
+
           className={styles.heading}
         >
           Portfolio
@@ -178,6 +193,7 @@ export function PortfolioPage() {
           ></AddAssetForm>
         </Paper>
       </item>
+      </div>
     </Stack>
   );
 }

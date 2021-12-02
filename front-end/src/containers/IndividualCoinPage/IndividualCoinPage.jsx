@@ -9,11 +9,23 @@ import {
   userAssetDataURL,
 } from "../../back-end_routes";
 import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
+import { makeStyles } from "@mui/styles";
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minHeight: "100vh",
+    backgroundImage: `url(${process.env.PUBLIC_URL + "/portfoliobackground2.png"})`,
+    backgroundRepeat: "repeat",
+    backgroundSize: "contain",
+  },
+}));
 
 const IndividualCoinPage = () => {
   const { userID, assetID, coinSymbol } = useParams();
   const [assetDetails, setAssetDetails] = useState({});
   const [historicalPriceData, setHistoricalPriceData] = useState([]);
+  const classes = useStyles();
 
   useEffect(() => {
     axios
@@ -64,16 +76,18 @@ const IndividualCoinPage = () => {
   }, [assetID, coinSymbol, userID]);
 
   return (
-    <Box>
-      <h1>{assetID}</h1>
-      <Paper elevation={2}>
-        <LiveChartContainer coinName={coinSymbol}></LiveChartContainer>
-        <DailyGraph
-          assetDetails={assetDetails}
-          historicalPriceData={historicalPriceData}
-        ></DailyGraph>
-      </Paper>
-    </Box>
+    // <div className={classes.root}>
+      <Box>
+          <h1 align = "center">{assetID}</h1>
+        <Paper elevation={2}>
+          <LiveChartContainer coinName={coinSymbol}></LiveChartContainer>
+          <DailyGraph
+            assetDetails={assetDetails}
+            historicalPriceData={historicalPriceData}
+          ></DailyGraph>
+        </Paper>
+      </Box>
+    // </div>
   );
 };
 

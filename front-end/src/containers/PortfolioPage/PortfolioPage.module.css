@@ -6,12 +6,13 @@
 
 .stackItem {
     border-radius: 15px;
-    margin: 2%;
+    margin: 4%;
+    background-color: rgb(255,255,255,0.97);
 }
 
 .heading {
     padding-top: 5%;
-    padding-left: 4%;
+    /* padding-left: 4%; */
 }
 
 .hidden {
