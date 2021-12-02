@@ -4,7 +4,6 @@ const needle = require("needle");
 require("dotenv").config();
 
 const refreshNews = async () => {
-  console.log("allCoins size", allCoins.length);
   let coins = await newsDatabase.find({}, { _id: 0, coin: 1 });
   let i = 0;
 

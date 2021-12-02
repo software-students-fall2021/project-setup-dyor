@@ -10,16 +10,16 @@ import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DropDownMenu from "../../components/DropDownMenu/drop_down_menu";
+import axios from "axios";
 import "./SettingsPage.css";
 
-const Currencies = ["$", "€", "£", "AED", "CAD", "¥"];
+const Currencies = ["$", "€", "£", "₣", "₵", "₹", "₨", "د.إ", "CAD", "¥"];
 
 export default function SettingsPage({ logoutHandler }) {
-  let localcurrency = localStorage.getItem("currency");
-  if (localcurrency === null) localcurrency = "$";
-
   const [isSwitched, setIsSwitched] = React.useState(false);
-  const [currency, setCurrency] = React.useState(localcurrency);
+  const [currency, setCurrency] = React.useState(
+    localStorage.getItem("currency"),
+  );
 
   React.useEffect(() => {
     if (isSwitched) {
@@ -30,9 +30,22 @@ export default function SettingsPage({ logoutHandler }) {
     }
   }, [isSwitched]);
 
-  React.useEffect(() => {
-    localStorage.setItem("currency", currency);
-  }, [currency]);
+  const postCurrency = async (newCurr) => {
+    const body = {
+      old: currency,
+      curr: newCurr,
+      email: localStorage.getItem("email"),
+    };
+    await axios
+      .put("/users/currency", body)
+      .then((response) => {
+        if (response.status === 200) {
+          setCurrency(response.data.currency);
+          localStorage.setItem("currency", response.data.currency);
+        } else console.log("currency change unsuccessful");
+      })
+      .catch((err) => console.log(err));
+  };
 
   const augmentedLogoutHandler = () => {
     localStorage.removeItem("token");
@@ -84,7 +97,7 @@ export default function SettingsPage({ logoutHandler }) {
               className="handle"
               selectedValue={currency}
               options={Currencies}
-              set={setCurrency}
+              set={postCurrency}
             />
           </Box>
         </Paper>

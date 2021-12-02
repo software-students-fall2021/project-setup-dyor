@@ -43,10 +43,12 @@ const LoginPage = ({ loginHandler }) => {
   useEffect(() => {
     // if the user is logged-in, save the token to local storage
     if (response.success && response.token) {
-      console.log(`User successfully logged in: ${response.email}`);
+      console.log(`User successfully logged in`);
+      console.log(response);
       localStorage.setItem("token", response.token);
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("email", response.email);
+      localStorage.setItem("currency", response.currency);
     }
   }, [response]);
 
