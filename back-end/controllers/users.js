@@ -17,6 +17,7 @@ signToken = (user) => {
 
 module.exports = {
   signUp: async (req, res, next) => {
+    console.log("IN SIGNUP");
     const { email, password } = req.value.body;
     console.log(email, password);
     // checking if the user is alredy created with the given email
