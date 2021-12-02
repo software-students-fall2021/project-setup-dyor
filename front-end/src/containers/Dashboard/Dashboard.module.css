@@ -3,13 +3,15 @@
 }
 
 .cardBox {
-  margin: 2%;
+  margin: 5%;
+  margin-left: 7%;
+  margin-right: 7%;
   border-radius: 15px;
   padding: 5%;
+  background-color: rgb(255,255,255,0.97);
 }
 
 .headingDash {
-  padding-left: 4%;
   padding-top: 5%;
 }
 

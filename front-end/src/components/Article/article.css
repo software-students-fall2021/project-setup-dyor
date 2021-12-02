@@ -17,12 +17,18 @@
 }
 .article_image {
     height: 100px;
+    /* display: block; */
+    padding-left: 15%;
+    padding-right: 15%;
+    margin-top: 5%;
+    border-radius: 10%;
 }
 .article_description{
     display: block;
 }
 .article_paper{
     margin: 0 auto 10px;
+    border-radius: 10px;
 }
 .article_story{
     text-align: justify;
