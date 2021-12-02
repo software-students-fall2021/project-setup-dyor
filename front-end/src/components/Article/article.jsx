@@ -8,7 +8,7 @@ export default function Article({ article }) {
   }
 
   return (
-    <Paper variant="outlined" className="article_paper">
+    <Paper elevation={2} variant="outlined" className="article_paper">
       <article className="article_content">
         <div className="image">
           { article.urlToImage !== null && article.urlToImage !== undefined &&

@@ -36,7 +36,7 @@ export default function NewsTile({ data, coin, number }) {
       {!isLoading && (
         <div className="news">
           <div className="news_content">
-            <div className="news_header">
+            <div className="news_header" align="center">
               <h3 className="news_title">{coin.toUpperCase()}</h3>
             </div>
             {articles.map((article) => (
