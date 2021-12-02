@@ -188,7 +188,9 @@ export function PortfolioTable(props) {
                 <TableRow key={userDataElement.id}>
                   {showDelete ? (
                     <TableCell component="th" scope="row">
-                      <Button onClick={() => onDeleteAsset(userDataElement.id)}>
+                      <Button 
+                        onClick={() => onDeleteAsset(userDataElement.id)}
+                      >
                         <DeleteIcon></DeleteIcon>
                       </Button>
                     </TableCell>
@@ -231,6 +233,7 @@ export function PortfolioTable(props) {
           <Button
             variant="contained"
             color="secondary"
+            style={{maxWidth: '100%', minWidth: '50%'}}
             onClick={deleteButtonHandler}
           >
             Delete Asset
@@ -240,6 +243,8 @@ export function PortfolioTable(props) {
           <Button
             variant="contained"
             color="primary"
+            style={{maxWidth: '100%', minWidth: '50%'}}
+
             onClick={props.onAddAsset}
           >
             Add Asset
