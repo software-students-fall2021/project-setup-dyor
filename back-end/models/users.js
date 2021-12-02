@@ -6,7 +6,6 @@ const userAssetSchema = new Schema({
   name: {
     type: String,
     required: true,
-    // unique: true,
   },
   quantityPurchased: {
     type: Number,
