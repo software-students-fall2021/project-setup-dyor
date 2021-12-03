@@ -18,22 +18,19 @@ signToken = (user) => {
 module.exports = {
   signUp: async (req, res, next) => {
     const { email, password } = req.value.body;
-    console.log(email, password);
+
     // checking if the user is alredy created with the given email
     const foundUser = await User.findOne({ email });
-    console.log("Found", foundUser);
+    console.log("User Already Found", foundUser);
 
     if (foundUser) {
       return res.status(403);
     }
-
     // creating a new user
     const newUser = new User({ email, password });
     await newUser.save();
-
     // responding with the webtoken
     const token = signToken(newUser);
-
     res.status(200).json({ success: true, email: newUser.email, token: token });
   },
 
