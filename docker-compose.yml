@@ -20,8 +20,8 @@ services:
       - "3001:3001"
     container_name: backend-docker
     restart: always
-    links:
-      - db
+    # links:
+    #   - db
     networks:
       - webappnetwork
 
