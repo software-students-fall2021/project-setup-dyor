@@ -20,6 +20,7 @@ passport.use(
     },
     async (payload, done) => {
       try {
+        console.log("Passport | JWT STRATEGY");
         //finding the user specified in the token
         const user = await User.findById(payload.sub);
         // if the user doesn't exist

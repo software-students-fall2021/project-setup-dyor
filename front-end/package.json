@@ -68,5 +68,5 @@
     "eslint": "^7.32.0",
     "prettier": "^2.4.1"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001/"
 }

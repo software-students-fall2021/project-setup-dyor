@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+
 const bcrypt = require("bcryptjs");
 const axios = require("axios");
 const { User } = require("../models/users");
 require("dotenv").config();
-
 const passportConf = require("../passport");
 
 const { validateBody, schemas } = require("../helpers/routeHelpers");
@@ -118,6 +118,13 @@ router
     passportSignIn,
     UserController.signIn,
   );
+
+router.route("/remove").delete(
+  passport.authenticate("jwt", {
+    session: false,
+  }),
+  UserController.remove,
+);
 
 const convert = async (assets, { old, curr }) => {
   const oldCurr = currencies[old];

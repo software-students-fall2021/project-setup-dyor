@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Redirect, Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Paper } from "@mui/material";
 import style from "./SignupPage.module.css";
 import axios from "axios";
@@ -25,9 +25,11 @@ const useStyles = makeStyles((theme) => ({
 
 const SignupPage = ({ loginHandler }) => {
   const classes = useStyles();
-  const [response, setResponse] = useState(false);
+  const [response, setResponse] = useState("WAITING");
   const [errorMessage, setErrorMessage] = useState("");
   const [userInput, setUserInput] = useState({ email: "", password: "" });
+
+  const history = useHistory();
 
   const handleInputChange = (event) => {
     if (event) {
@@ -39,22 +41,28 @@ const SignupPage = ({ loginHandler }) => {
     }
   };
 
-  const augmentedLoginHandler = async () => {
-    try {
-      const res = await axios.post(`users/signup`, userInput);
-      setResponse(res.data.success);
-    } catch (err) {
-      setErrorMessage("Invalid email address");
-    }
+  const augmentedLoginHandler = () => {
+    axios
+      .post(`users/signup`, userInput)
+      .then((res) => {
+        setResponse(() => (res.data.success ? "SUCCESS" : "FAILURE"));
+      })
+      .catch((err) => {
+        setResponse(() => "FAILURE");
+        console.log("ERROR IN SIGNUP | EMAIL ALREADY IN USE");
+      });
   };
 
   React.useEffect(() => {
-    if (response) setErrorMessage("Sign up successful");
-  }, [response]);
-
-  if (response) {
-    return <Redirect to="/loginPage" />;
-  }
+    if (response === "SUCCESS") {
+      setErrorMessage(() => "SIGNUP Success");
+      history.push("/loginPage");
+    } else if (response === "FAILURE") {
+      setErrorMessage(() => "SIGNUP Failure, EMAIL previously in usage.");
+    } else {
+      setErrorMessage(() => "");
+    }
+  }, [response, history]);
 
   return (
     <div className={classes.root}>
@@ -122,7 +130,7 @@ const SignupPage = ({ loginHandler }) => {
               color="primary"
               onClick={augmentedLoginHandler}
             >
-              Signup
+              Signup Now
             </Button>
           </div>
         </Paper>

@@ -33,7 +33,6 @@ const theme = createTheme({
 
 function App() {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
-  // const [email, setEmail] = React.useState();
 
   const loginHandler = () => {
     console.log("LOGGING IN");
@@ -42,6 +41,7 @@ function App() {
 
   const logoutHandler = () => {
     console.log("LOGGING OUT");
+
     setLoggedIn(false);
   };
 
