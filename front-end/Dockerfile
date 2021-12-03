@@ -6,6 +6,8 @@ WORKDIR /front-end
 
 # Copy package json and install dependencies
 COPY package*.json ./
+COPY package-lock.json ./
+
 RUN npm install
 
 # Copy our app

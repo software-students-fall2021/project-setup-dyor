@@ -9,6 +9,9 @@ services:
     restart: always # What to do if container crashes
     links:
       - backend
+    networks:
+      - webappnetwork
+
   # Create backend container
   backend:
     # Create backend container
@@ -19,10 +22,20 @@ services:
     restart: always
     links:
       - db
+    networks:
+      - webappnetwork
+
+  # We dont need a seperate container for database since we are using Atlas
   # Create database container
-  db:
-    image: mongo
-    ports:
-      - "5432:5432"
-    container_name: database-docker
-    restart: always
+  # db:
+  #   image: mongo
+  #   ports:
+  #     - 27017:27017
+  #   container_name: database-docker
+  #   restart: always
+  #   networks:
+  #     - webappnetwork
+
+networks:
+  webappnetwork:
+    driver: bridge

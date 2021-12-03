@@ -41,7 +41,10 @@ const SignupPage = ({ loginHandler }) => {
 
   const augmentedLoginHandler = async () => {
     try {
-      const res = await axios.post(`users/signup`, userInput);
+      const res = await axios.post(
+        `http://localhost:3001/users/signup`,
+        userInput,
+      );
       setResponse(res.data.success);
     } catch (err) {
       setErrorMessage("Invalid email address");
@@ -53,7 +56,7 @@ const SignupPage = ({ loginHandler }) => {
   }, [response]);
 
   if (response) {
-    return <Redirect to="/loginPage" />;
+    return <Redirect to="http://localhost:3001/loginPage" />;
   }
 
   return (
@@ -66,7 +69,7 @@ const SignupPage = ({ loginHandler }) => {
           aria-label="menu"
           sx={{ mr: 2 }}
         >
-          <Link className="link" to="/">
+          <Link className="link" to="http://localhost:3001/">
             <ArrowBackIcon />
           </Link>
         </IconButton>

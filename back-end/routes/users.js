@@ -39,7 +39,10 @@ router.post("/resetPassword", async (req, res) => {
 
     if (response && response.email === email) {
       console.log(response);
-      console.log("The password are the same", response.password === passwordHashed);
+      console.log(
+        "The password are the same",
+        response.password === passwordHashed,
+      );
       res
         .status(201)
         .json({ success: true, message: "Password changed successfully" });

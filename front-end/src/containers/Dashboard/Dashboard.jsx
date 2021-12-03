@@ -13,7 +13,7 @@ export default function DashboardPage() {
   React.useEffect(() => {
     const getArticles = async () => {
       await axios
-        .get("/news/cryptocurrency")
+        .get("http://localhost:3001/news/cryptocurrency")
         .then((res) => {
           setArticles(res.data);
         })

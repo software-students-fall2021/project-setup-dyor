@@ -8,6 +8,9 @@ const refreshTwitter = require("./refreshSocials/refreshTwitter");
 const refreshReddit = require("./refreshSocials/refreshReddit");
 require("dotenv").config();
 
+var cors = require("cors");
+app.use(cors()); // Use this after the variable declaration
+
 const morgan = require("morgan"); // middleware for nice logging of incoming HTTP requests
 const dotenv = require("dotenv"); // access API_KEYS and other details
 dotenv.config({ path: "./.env" });
