@@ -54,7 +54,10 @@ const LoginPage = ({ loginHandler }) => {
 
   const augmentedLoginHandler = async () => {
     try {
-      const response = await axios.post(`users/signin`, userInput);
+      const response = await axios.post(
+        `http://localhost:3001/users/signin`,
+        userInput,
+      );
       // store the response data into the data state variable
       setErrorMessage("Login successful");
       setResponse(response.data);
@@ -90,7 +93,7 @@ const LoginPage = ({ loginHandler }) => {
 
   if (response.success) {
     loginHandler();
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="http://localhost:3001/dashboard" />;
   } else
     return (
       <div className={classes.root}>
@@ -102,7 +105,7 @@ const LoginPage = ({ loginHandler }) => {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <Link className="link" to="/">
+            <Link className="link" to="http://localhost:3001/">
               <ArrowBackIcon />
             </Link>
           </IconButton>
