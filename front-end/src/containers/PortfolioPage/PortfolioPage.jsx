@@ -9,11 +9,12 @@ import { userAssetDataURL, coinLabelDataURL } from "../../back-end_routes";
 
 import { makeStyles } from "@mui/styles";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
-    backgroundImage: `url(${process.env.PUBLIC_URL + "/portfoliobackground3.png"})`,
+    backgroundImage: `url(${
+      process.env.PUBLIC_URL + "/portfoliobackground3.png"
+    })`,
     backgroundRepeat: "repeat",
     backgroundSize: "cover",
   },
@@ -27,8 +28,9 @@ export function PortfolioPage() {
   const [coinPrices, setCoinPrices] = useState([]);
   const [userData, setUserData] = useState([]);
   const [refresh, setRefresh] = useState(false);
-  const classes = useStyles();
 
+  const [totalProfitAndLoss, setTotalProfitAndLoss] = useState(0);
+  const currency = localStorage.getItem("currency");
 
   //This will obtain the initial set of coins
   useEffect(() => {
@@ -156,14 +158,13 @@ export function PortfolioPage() {
       alignItems="stretch"
       spacing={2}
       bgcolor="rgb(230, 248, 246)"
-    ><div className = {classes.root}>
+    >
       <item>
         <Typography
           weight="bolder"
           color="#fff"
           variant="h4"
           align="center"
-
           className={styles.heading}
         >
           Portfolio
@@ -177,6 +178,7 @@ export function PortfolioPage() {
             coinNameToSymbolDict={coinNameToSymbolDict}
             onAddAsset={onAddNewAssetButtonClickHandler}
             onRefresh={onSetRefresh}
+            setProfitAndLoss={setTotalProfitAndLoss}
           ></PortfolioTable>
         </Paper>
       </item>
@@ -194,7 +196,13 @@ export function PortfolioPage() {
           ></AddAssetForm>
         </Paper>
       </item>
-      </div>
+      <item>
+        <Paper elevation={2} className={styles.stackItem}>
+          <Typography>
+            Cumulative Profit-and-Loss {`${currency} ${totalProfitAndLoss}`}
+          </Typography>
+        </Paper>
+      </item>
     </Stack>
   );
 }

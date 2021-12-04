@@ -84,6 +84,7 @@ export function PortfolioTable(props) {
         .request(presentPriceAndChangeURL)
         .then((response) => {
           setDailyPricesAndChanges(() => response.data);
+          console.log("DAILY PRICE AND CHANGE");
           console.log(response.data);
         })
         .catch((err) => {
@@ -126,6 +127,84 @@ export function PortfolioTable(props) {
         console.log("Deletion Unsuccessful");
         console.log(err);
       });
+  };
+
+  const TableEntries = () => {
+    let totalProfitAndLoss = 0;
+
+    const returnObjects = props.userData.map((userDataElement) => {
+      const lowerCaseID = userDataElement.id.toLowerCase().split(" ").join("-");
+
+      const coinStaticPrice =
+        (dailyPricesAndChanges[lowerCaseID] &&
+          dailyPricesAndChanges[lowerCaseID].price) ||
+        0;
+
+      const coinRealTimePrice =
+        props.pricesData[lowerCaseID] || coinStaticPrice;
+
+      const coinDailyChange =
+        (dailyPricesAndChanges[lowerCaseID] &&
+          dailyPricesAndChanges[lowerCaseID].priceChange) ||
+        "";
+
+      const userProfit =
+        (coinStaticPrice - userDataElement.unitPrice) *
+        userDataElement.quantityPurchased *
+        rate;
+
+      const coinPrice = coinRealTimePrice * rate;
+
+      console.log(
+        `staticPrice: ${coinStaticPrice} | coinRealTimePrice: ${coinRealTimePrice} | coinDailyChange: ${coinDailyChange} | userProfit: ${userProfit} | rate ${rate} | coinPrice: ${coinPrice}`,
+      );
+
+      totalProfitAndLoss += userProfit;
+
+      return (
+        <TableRow key={userDataElement.id}>
+          {showDelete ? (
+            <TableCell component="th" scope="row">
+              <Button onClick={() => onDeleteAsset(userDataElement.id)}>
+                <DeleteIcon></DeleteIcon>
+              </Button>
+            </TableCell>
+          ) : (
+            <></>
+          )}
+          <TableCell component="th" scope="row">
+            <CoinImage
+              coinID={userDataElement.id}
+              symbolsDict={props.coinNameToSymbolDict}
+            ></CoinImage>
+          </TableCell>
+          <TableCell align="right">
+            <NumericEntry
+              val={`${coinPrice}`}
+              numDecimalPlaces={2}
+            ></NumericEntry>
+          </TableCell>
+          <TableCell align="right">
+            <NumericEntry
+              val={coinDailyChange}
+              isColor={true}
+              numDecimalPlaces={2}
+              additionalSuffix="%"
+            ></NumericEntry>
+          </TableCell>
+          <TableCell align="right">
+            <NumericEntry
+              val={userProfit}
+              isColor={true}
+              numDecimalPlaces={2}
+            ></NumericEntry>
+          </TableCell>
+        </TableRow>
+      );
+    });
+    console.log(`P&L is ${totalProfitAndLoss}`);
+    props.setProfitAndLoss(() => totalProfitAndLoss);
+    return returnObjects;
   };
 
   return (
@@ -171,69 +250,13 @@ export function PortfolioTable(props) {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {props.userData.map((userDataElement) => {
-              const lowerCaseID = userDataElement.id.toLowerCase();
-              let coinPrice = props.pricesData[lowerCaseID];
-              coinPrice = coinPrice * rate;
-              const coinDailyChange =
-                (dailyPricesAndChanges[lowerCaseID] &&
-                  dailyPricesAndChanges[lowerCaseID].priceChange) ||
-                "";
-              const userProfit =
-                (coinPrice - userDataElement.unitPrice) *
-                userDataElement.quantityPurchased;
-
-              return (
-                <TableRow key={userDataElement.id}>
-                  {showDelete ? (
-                    <TableCell component="th" scope="row">
-                      <Button 
-                        onClick={() => onDeleteAsset(userDataElement.id)}
-                      >
-                        <DeleteIcon></DeleteIcon>
-                      </Button>
-                    </TableCell>
-                  ) : (
-                    <></>
-                  )}
-                  <TableCell component="th" scope="row">
-                    <CoinImage
-                      coinID={userDataElement.id}
-                      symbolsDict={props.coinNameToSymbolDict}
-                    ></CoinImage>
-                  </TableCell>
-                  <TableCell align="right">
-                    <NumericEntry
-                      val={`${coinPrice}`}
-                      numDecimalPlaces={2}
-                    ></NumericEntry>
-                  </TableCell>
-                  <TableCell align="right">
-                    <NumericEntry
-                      val={coinDailyChange}
-                      isColor={true}
-                      numDecimalPlaces={2}
-                      additionalSuffix="%"
-                    ></NumericEntry>
-                  </TableCell>
-                  <TableCell align="right">
-                    <NumericEntry
-                      val={userProfit}
-                      isColor={true}
-                      numDecimalPlaces={2}
-                    ></NumericEntry>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
+          <TableBody>{TableEntries()}</TableBody>
         </Table>
         <Box className={styles.button}>
           <Button
             variant="contained"
             color="secondary"
-            style={{maxWidth: '100%', minWidth: '50%'}}
+            style={{ maxWidth: "100%", minWidth: "50%" }}
             onClick={deleteButtonHandler}
           >
             Delete Asset
@@ -243,8 +266,7 @@ export function PortfolioTable(props) {
           <Button
             variant="contained"
             color="primary"
-            style={{maxWidth: '100%', minWidth: '50%'}}
-
+            style={{ maxWidth: "100%", minWidth: "50%" }}
             onClick={props.onAddAsset}
           >
             Add Asset
