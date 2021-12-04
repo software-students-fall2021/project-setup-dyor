@@ -33,7 +33,6 @@ passport.use(
         // done(null, user);
         done(null, { id: user.id, email: user.email });
       } catch (error) {
-        console.log("PASSPORT: ERROR HELLO");
         done(error, false);
       }
     },
