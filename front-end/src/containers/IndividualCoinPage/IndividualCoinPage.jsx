@@ -9,8 +9,10 @@ import {
   userAssetDataURL,
 } from "../../back-end_routes";
 import { DailyGraph } from "../../components/DailyGraph/DailyGraph";
-// import { makeStyles } from "@mui/styles";
+import { Stack } from "@mui/material";
 
+import "./IndividualCoinPage.css";
+// import { makeStyles } from "@mui/styles";
 
 // const useStyles = makeStyles((theme) => ({
 //   root: {
@@ -77,16 +79,32 @@ const IndividualCoinPage = () => {
 
   return (
     // <div className={classes.root}>
-      <Box>
-          <h1 align = "center">{assetID}</h1>
-        <Paper elevation={2}>
+    <Box>
+      <Stack
+        sx={{ padding: "3%" }}
+        direction="column"
+        justifyContent="center"
+        alignItems="stretch"
+        spacing={2}
+      >
+        <item>
+          <h1 align="center">{assetID}</h1>
+        </item>
+        <item>
           <LiveChartContainer coinName={coinSymbol}></LiveChartContainer>
-          <DailyGraph
-            assetDetails={assetDetails}
-            historicalPriceData={historicalPriceData}
-          ></DailyGraph>
-        </Paper>
-      </Box>
+        </item>
+        <item>
+          <Paper elevation={2} style={{ borderRadius: "15px" }}>
+            <div style={{ padding: "10px" }}>
+              <DailyGraph
+                assetDetails={assetDetails}
+                historicalPriceData={historicalPriceData}
+              ></DailyGraph>
+            </div>
+          </Paper>
+        </item>
+      </Stack>
+    </Box>
     // </div>
   );
 };

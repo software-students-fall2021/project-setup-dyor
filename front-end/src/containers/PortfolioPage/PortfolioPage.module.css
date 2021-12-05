@@ -5,17 +5,25 @@
 } */
 
 .stackItem {
-    border-radius: 15px;
-    margin: 4%;
-    background-color: rgb(255,255,255,0.97);
-    
+  border-radius: 15px;
+  margin: 4%;
+  background-color: rgb(255, 255, 255, 0.97);
 }
 
 .heading {
-    padding-top: 5%;
-    /* padding-left: 4%; */
+  padding-top: 5%;
+  /* padding-left: 4%; */
 }
 
 .hidden {
-    display: none;
+  display: none;
+}
+
+.displayInline {
+  display: flex;
+  font-size: 30px;
+  text-align: center;
+  justify-content: space-around;
+
+  padding-bottom: 5%;
 }

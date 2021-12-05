@@ -51,50 +51,44 @@ export default function NewsPage() {
     return (
       <>
         {isLoading ? (
-        <div className="circularProgress">
-          <CircularProgress
-            className="progressBar"
-            size={100}
-            thickness={2.0}
-          />
-        </div>
-      ) : (
-        <div className="newspage">
-            <div className="nocoins">
-                News on your assets will appear here.
-            </div>
-        </div>
-      )}
+          <div className="circularProgress">
+            <CircularProgress
+              className="progressBar"
+              size={100}
+              thickness={2.0}
+            />
+          </div>
+        ) : (
+          <div className="newspage">
+            <div className="nocoins">News on your assets will appear here.</div>
+          </div>
+        )}
       </>
     );
-  }
-  else {
+  } else {
     return (
       <>
         {isLoading ? (
-        <div className="circularProgress">
-          <CircularProgress
-            className="progressBar"
-            size={100}
-            thickness={2.0}
-          />
-        </div>
-      ) : (
-        <div className="newspage">
-            {
-            userData.map((data, index) => (
-            <NewsTile
-              key={index}
-              coin={data.id}
-              number={2}
-              data={articles[data.id.toLowerCase()]}
+          <div className="circularProgress">
+            <CircularProgress
+              className="progressBar"
+              size={100}
+              thickness={2.0}
             />
-              ))
-            }
-        </div>
-      )}
+          </div>
+        ) : (
+          <div className="newspage">
+            {userData.map((data, index) => (
+              <NewsTile
+                key={index}
+                coin={data.id}
+                number={2}
+                data={articles[data.id.toLowerCase()]}
+              />
+            ))}
+          </div>
+        )}
       </>
     );
   }
 }
-

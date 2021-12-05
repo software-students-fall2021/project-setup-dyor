@@ -6,19 +6,20 @@ import { PortfolioTable } from "../../components/PortfolioTable/PortfolioTable";
 import styles from "./PortfolioPage.module.css";
 import axios from "axios";
 import { userAssetDataURL, coinLabelDataURL } from "../../back-end_routes";
+import { Button } from "@mui/material";
 
 import { makeStyles } from "@mui/styles";
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     minHeight: "100vh",
-//     backgroundImage: `url(${
-//       process.env.PUBLIC_URL + "/portfoliobackground3.png"
-//     })`,
-//     backgroundRepeat: "repeat",
-//     backgroundSize: "cover",
-//   },
-// }));
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minHeight: "100vh",
+    backgroundImage: `url(${
+      process.env.PUBLIC_URL + "/portfoliobackground3.png"
+    })`,
+    backgroundRepeat: "repeat",
+    backgroundSize: "cover",
+  },
+}));
 
 export function PortfolioPage() {
   const [coinNameToSymbolDict, setCoinNameToSymbolDict] = useState({});
@@ -28,6 +29,7 @@ export function PortfolioPage() {
   const [coinPrices, setCoinPrices] = useState([]);
   const [userData, setUserData] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const classes = useStyles();
 
   const [totalProfitAndLoss, setTotalProfitAndLoss] = useState(0);
   const currency = localStorage.getItem("currency");
@@ -152,57 +154,62 @@ export function PortfolioPage() {
   };
 
   return (
-    <Stack
-      direction="column"
-      justifyContent="space-evenly"
-      alignItems="stretch"
-      spacing={2}
-      bgcolor="rgb(230, 248, 246)"
-    >
-      <item>
-        <Typography
-          weight="bolder"
-          color="#fff"
-          variant="h4"
-          align="center"
-          className={styles.heading}
-        >
-          Portfolio
-        </Typography>
-      </item>
-      <item>
-        <Paper elevation={2} className={styles.stackItem}>
-          <PortfolioTable
-            pricesData={coinPrices}
-            userData={userData}
-            coinNameToSymbolDict={coinNameToSymbolDict}
-            onAddAsset={onAddNewAssetButtonClickHandler}
-            onRefresh={onSetRefresh}
-            setProfitAndLoss={setTotalProfitAndLoss}
-          ></PortfolioTable>
-        </Paper>
-      </item>
-      <item>
-        <Paper
-          elevation={2}
-          className={`${styles.stackItem} ${
-            newAssetAdditionPending ? "" : styles.hidden
-          }`}
-        >
-          <AddAssetForm
-            coinLabels={coinLabels}
-            onAddNewAssetHandler={addNewUserAssetData}
-            onSubmit={onSubmitNewAssetButtonClickHandler}
-          ></AddAssetForm>
-        </Paper>
-      </item>
-      <item>
-        <Paper elevation={2} className={styles.stackItem}>
-          <Typography>
-            Cumulative Profit-and-Loss {`${currency} ${totalProfitAndLoss}`}
+    <div className={classes.root}>
+      <Stack
+        direction="column"
+        justifyContent="space-evenly"
+        alignItems="stretch"
+        spacing={2}
+        // bgcolor="rgb(230, 248, 246)"
+      >
+        <item>
+          <Typography
+            weight="bolder"
+            color="#fff"
+            variant="h4"
+            align="center"
+            className={styles.heading}
+          >
+            Portfolio
           </Typography>
-        </Paper>
-      </item>
-    </Stack>
+        </item>
+        <item>
+          <Paper elevation={2} className={styles.stackItem}>
+            <PortfolioTable
+              pricesData={coinPrices}
+              userData={userData}
+              coinNameToSymbolDict={coinNameToSymbolDict}
+              onAddAsset={onAddNewAssetButtonClickHandler}
+              onRefresh={onSetRefresh}
+              setProfitAndLoss={setTotalProfitAndLoss}
+            ></PortfolioTable>
+          </Paper>
+        </item>
+        <item>
+          <Paper
+            elevation={2}
+            className={`${styles.stackItem} ${
+              newAssetAdditionPending ? "" : styles.hidden
+            }`}
+          >
+            <AddAssetForm
+              coinLabels={coinLabels}
+              onAddNewAssetHandler={addNewUserAssetData}
+              onSubmit={onSubmitNewAssetButtonClickHandler}
+            ></AddAssetForm>
+          </Paper>
+        </item>
+        <item>
+          <div className={styles.displayInline}>
+            <Button variant="contained" size="small">
+              Cumulative Profit-and-Loss
+              <Typography>{`${currency} ${totalProfitAndLoss.toFixed(
+                2,
+              )}`}</Typography>
+            </Button>
+          </div>
+        </item>
+      </Stack>
+    </div>
   );
 }

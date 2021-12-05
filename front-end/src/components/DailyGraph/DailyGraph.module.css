@@ -1,15 +1,15 @@
 .DailyGraphBox {
-    /* border: 1px solid gray; */
-    border-radius: 15px;
-    padding: 10px;
-    /* background-color: rgb(230, 248, 246); */
+  /* border: 1px solid gray; */
+  border-radius: 15px;
+  padding: 5px;
+  /* background-color: rgb(230, 248, 246); */
 }
 
 .center > div {
-    margin-right: 50px;
-    margin-left: 20px;
+  margin-right: 50px;
+  /* margin-left: 20px; */
 }
 
 .fullWidth {
-    width: 100%;
+  width: 100%;
 }

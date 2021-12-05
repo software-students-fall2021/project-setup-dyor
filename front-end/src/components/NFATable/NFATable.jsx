@@ -12,7 +12,7 @@ import Icon from "react-crypto-icons";
 import axios from "axios";
 import { coinPredict } from "../../back-end_routes";
 import { Link } from "react-router-dom";
-import {useState} from "react";
+import { useState } from "react";
 
 let count = 0;
 
@@ -72,23 +72,23 @@ const NumericEntry = ({
 export function NFATable(props) {
   const [getPredict, setGetPredict] = useState({});
 
-  if (count % 30 === 0){
-      axios
+  if (count % 30 === 0) {
+    axios
       .get(coinPredict)
       .then((response) => {
-        console.log("Front-end")
-        for (let i = 0; i<2;i++){
-          console.log(props.userData[i].id)
+        console.log("Front-end");
+        for (let i = 0; i < 2; i++) {
+          console.log(props.userData[i].id);
         }
 
         setGetPredict(response.data);
       })
       .catch((err) => {
         console.log(err);
-        console.log("Error")
+        console.log("Error");
       });
-    }
-    count = count + 1;
+  }
+  count = count + 1;
 
   return (
     <>
@@ -115,7 +115,7 @@ export function NFATable(props) {
 
               <TableCell align="center">
                 <Typography className={styles.tableHeading} variant="subtitle2">
-                  Tomorrow
+                  24H Pred
                 </Typography>
               </TableCell>
             </TableRow>
@@ -133,7 +133,6 @@ export function NFATable(props) {
                       coinID={userDataElement.id}
                       symbolsDict={props.coinNameToSymbolDict}
                     ></CoinImage>
-
                   </TableCell>
                   <TableCell align="center">
                     <NumericEntry
@@ -142,13 +141,18 @@ export function NFATable(props) {
                     ></NumericEntry>
                   </TableCell>
                   <TableCell align="center">
-                    {getPredict && !(typeof getPredict === 'object' && !Array.isArray(getPredict) && getPredict !== null)
-                      ? 
-                      getPredict.map((obj) =>
-                          obj.name === userDataElement.id ? obj.predictions.toFixed(4): "",
+                    {getPredict &&
+                    !(
+                      typeof getPredict === "object" &&
+                      !Array.isArray(getPredict) &&
+                      getPredict !== null
+                    )
+                      ? getPredict.map((obj) =>
+                          obj.name === userDataElement.id
+                            ? obj.predictions.toFixed(4)
+                            : "",
                         )
-                      : 'loading...'}
-
+                      : "loading..."}
                   </TableCell>
                 </TableRow>
               );
@@ -156,7 +160,6 @@ export function NFATable(props) {
           </TableBody>
         </Table>
       </Box>
-      
     </>
   );
 }
