@@ -13,6 +13,7 @@ const getSocialsTest = require("./getSocialsTest");
 const sentimentTest = require("./sentimentTest");
 const userAssetTest = require("./userAssetTest");
 const wordcloudTest = require("./wordcloudTest");
+const UsersRouteTest = require("./usersTest");
 
 // const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_TEST_DB}?retryWrites=true&w=majority&ssl=true`;
 // const options = {
@@ -47,6 +48,7 @@ describe("TESTING ALL ROUTES INVOLVING DB", () => {
   sentimentTest();
   userAssetTest();
   wordcloudTest();
+  UsersRouteTest();
 });
 
 describe("TESTING ALL ROUTES NOT INVOLVING DB", () => {
