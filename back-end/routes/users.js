@@ -63,6 +63,10 @@ router.post("/resetPassword", async (req, res) => {
 router.get("/currency/:curr", async (req, res) => {
   const curr = req.params.curr;
   const newCurr = currencies[curr];
+  console.log(curr);
+  if (!newCurr) {
+    res.status(404).json({ error: "Invalid currency" });
+  }
   if (newCurr === "USD") res.status(200).json({ rate: 1 });
   else {
     const url = `https://freecurrencyapi.net/api/v2/latest?apikey=${process.env.CURRENCY_CHANGE}&base_currency=USD`;
