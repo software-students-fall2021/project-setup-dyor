@@ -24,7 +24,10 @@ module.exports = {
     console.log("User Already Found", foundUser);
 
     if (foundUser) {
-      return res.status(403);
+      return res.status(403).json({
+        success: false,
+        error: "email is already in use",
+      });
     }
     // creating a new user
     const newUser = new User({ email, password });
