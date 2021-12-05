@@ -9,16 +9,16 @@ import { userAssetDataURL, coinLabelDataURL } from "../../back-end_routes";
 
 import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: "100vh",
-    backgroundImage: `url(${
-      process.env.PUBLIC_URL + "/portfoliobackground3.png"
-    })`,
-    backgroundRepeat: "repeat",
-    backgroundSize: "cover",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     minHeight: "100vh",
+//     backgroundImage: `url(${
+//       process.env.PUBLIC_URL + "/portfoliobackground3.png"
+//     })`,
+//     backgroundRepeat: "repeat",
+//     backgroundSize: "cover",
+//   },
+// }));
 
 export function PortfolioPage() {
   const [coinNameToSymbolDict, setCoinNameToSymbolDict] = useState({});
