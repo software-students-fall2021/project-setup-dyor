@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import { Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import styles from "./DailyGraph.module.css";
 import { Grid, Button } from "@mui/material";
 import {
@@ -138,14 +138,14 @@ export function DailyGraph({ assetDetails, historicalPriceData }) {
       spacing={2}
     >
       <item>
-        <h1>Historical Daily Profit/Loss</h1>
+        <Typography variant="h6"> Historical Daily Profit/Loss</Typography>
       </item>
       <item>
         <div className={styles.center}>
           <BarChart
             data={graphData}
-            width={350}
-            height={500}
+            width={320}
+            height={300}
             margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
@@ -159,11 +159,14 @@ export function DailyGraph({ assetDetails, historicalPriceData }) {
               {graphData.map((entry, index) => {
                 console.log(entry);
                 return (
-                  <Cell
-                    key={`${entry.date}`}
-                    fill={entry.profitLoss > 0 ? "00FF00" : "FF0000"}
-                    stroke={entry.profitLoss > 0 ? "00FF00" : "FF0000"}
-                  />
+                  <>
+                    {console.log(entry.profitLoss)}
+                    <Cell
+                      key={`${entry.date}`}
+                      fill={entry.profitLoss > 0 ? "#008000" : "#D2042D"}
+                      stroke={entry.profitLoss > 0 ? "#008000" : "#D2042D"}
+                    />
+                  </>
                 );
               })}
             </Bar>
