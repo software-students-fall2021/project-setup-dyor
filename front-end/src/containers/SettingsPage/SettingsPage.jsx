@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Paper } from "@material-ui/core";
 import { Switch, Divider } from "@mui/material";
 import { Box, IconButton } from "@mui/material";
@@ -20,6 +20,7 @@ export default function SettingsPage({ logoutHandler }) {
   const [currency, setCurrency] = React.useState(
     localStorage.getItem("currency"),
   );
+  const history = useHistory();
 
   React.useEffect(() => {
     if (isSwitched) {
@@ -52,6 +53,25 @@ export default function SettingsPage({ logoutHandler }) {
     localStorage.setItem("isLoggedIn", "false");
     localStorage.removeItem("email");
     logoutHandler();
+    history.push("/");
+  };
+
+  const augmentedDeleteHandler = () => {
+    console.log("DELETE BUTTON CLICKED");
+    axios
+      .delete("/users/remove", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        console.log("Proceeding with Delete");
+        augmentedLogoutHandler();
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("Failure in Deletion");
+      });
   };
 
   return (
@@ -142,7 +162,7 @@ export default function SettingsPage({ logoutHandler }) {
             sx={{ mr: 2 }}
           >
             <Link to="/">
-              <DeleteIcon onClick={logoutHandler} color="warning" />
+              <DeleteIcon onClick={augmentedDeleteHandler} color="warning" />
             </Link>
           </IconButton>
         </Paper>
