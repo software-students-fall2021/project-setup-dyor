@@ -27,3 +27,10 @@
 .loss {
   color: red;
 }
+
+.tableHeading {
+  font-size: 10px;
+  font-weight: bold;
+  padding: 1em 0.5em;
+  display: flex-end;
+}

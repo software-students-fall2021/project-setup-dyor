@@ -352,7 +352,7 @@ export default function NFA() {
           <item>
             <Paper elevation={2}>
               <div className={styles.pricePredic}>
-                <Typography weight="bold" color="primary" display="inline">
+                <Typography weight="bold" color="primary" display="inline" textAlign ="center" >
                   NFA Price Prediction
                 </Typography>
               </div>

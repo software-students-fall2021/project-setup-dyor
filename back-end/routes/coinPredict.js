@@ -328,31 +328,31 @@ router.get("/", (req, res) => {
 
 
 
-      // axios
-      //   .get(
-      //     "https://my.api.mockaroo.com/coins_mockeroo.json?key=0cc02cb0&__method=GET",
-      //   )
-      //   .then((response) => {
-      //     res.status(200).json(response.data);
-      //     // console.log(response.data);
+      axios
+        .get(
+          "https://my.api.mockaroo.com/coins_mockeroo.json?key=0cc02cb0&__method=GET",
+        )
+        .then((response) => {
+          res.status(200).json(response.data);
+          // console.log(response.data);
 
-      //     for (let i = 0; i < response.data.length; i++) {
-      //       if (docs.name != response.data[i].id) {
-      //         new coinPredictMod({
-      //           name: response.data[i].id,
-      //           prediction: response.data[i].prediction,
-      //           currentdate: date,
-      //         }).save(function (err, doc) {
-      //           if (err) return console.error(err);
-      //         });
-      //       }
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     // if (err.response){
-      //     console.log("Error Response from API", err.response.status);
-      //     // }
-      //   });
+          for (let i = 0; i < response.data.length; i++) {
+            if (docs.name != response.data[i].id) {
+              new coinPredictMod({
+                name: response.data[i].id,
+                prediction: response.data[i].prediction,
+                currentdate: date,
+              }).save(function (err, doc) {
+                if (err) return console.error(err);
+              });
+            }
+          }
+        })
+        .catch((err) => {
+          // if (err.response){
+          console.log("Error Response from API", err.response.status);
+          // }
+        });
     } 
     else if (err) 
     {
