@@ -44,12 +44,32 @@ jobs:
           cd front-end
           npm install # install all dependencies listed in package.json
           npm run build # have react build the stand-alone front-end code
+  deploy:
+    machine:
+      image: ubuntu-2004:202111-01
+    steps:
+      - add_ssh_keys:
+          fingerprints: 
+            - "ee:8b:97:bc:0c:7b:b1:2f:55:f3:dc:4d:28:6a:2f:ef"
+      - run: |
+          ssh hanzalla@137.184.30.95
+          ls
+
+
+
+    
 
 # Orchestrate our job run sequence
 workflows:
-  build-and-test-back-end:
+  test-build-and-deploy:
     jobs:
       - build-and-test-express-js
-  build-front-end:
-    jobs:
       - build-react-js
+      - hold:
+         type: approval
+         requires:
+           - build-and-test-express-js
+           - build-react-js
+      - deploy:
+         requires:
+          - hold
