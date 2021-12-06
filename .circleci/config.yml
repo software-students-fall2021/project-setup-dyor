@@ -55,10 +55,6 @@ jobs:
           ssh hanzalla@137.184.30.95
           ls
 
-
-
-    
-
 # Orchestrate our job run sequence
 workflows:
   test-build-and-deploy:
