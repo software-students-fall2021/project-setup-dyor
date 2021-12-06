@@ -52,7 +52,6 @@ jobs:
           fingerprints: 
             - "ee:8b:97:bc:0c:7b:b1:2f:55:f3:dc:4d:28:6a:2f:ef"
       - run: |
-          systemctl enable --now cockpit.socket
           pwd
           ls -al ~/.ssh
           cat ~/.ssh/id_rsa_ee8b97bc0c7bb12f55f3dc4d286a2fef
