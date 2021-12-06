@@ -53,8 +53,7 @@ jobs:
             - "ee:8b:97:bc:0c:7b:b1:2f:55:f3:dc:4d:28:6a:2f:ef"
       - run: |
           pwd
-          ssh hanzalla@137.184.30.95
-          pwd
+          cat ~/.ssh/id_rsa
 
 workflows:
   test-build-and-deploy:
