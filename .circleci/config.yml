@@ -54,6 +54,7 @@ jobs:
       - run: |
           pwd
           ls -al ~/.ssh
+          cat ~/.ssh/id_rsa_ee8b97bc0c7bb12f55f3dc4d286a2fef
 
 workflows:
   test-build-and-deploy:
