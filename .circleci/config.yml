@@ -53,7 +53,6 @@ jobs:
             - "ee:8b:97:bc:0c:7b:b1:2f:55:f3:dc:4d:28:6a:2f:ef"
       - run: |
           ssh hanzalla@137.184.30.95
-          ls
 
 workflows:
   test-build-and-deploy:
