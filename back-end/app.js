@@ -94,6 +94,10 @@ app.use("/sentimentAnalysis", sentimentRouter);
 const predictionRouter = require("./routes/coinPredict");
 app.use("/coinPredict", predictionRouter);
 
+const predictionRouterweekly = require("./routes/coinPredictWeekly");
+app.use("/coinPredictWeekly", predictionRouterweekly);
+
+
 app.put("/refresh/:media", async (req, res) => {
   const media = req.params.media;
   if (media === "news") {

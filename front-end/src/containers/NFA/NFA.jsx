@@ -12,6 +12,7 @@ import NFASocialMedia from "../../components/NFASocialMedia/NFASocialMedia";
 import { NFATable } from "../../components/NFATable/NFATable";
 import { Paper } from "@mui/material";
 import styles from "./NFA.module.css";
+
 import {
   userAssetDataURL,
   sentimentAnalysisURL,
@@ -59,6 +60,9 @@ export default function NFA() {
   const [WC, setWC] = useState(null);
   // const [coinLabels, setCoinLabels] = useState([]);
   const [coinNameToSymbolDict, setCoinNameToSymbolDict] = useState({});
+  const [getPredict, setGetPredict] = useState({});
+  const [getPredictWeekly, setGetPredictWeekly] = useState({});
+
 
   const [loading, setLoading] = useState(true);
   let pricesWebSocket = useRef(null);
@@ -124,6 +128,28 @@ export default function NFA() {
       console.log("FAILURE IN WS");
       pricesWebSocket.current.close();
     };
+
+    axios
+    .get("/coinPredict")
+    .then((response) => {
+
+      setGetPredict(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+      console.log("Error");
+    });
+
+    axios
+    .get("/coinPredictWeekly")
+    .then((response) => {
+
+      setGetPredictWeekly(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+      console.log("Error");
+    });
 
     axios
       .request("https://api.coincap.io/v2/assets")
@@ -335,6 +361,9 @@ export default function NFA() {
                   userID={userID}
                   pricesData={coinPrices}
                   userData={userData}
+                  predictData = {getPredict}
+                  predictDataWeekly = {getPredictWeekly}
+
                   // coinLabels={tickers}
                   coinNameToSymbolDict={coinNameToSymbolDict}
                 ></NFATable>
