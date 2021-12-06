@@ -52,43 +52,45 @@ const CoinImage = (props) => {
   );
 };
 
-const NumericEntry = ({
-  val,
-  isColor,
-  numDecimalPlaces = 0,
-  additionalSuffix = "",
-}) => {
-  const multiplier = 10 ** numDecimalPlaces;
-  const formatedVal = Math.round(val * multiplier) / multiplier;
-  const styleClass = isColor
-    ? formatedVal > 0
-      ? styles.profit
-      : styles.loss
-    : styles.normal;
-  const outputString = `${formatedVal}${additionalSuffix}`;
-  return <Typography className={styleClass}>{outputString}</Typography>;
-};
+// const NumericEntry = ({
+//   val,
+//   isColor,
+//   numDecimalPlaces = 0,
+//   additionalSuffix = "",
+// }) => {
+//   const multiplier = 10 ** numDecimalPlaces;
+//   const formatedVal = Math.round(val * multiplier) / multiplier;
+//   const styleClass = isColor
+//     ? formatedVal > 0
+//       ? styles.profit
+//       : styles.loss
+//     : styles.normal;
+//   const outputString = `${formatedVal}${additionalSuffix}`;
+//   return <Typography className={styleClass}>{outputString}</Typography>;
+// };
 
 export function NFATable(props) {
-  const [getPredict, setGetPredict] = useState({});
+  // const [getPredict, setGetPredict] = useState({});
+  
+  // if (count % 30 === 0) {
+  //   axios
+  //     .get(coinPredict)
+  //     .then((response) => {
+  //       // console.log("Front-end");
+  //       // for (let i = 0; i < 2; i++) {
+  //       //   console.log(props.userData[i].id);
+  //       // }
 
-  if (count % 30 === 0) {
-    axios
-      .get(coinPredict)
-      .then((response) => {
-        console.log("Front-end");
-        for (let i = 0; i < 2; i++) {
-          console.log(props.userData[i].id);
-        }
 
-        setGetPredict(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log("Error");
-      });
-  }
-  count = count + 1;
+  //       setGetPredict(response.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       console.log("Error");
+  //     });
+  // }
+  // count = count + 1;
+  // console.log(count);
 
   return (
     <>
@@ -108,14 +110,13 @@ export function NFATable(props) {
               </TableCell>
               <TableCell align="center">
                 <Typography className={styles.tableHeading} variant="subtitle2">
-                  {" "}
-                  Price
+                  Tomorrow
                 </Typography>
               </TableCell>
-
               <TableCell align="center">
                 <Typography className={styles.tableHeading} variant="subtitle2">
-                  24H Pred
+                  {" "}
+                  Next Week
                 </Typography>
               </TableCell>
             </TableRow>
@@ -123,7 +124,7 @@ export function NFATable(props) {
           <TableBody>
             {props.userData.map((userDataElement) => {
               const lowerCaseID = userDataElement.id.toLowerCase();
-              const coinPrice = props.pricesData[lowerCaseID];
+              // const coinPrice = props.pricesData[lowerCaseID];
 
               return (
                 <TableRow key={userDataElement.id}>
@@ -135,19 +136,29 @@ export function NFATable(props) {
                     ></CoinImage>
                   </TableCell>
                   <TableCell align="center">
-                    <NumericEntry
-                      val={coinPrice}
-                      numDecimalPlaces={2}
-                    ></NumericEntry>
+
+                  {props.predictData &&
+                    !(
+                      typeof props.predictData === "object" &&
+                      !Array.isArray(props.predictData) &&
+                      props.predictData !== null
+                    )
+                      ? props.predictData.map((obj) =>
+                          obj.name === userDataElement.id
+                            ? obj.predictions.toFixed(4)
+                            : "",
+                        )
+                      : "loading..."}
                   </TableCell>
                   <TableCell align="center">
-                    {getPredict &&
+
+                  {props.predictDataWeekly &&
                     !(
-                      typeof getPredict === "object" &&
-                      !Array.isArray(getPredict) &&
-                      getPredict !== null
+                      typeof props.predictDataWeekly === "object" &&
+                      !Array.isArray(props.predictDataWeekly) &&
+                      props.predictDataWeekly !== null
                     )
-                      ? getPredict.map((obj) =>
+                      ? props.predictDataWeekly.map((obj) =>
                           obj.name === userDataElement.id
                             ? obj.predictions.toFixed(4)
                             : "",
