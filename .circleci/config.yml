@@ -55,17 +55,21 @@ jobs:
           ssh hanzalla@137.184.30.95
           ls
 
-# Orchestrate our job run sequence
 workflows:
   test-build-and-deploy:
-    jobs:
-      - build-and-test-express-js
-      - build-react-js
-      - hold:
-         type: approval
-         requires:
-           - build-and-test-express-js
-           - build-react-js
-      - deploy:
-         requires:
-          - hold
+    - deploy:
+
+# Orchestrate our job run sequence
+# workflows:
+#   test-build-and-deploy:
+#     jobs:
+#       - build-and-test-express-js
+#       - build-react-js
+#       - hold:
+#          type: approval
+#          requires:
+#            - build-and-test-express-js
+#            - build-react-js
+#       - deploy:
+#          requires:
+#           - hold
