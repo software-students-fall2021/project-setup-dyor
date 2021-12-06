@@ -57,7 +57,8 @@ jobs:
 
 workflows:
   test-build-and-deploy:
-    - deploy:
+    jobs:
+       - deploy
 
 # Orchestrate our job run sequence
 # workflows:
