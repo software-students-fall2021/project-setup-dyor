@@ -60,7 +60,7 @@ app.use("/coinPresentPriceAndChange", coinPresentPriceAndChangeRouter);
 //General news and social media filters
 
 //Refresh news and socials at destined times
-schedule.scheduleJob("0 */6 * * *", async () => {
+schedule.scheduleJob("0 */8 * * *", async () => {
   console.log("Refresh news");
   refreshNews();
 });
