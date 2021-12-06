@@ -13,6 +13,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     margin: "5px",
+    marginBottom: "0",
+    borderBottom: "5px solid #088f8f ",
   },
   toGo: {
     minheight: "90vh",

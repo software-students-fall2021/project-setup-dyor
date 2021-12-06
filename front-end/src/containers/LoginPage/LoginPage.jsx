@@ -111,7 +111,7 @@ const LoginPage = ({ loginHandler }) => {
           className={style.errorText}
           style={{ color: response.success ? "green" : "red" }}
         >
-          <Typography>{errorMessage}</Typography>
+          <Typography className = {style.errorMessage}>{errorMessage}</Typography>
         </div>
         <Stack
           direction="column"

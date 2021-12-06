@@ -50,3 +50,7 @@
 .textfield__label {
   color: rgb(151, 151, 151) !important;
 }
+.errorMessage {
+  color: red;
+  font-weight: bold;
+}
