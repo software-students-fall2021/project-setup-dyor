@@ -20,10 +20,29 @@
 }
 
 .displayInline {
-  display: flex;
-  font-size: 30px;
+  margin: 10%;
+  margin-top: 0;
+  border-radius: 15px;
+  padding-top: 0.25%;
+  /* display: flex; */
+  font-size: 22px;
   text-align: center;
-  justify-content: space-around;
+  color: white !important;
+  /* justify-content: space-around; */
+  background-color: rgb(255, 255, 255, 0.97);
+  align-items: center;
+  align-content: center;
+  vertical-align: middle;
 
   padding-bottom: 5%;
+}
+
+.displayCPL{
+  font-size: 20px;
+  background-color: rgb(8,143,143) !important;
+  margin: 1%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding-bottom: 2%;
+  padding-top: 2%;
 }

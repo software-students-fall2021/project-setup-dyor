@@ -104,17 +104,17 @@ export function NFATable(props) {
           <TableHead>
             <TableRow>
               <TableCell align="center">
-                <Typography className={styles.tableHeading} variant="subtitle2">
+                <Typography className={styles.tableHeading} variant="h7">
                   Coin
                 </Typography>
               </TableCell>
               <TableCell align="center">
-                <Typography className={styles.tableHeading} variant="subtitle2">
+                <Typography className={styles.tableHeading} variant="h7">
                   Tomorrow
                 </Typography>
               </TableCell>
               <TableCell align="center">
-                <Typography className={styles.tableHeading} variant="subtitle2">
+                <Typography className={styles.tableHeading} variant="h7">
                   {" "}
                   Next Week
                 </Typography>

@@ -224,6 +224,30 @@ router.get("/", (req, res) => {
   coinPredictMod.find({ currentdate: dateweekly}, (err, docs) => {
     if (docs.length == 0) {
       console.log("Weekly Prediction 0 doc length");
+      axios
+      .get(
+        "https://my.api.mockaroo.com/coins_mockeroo.json?key=0cc02cb0&__method=GET",
+      )
+      .then((response) => {
+        res.status(200).json(response.data);
+
+        for (let i = 0; i < response.data.length; i++) {
+          if (docs.name != response.data[i].id) {
+            new coinPredictMod({
+              name: response.data[i].id,
+              prediction: response.data[i].prediction,
+              currentdate: dateweekly,
+            }).save(function (err, doc) {
+              if (err) return console.error(err);
+            });
+          }
+        }
+      })
+      .catch((err) => {
+        // if (err.response){
+        console.log("Error Response from API", err.response.status);
+        // }
+      });
 
     } 
     else if (err) 

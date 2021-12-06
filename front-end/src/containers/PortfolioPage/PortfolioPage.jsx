@@ -201,12 +201,21 @@ export function PortfolioPage() {
         </item>
         <item>
           <div className={styles.displayInline}>
-            <Button variant="contained" size="small">
-              Cumulative Profit-and-Loss
-              <Typography>{`${currency} ${totalProfitAndLoss.toFixed(
-                2,
-              )}`}</Typography>
-            </Button>
+              <div className = {styles.displayCPL}>
+                Cumulative Profit-and-Loss
+              </div>
+              <div>
+              {(totalProfitAndLoss<0)?
+                <Typography color="red" variant = "h6">{`${currency} ${totalProfitAndLoss.toFixed(
+                  2,)}`}
+                  </Typography>
+              : <Typography color="green" variant = "h6">{`${currency} ${totalProfitAndLoss.toFixed(
+                2,)}`}
+                </Typography>}
+              </div>
+              {/* <Typography color="green" variant = "h6">{`${currency} ${totalProfitAndLoss.toFixed(
+                2,)}`}
+                </Typography> */}
           </div>
         </item>
       </Stack>
