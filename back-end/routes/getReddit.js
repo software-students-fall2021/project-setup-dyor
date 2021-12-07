@@ -43,7 +43,7 @@ router.get("/:coin", async (req, res) => {
     if (Object.keys(coins).includes(coin.toUpperCase())) {
       coin = coins[coin.toUpperCase()];
     }
-    if (coin !== undefined) {
+    if (Object.values(coins).includes(coin)) {
       await redditDatabase
         .findOne({ coin: coin })
         .then((result) => {

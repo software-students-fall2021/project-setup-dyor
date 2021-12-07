@@ -7,7 +7,6 @@ const Reddit = require("../schemas/redditModel");
 const { RedditOne, RedditTwo, TwitterOne, TwitterTwo } = require("./mockdata");
 
 const getSocialsTest = () => {
-
   describe("GET /:media/:asset", () => {
     beforeEach(async () => {
       await Reddit.collection.dropIndexes();
