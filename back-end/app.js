@@ -61,8 +61,13 @@ app.use("/coinPresentPriceAndChange", coinPresentPriceAndChangeRouter);
 
 //Refresh news and socials at destined times
 schedule.scheduleJob("0 */6 * * *", async () => {
-  console.log("Refresh news");
-  refreshNews();
+  const today = new Date();
+  const time = today.getHours();
+  console.log(time);
+  if (time > 10 && time < 23) {
+    console.log("Refresh news");
+    refreshNews();
+  }
 });
 schedule.scheduleJob("0 */2 * * *", async () => {
   console.log("Refresh twitter");

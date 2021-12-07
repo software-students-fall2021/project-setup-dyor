@@ -30,7 +30,6 @@ router
 
 router.post("/resetPassword", async (req, res) => {
   console.log("Resetting Password");
-  console.log(req.body);
 
   if (req.body === undefined) {
     res

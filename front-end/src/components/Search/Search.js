@@ -7,7 +7,9 @@ export default function ComboBox({ coins, changeCoin, currentCoin }) {
     <Autocomplete
       value={currentCoin}
       onChange={(event, newValue) => {
-        changeCoin(newValue.label);
+        if (newValue) {
+          changeCoin(newValue.label);
+        }
       }}
       disablePortal
       id="combo-box-demo"
