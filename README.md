@@ -42,3 +42,8 @@ Product Owner: Talal Said
 
 Scrum Master: Desmond Ofori Atta <br>
 Product Owner: Abdullah Chaudhry
+
+# Extra-Credit 
+
+1. We have employed continous deployment, in that one of the jobs for each commit in circleCI which requires manual approval and the successful completion of unit tests and the build process. 
+
