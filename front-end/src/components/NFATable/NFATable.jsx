@@ -9,12 +9,8 @@ import { Box } from "@mui/system";
 import { Grid } from "@material-ui/core";
 import styles from "./NFATable.module.css";
 import Icon from "react-crypto-icons";
-import axios from "axios";
-import { coinPredict } from "../../back-end_routes";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 
-let count = 0;
 
 const CoinImage = (props) => {
   const userID = props.userID;
@@ -71,7 +67,7 @@ const CoinImage = (props) => {
 
 export function NFATable(props) {
   // const [getPredict, setGetPredict] = useState({});
-  
+
   // if (count % 30 === 0) {
   //   axios
   //     .get(coinPredict)
@@ -80,7 +76,6 @@ export function NFATable(props) {
   //       // for (let i = 0; i < 2; i++) {
   //       //   console.log(props.userData[i].id);
   //       // }
-
 
   //       setGetPredict(response.data);
   //     })
@@ -123,7 +118,7 @@ export function NFATable(props) {
           </TableHead>
           <TableBody>
             {props.userData.map((userDataElement) => {
-              const lowerCaseID = userDataElement.id.toLowerCase();
+              // const lowerCaseID = userDataElement.id.toLowerCase();
               // const coinPrice = props.pricesData[lowerCaseID];
 
               return (
@@ -136,8 +131,7 @@ export function NFATable(props) {
                     ></CoinImage>
                   </TableCell>
                   <TableCell align="center">
-
-                  {props.predictData &&
+                    {props.predictData &&
                     !(
                       typeof props.predictData === "object" &&
                       !Array.isArray(props.predictData) &&
@@ -151,8 +145,7 @@ export function NFATable(props) {
                       : "loading..."}
                   </TableCell>
                   <TableCell align="center">
-
-                  {props.predictDataWeekly &&
+                    {props.predictDataWeekly &&
                     !(
                       typeof props.predictDataWeekly === "object" &&
                       !Array.isArray(props.predictDataWeekly) &&

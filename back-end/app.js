@@ -60,9 +60,14 @@ app.use("/coinPresentPriceAndChange", coinPresentPriceAndChangeRouter);
 //General news and social media filters
 
 //Refresh news and socials at destined times
-schedule.scheduleJob("0 */8 * * *", async () => {
-  console.log("Refresh news");
-  refreshNews();
+schedule.scheduleJob("0 */6 * * *", async () => {
+  const today = new Date();
+  const time = today.getHours();
+  console.log(time);
+  if (time > 10 && time < 23) {
+    console.log("Refresh news");
+    refreshNews();
+  }
 });
 schedule.scheduleJob("0 */2 * * *", async () => {
   console.log("Refresh twitter");
@@ -96,7 +101,6 @@ app.use("/coinPredict", predictionRouter);
 
 const predictionRouterweekly = require("./routes/coinPredictWeekly");
 app.use("/coinPredictWeekly", predictionRouterweekly);
-
 
 app.put("/refresh/:media", async (req, res) => {
   const media = req.params.media;
