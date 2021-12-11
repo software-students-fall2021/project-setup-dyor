@@ -13,6 +13,7 @@ module.exports = {
         req.value = {};
       }
       req.value["body"] = result.value;
+
       console.log("LOGIN/SIGNUP: Validating Done");
       next();
     };
