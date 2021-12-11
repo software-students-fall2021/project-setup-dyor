@@ -31,9 +31,9 @@ passport.use(
         // console.log(user.id);
         // otherwise return the user
         // done(null, user);
-        done(null, { id: user.id, email: user.email });
+        return done(null, { id: user.id, email: user.email });
       } catch (error) {
-        done(error, false);
+        return done(error, false);
       }
     },
   ),
@@ -65,9 +65,9 @@ passport.use(
         // if (!isMatch) {
         //   return done(null, false);
         // }
-        done(null, user);
+        return done(null, user);
       } catch (error) {
-        done(error, false);
+        return done(error, false);
       }
     },
   ),
