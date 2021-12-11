@@ -11,9 +11,9 @@ module.exports = {
       }
       if (!req.value) {
         req.value = {};
-      } else {
-        req.value["body"] = result.value;
       }
+      req.value["body"] = result.value;
+
       console.log("LOGIN/SIGNUP: Validating Done");
       next();
     };
