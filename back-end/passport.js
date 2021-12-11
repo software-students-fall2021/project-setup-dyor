@@ -54,17 +54,18 @@ passport.use(
           return done(null, false);
         }
 
-        user.isValidPassword(password, (error, match) => {
-          if (!match) {
-            return done(null, false);
-          }
-        });
+        // await user.isValidPassword(password, (error, match) => {
+        //   if (!match) {
+        //     console.log(error);
+        //     return done(null, false);
+        //   }
+        // });
 
-        // const isMatch = await user.isValidPassword(password);
+        const isMatch = await user.isValidPassword(password);
         // console.log(isMatch);
-        // if (!isMatch) {
-        //   return done(null, false);
-        // }
+        if (!isMatch) {
+          return done(null, false);
+        }
         return done(null, user);
       } catch (error) {
         return done(error, false);
