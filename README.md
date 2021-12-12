@@ -21,6 +21,10 @@ Lastly, we would seek to add the feature of Price Prediction for a short period 
 
 For contributions please see the [CONTRIBUTING](https://github.com/software-students-fall2021/project-setup-dyor/blob/master/CONTRIBUTING.md) file. Thank you!
 
+## Deployment
+
+View our deployed website here: http://137.184.30.95:3000
+
 ## Sprints
 
 ### Assigned roles for Sprint 1
