@@ -20,7 +20,8 @@ const refreshReddit = async () => {
   for (let coin in coins) {
     const posts = await getPost(coin);
     const success = await putInDatabase(coins[coin], posts);
-    i = i + 1;
+    if(success)
+      i = i + 1;
   }
 
   if (i >= 8) console.log("Success");
@@ -44,7 +45,7 @@ const getPost = async (shortForm) => {
   const url = `https://www.reddit.com/r/${channels[shortForm]}/hot.json?limit=100`;
   const res = await needle("get", url);
   console.log(channels[shortForm], res.body.data.children.length);
-  if (res.body.data.children) {
+  if (res && res.body.data.children) {
     posts = res.body.data.children.filter((post) => post.data.selftext !== "");
   } else {
     console.log("Unsuccesful request");
@@ -65,8 +66,8 @@ const putInDatabase = async (coin, posts) => {
 
   const opts = { new: true, upsert: true };
 
-  const response = await redditDatabase.findOneAndUpdate(query, update, opts);
-  if (response.coin.toLowerCase() === coin.toLowerCase()) return true;
+  const result = await redditDatabase.findOneAndUpdate(query, update, opts);
+  if (result && result.coin.toLowerCase() === coin.toLowerCase()) return true;
   else return false;
 };
 
