@@ -16,12 +16,11 @@ const coins = {
 };
 
 const refreshTwitter = async () => {
-  console.log("twitter");
   let i = 0;
   for (let coin in coins) {
     const tweets = await getTweets(coin, coins[coin]);
     const success = await putInDatabase(coins[coin], tweets);
-    i = i + 1;
+    if(success) i = i + 1;
   }
 
   if (i >= 8) {
@@ -51,7 +50,7 @@ const getTweets = async (shortForm, coin) => {
     },
   });
 
-  if (res.body) {
+  if (res && res.body) {
     const map = new Map();
     const allTweets = res.body.data;
     let users = res.body.includes.users;
@@ -107,8 +106,8 @@ const putInDatabase = async (coin, tweets) => {
   const { error } = socials(update);
   if (error) return false;
 
-  const response = await twitterDatabase.findOneAndUpdate(query, update, opts);
-  if (response.coin.toLowerCase() === coin.toLowerCase()) return true;
+  const result = await twitterDatabase.findOneAndUpdate(query, update, opts);
+  if (result && result.coin.toLowerCase() === coin.toLowerCase()) return true;
   else return false;
 };
 

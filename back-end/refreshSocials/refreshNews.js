@@ -7,12 +7,12 @@ const refreshNews = async () => {
   let coins = await newsDatabase.find({}, { _id: 0, coin: 1 });
   let i = 0;
 
-  if (coins.length < allCoins.length) {
+  if (coins && (coins.length < allCoins.length)) {
     for (let j = 0; j < allCoins.length; ++j) {
       const coin = allCoins[j]["name"];
       const coinNews = await getArticle(coin.toLowerCase());
       const success = await putInDatabase(coin.toLowerCase(), coinNews);
-      i = i + 1;
+      if(success) i = i + 1;
     }
     if (i >= allCoins.length) console.log("Success");
     else console.log("Failed");
@@ -21,7 +21,7 @@ const refreshNews = async () => {
       const { coin } = coins[j];
       const coinNews = await getArticle(coin.toLowerCase());
       const success = await putInDatabase(coin.toLowerCase(), coinNews);
-      i = i + 1;
+      if(success) i = i + 1;
     }
 
     if (i >= allCoins.length) {
@@ -57,8 +57,8 @@ const putInDatabase = async (coin, coinNews) => {
 
   const opts = { new: true, upsert: true };
 
-  const response = await newsDatabase.findOneAndUpdate(query, update, opts);
-  if (response.coin.toLowerCase() === coin.toLowerCase()) {
+  const result = await newsDatabase.findOneAndUpdate(query, update, opts);
+  if (result && result.coin.toLowerCase() === coin.toLowerCase()) {
     return true;
   } else {
     return false;
