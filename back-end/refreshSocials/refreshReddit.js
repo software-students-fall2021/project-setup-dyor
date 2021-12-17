@@ -43,7 +43,7 @@ const getPost = async (shortForm) => {
 
   const url = `https://www.reddit.com/r/${channels[shortForm]}/hot.json?limit=100`;
   const res = await needle("get", url);
-  if (res.body) {
+  if (res.body.data.children) {
     posts = res.body.data.children.filter((post) => post.data.selftext !== "");
   } else {
     console.log("Unsuccesful request");
