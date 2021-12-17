@@ -32,7 +32,7 @@ const getPost = async (shortForm) => {
   const channels = {
     BTC: "bitcoin",
     ETH: "ethereum",
-    SHIB: "Shibacoin",
+    SHIB: "SHIBArmy",
     DOGE: "dogecoin",
     LTC: "litecoin",
     DOT: "dot",
@@ -43,6 +43,7 @@ const getPost = async (shortForm) => {
 
   const url = `https://www.reddit.com/r/${channels[shortForm]}/hot.json?limit=100`;
   const res = await needle("get", url);
+  console.log(channels[shortForm], res.body.data.children.length);
   if (res.body.data.children) {
     posts = res.body.data.children.filter((post) => post.data.selftext !== "");
   } else {
