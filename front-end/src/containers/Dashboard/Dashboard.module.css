@@ -1,0 +1,21 @@
+.orderedList {
+  list-style-type: circle;
+}
+
+.cardBox {
+  margin: 5%;
+  margin-left: 7%;
+  margin-right: 7%;
+  border-radius: 15px;
+  padding: 5%;
+  background-color: rgb(255,255,255,0.97);
+}
+
+.headingDash {
+  padding-top: 5%;
+}
+
+.circularProgress {
+  display: flex;
+  justify-content: center;
+}

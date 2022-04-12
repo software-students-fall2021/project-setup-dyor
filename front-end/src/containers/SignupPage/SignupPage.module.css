@@ -1,0 +1,56 @@
+.bgColor {
+  background-color: rgba(79, 184, 172, 0.582);
+  height: 100vh;
+}
+
+.greetings {
+  font-size: 2em;
+  padding: 5px;
+}
+
+.cardBox {
+  background: rgb(230, 248, 246);
+  margin: auto;
+  margin-top: 10%;
+  border-radius: 15px;
+  padding: 3%;
+  width: 80%;
+}
+
+.fontColor {
+  color: white;
+}
+
+.centerButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+}
+.header{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 5%;
+  padding-left: 20px;
+}
+.centerButton Button {
+  text-decoration: none;
+  margin: 10px;
+}
+.textfield {
+    font-size: smaller;
+    margin-bottom: 10px;
+}
+.errorText {
+    font-size: small;
+    font-weight: lighter;
+    text-align: center;
+}
+.textfield__label {
+  color: rgb(151, 151, 151) !important;
+}
+.setErrorMessage {
+  color: red;
+  font-weight: bold;
+}

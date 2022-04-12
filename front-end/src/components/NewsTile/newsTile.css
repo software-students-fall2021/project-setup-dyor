@@ -1,0 +1,20 @@
+.news{
+    max-width: 90%;
+    margin-left: 5%;
+    margin-bottom: 30px;
+}
+.news_header{
+    margin-top: 10px;
+    margin-bottom: 10px; 
+}
+
+#news_dropdown{
+    margin-left: auto;
+}
+
+.readmore {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}

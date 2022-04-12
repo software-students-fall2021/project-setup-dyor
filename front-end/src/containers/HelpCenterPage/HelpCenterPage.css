@@ -1,0 +1,60 @@
+.helpCenter {
+    background-color: rgb(230, 248, 246);
+  }
+  .helpCenterTitle{
+    padding: 10px;
+    margin-top: 10px;
+  }
+  .welcome {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+  .helpCenterTile{
+    margin-bottom: 20px;
+  }
+  .header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+  }
+  .help {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  .iconAndLabel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto;
+    margin-left: 8px; 
+  }
+  .notification-icon {
+    margin-right: 15px;
+  }
+  .facebook {
+      color: #4267B2;
+  }
+  .help a{
+      color: black;
+      text-decoration: none;
+  }
+  .help a:link {
+    color: black;
+    text-decoration: none;
+  }
+  .help a:visited {
+    color: black;
+    text-decoration: none;
+  }
+  .help a:hover {
+    color: #088f8f;
+    text-decoration: none;
+  }
+  .help a:active {
+    color: #088f8f;
+    text-decoration: underline;
+  }

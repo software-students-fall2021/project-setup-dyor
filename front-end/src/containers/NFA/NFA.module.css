@@ -1,0 +1,31 @@
+.nfaPageDiv {
+  background-color: white;
+}
+
+.displayInline {
+  display: flex;
+  font-size: 30px;
+  text-align: center;
+  justify-content: space-around;
+
+  padding-bottom: 5%;
+}
+
+.bgColor {
+  background-color: rgb(230, 248, 246);
+}
+
+.circularProgress {
+  display: flex;
+  justify-content: center;
+}
+
+.progressBar {
+  align-self: center;
+  margin: 50px auto;
+}
+
+.pricePredic {
+  padding: 2%;
+  text-align: center;
+}
